@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --spacing: 0.25rem;
+  --container-2xl: 1400px;
+
+  --color-bg: #0c0c0c;
+  --color-bg-warm: #111111;
+  --color-surface: #1a1917;
+  --color-surface-hover: #222220;
+  --color-text-primary: #e8e4de;
+  --color-text-muted: #8a8680;
+  --color-text-dim: #5c5856;
+  --color-divider: rgba(232, 228, 222, 0.08);
+  --color-accent: #bc002d;
+  --color-accent-hover: #d4003a;
+  --color-accent-soft: rgba(188, 0, 45, 0.12);
+
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Zen Old Mincho", ui-serif, Georgia, serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+::selection {
+  background-color: #bc002d;
+  color: #e8e4de;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #0c0c0c;
+}
+::-webkit-scrollbar-thumb {
+  background: #5c5856;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8a8680;
+}
+
+.jp-serif {
+  font-family: "Zen Old Mincho", serif;
+}
+
+.vertical-jp {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  color: #5c5856;
+  font-family: "Zen Old Mincho", serif;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+a {
+  transition: color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }

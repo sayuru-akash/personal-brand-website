@@ -11,11 +11,11 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: "Sayuru Akash — サユル アーカーシュ",
   description:
-    "Musical Artist, Frontend Developer, Web Designer, Content Writer & Investor based in Sri Lanka. Building digital experiences with precision and soul.",
+    "Musical Artist, Tech Lead, Full-stack Developer, Content Writer & Investor based in Sri Lanka. Building digital experiences with precision and soul.",
   keywords: [
     "Sayuru Akash",
-    "Frontend Developer",
-    "Web Designer",
+    "Full-stack Developer",
+    "Tech Lead",
     "Musical Artist",
     "Sri Lanka",
     "Software Engineer",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sayuru Akash — サユル アーカーシュ",
     description:
-      "Musical Artist, Frontend Developer, Web Designer & Investor. Building digital experiences with precision and soul.",
+      "Musical Artist, Tech Lead, Full-stack Developer, Content Writer & Investor based in Sri Lanka. Building digital experiences with precision and soul.",
     url: "https://sayuru.me",
     siteName: "Sayuru Akash",
     locale: "en_US",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Sayuru Akash — サユル アーカーシュ",
-    description: "Musical Artist, Frontend Developer, Web Designer & Investor.",
+    description: "Musical Artist, Tech Lead, Full-stack Developer, Content Writer & Investor based in Sri Lanka.",
     creator: "@sayuru_akash",
   },
   robots: {

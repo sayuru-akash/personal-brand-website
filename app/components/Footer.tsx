@@ -8,7 +8,7 @@ const socialLinks = [
   { label: "Instagram", href: "https://instagram.com/sayuru_akash" },
   { label: "LinkedIn", href: "https://linkedin.com/in/sayuruakash" },
   { label: "Telegram", href: "https://t.me/sayuruakash_channel" },
-  { label: "GitHub", href: "https://github.com/SayuruRemo" },
+  { label: "GitHub", href: "https://github.com/sayuru-akash" },
 ];
 
 export default function Footer() {

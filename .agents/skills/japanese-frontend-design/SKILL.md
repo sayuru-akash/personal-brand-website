@@ -1,7 +1,7 @@
 ---
 name: japanese-frontend-design
 description: Create distinctive, production-grade frontend interfaces with high design quality and japanese touch. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications with a japanese touch and vibe. Generates creative, polished code and UI design that represents a mix of modern web design and japanese aesthetics.
-license: Complete terms in LICENSE.txt
+license: Complete terms in LICENSE.txt 
 ---
 
 ## Japanese Modern Web Interface Design

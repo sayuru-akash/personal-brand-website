@@ -1,31 +1,23 @@
-# SKILL.MD
-
-## Japanese-Inspired Modern Landing Page Design System
-
-### Agent Skill Framework for International Studio-Grade Web Interfaces
-
+---
+name: japanese-frontend-design
+description: Create distinctive, production-grade frontend interfaces with high design quality and japanese touch. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications with a japanese touch and vibe. Generates creative, polished code and UI design that represents a mix of modern web design and japanese aesthetics.
+license: Complete terms in LICENSE.txt
 ---
 
-## SKILL NAME
+## Japanese Modern Web Interface Design
 
-Japanese Modern Web Interface Design
-
----
-
-## PURPOSE
-
-Enable agents to design and implement landing pages that reflect Japanese modern design principles through typography-led layout, symbolic colour use, controlled asymmetry, atmospheric motion, and subtractive visual composition.
+The purpose of this skill is to enable agents to design and implement landing pages that reflect Japanese modern design principles through typography-led layout, symbolic colour use, controlled asymmetry, atmospheric motion, and subtractive visual composition.
 
 ---
 
 ## WHEN TO USE
 
-* Personal portfolios
-* Studio landing pages
-* Agency websites
-* Brand landing pages
-* Product launch pages
-* Executive identity pages
+- Personal portfolios
+- Studio landing pages
+- Agency websites
+- Brand landing pages
+- Product launch pages
+- Executive identity pages
 
 ---
 
@@ -33,14 +25,14 @@ Enable agents to design and implement landing pages that reflect Japanese modern
 
 After mastering this skill, an agent should be able to:
 
-* Design a landing page with intentional whitespace (Ma)
-* Implement typography-led layout hierarchy
-* Apply asymmetrical grid breaking with purpose
-* Use restrained symbolic colour palettes
-* Create calm, subtle motion behaviour
-* Build reusable layout systems using tokens
-* Produce visually atmospheric interfaces
-* Avoid SaaS/template-driven aesthetics
+- Design a landing page with intentional whitespace (Ma)
+- Implement typography-led layout hierarchy
+- Apply asymmetrical grid breaking with purpose
+- Use restrained symbolic colour palettes
+- Create calm, subtle motion behaviour
+- Build reusable layout systems using tokens
+- Produce visually atmospheric interfaces
+- Avoid SaaS/template-driven aesthetics
 
 ---
 
@@ -176,33 +168,33 @@ Single CTA
 
 ### Typography
 
-* Tracking applied
-* JP subtitle lighter
-* Hierarchy visible
+- Tracking applied
+- JP subtitle lighter
+- Hierarchy visible
 
 ### Colour
 
-* No gradients
-* Accent minimal
-* No full background fill
+- No gradients
+- Accent minimal
+- No full background fill
 
 ### Layout
 
-* Asymmetry present
-* Pause spacing used
+- Asymmetry present
+- Pause spacing used
 
 ### Motion
 
-* No bounce
-* Calm easing
+- No bounce
+- Calm easing
 
 ### Fail Test
 
 If it looks:
 
-* SaaS-like
-* Template-clean
-* Startupish
+- SaaS-like
+- Template-clean
+- Startupish
   Remove something.
 
 ---
@@ -213,9 +205,9 @@ If it looks:
 
 Build hero with:
 
-* English H1
-* JP subtitle
-* Circle motif
+- English H1
+- JP subtitle
+- Circle motif
 
 ### Drill 02 — Rhythm Section (60 min)
 
@@ -234,12 +226,12 @@ Ink tone
 
 Completed design must:
 
-* Use restrained palette
-* Feature asymmetry
-* Include typography-led hierarchy
-* Maintain atmospheric motion
-* Avoid symmetry
-* Avoid decorative gradients
+- Use restrained palette
+- Feature asymmetry
+- Include typography-led hierarchy
+- Maintain atmospheric motion
+- Avoid symmetry
+- Avoid decorative gradients
 
 If symmetry dominates, redesign.
 

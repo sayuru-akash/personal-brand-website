@@ -26,7 +26,7 @@ export default function Hero() {
       <div className="absolute -right-16 top-1/3 w-40 h-40 md:w-56 md:h-56 rounded-full border border-accent/10" />
 
       {/* Content */}
-      <div className="mx-auto max-w-7xl px-6 md:px-12 w-full pt-32 md:pt-0">
+      <div className="mx-auto max-w-7xl px-6 md:pl-24 lg:pl-32 md:pr-12 w-full pt-32 md:pt-0">
         <div className="max-w-3xl">
           {/* JP subtitle */}
           <motion.p

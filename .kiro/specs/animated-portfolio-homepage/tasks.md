@@ -21,20 +21,20 @@ This implementation plan breaks down the animated portfolio homepage into discre
 ## Tasks
 
 - [ ] 1. Project setup and configuration
-  - [-] 1.1 Configure Tailwind CSS v4 with custom design tokens
+  - [x] 1.1 Configure Tailwind CSS v4 with custom design tokens
     - Create `tailwind.config.ts` with custom color palette (90% neutrals, 8% muted tones, 2% accent)
     - Configure typography scale with Sans-Serif font stack (Geist, Satoshi, Cabinet Grotesk)
     - Set up responsive breakpoints (sm: 640px, md: 768px, lg: 1024px, xl: 1280px)
     - Add custom utilities for Japanese design (letter-spacing, asymmetric offsets)
     - _Requirements: 8.1, 8.2, 8.3, 8.4, 9.1, 9.2, 9.3, 9.6, 10.1_
 
-  - [~] 1.2 Set up TypeScript types and interfaces
+  - [x] 1.2 Set up TypeScript types and interfaces
     - Create `types/portfolio.ts` with HeroContent, AboutContent, SkillCategory, Project, ContactContent interfaces
     - Define SocialLink interface for contact section
     - Add type definitions for animation configurations
     - _Requirements: 15.4, 15.5_
 
-  - [~] 1.3 Create static content data file
+  - [x] 1.3 Create static content data file
     - Create `data/portfolio.ts` with typed content constants
     - Add Sayuru's biographical information (name, Japanese name, roles, traits, location, education)
     - Define skill categories (Development, Design, Music Production, Content Writing, Investment)
@@ -42,7 +42,7 @@ This implementation plan breaks down the animated portfolio homepage into discre
     - Add contact information and social links
     - _Requirements: 14.1, 14.2, 14.3, 14.4, 14.5, 14.6, 14.7_
 
-  - [~] 1.4 Configure root layout and global styles
+  - [x] 1.4 Configure root layout and global styles
     - Update `app/layout.tsx` with metadata and font configuration
     - Add global styles to `app/globals.css` (grain texture overlay, base typography)
     - Configure Next.js metadata for SEO
@@ -50,27 +50,27 @@ This implementation plan breaks down the animated portfolio homepage into discre
     - _Requirements: 9.5, 12.7, 15.1_
 
 - [ ] 2. Implement animation system and custom hooks
-  - [~] 2.1 Create useReducedMotion hook
+  - [x] 2.1 Create useReducedMotion hook
     - Implement `hooks/useReducedMotion.ts` to detect prefers-reduced-motion media query
     - Return boolean indicating if user prefers reduced motion
     - Add proper cleanup for media query listener
     - _Requirements: 12.1, 12.2_
 
-  - [~] 2.2 Create useScrollAnimation hook
+  - [-] 2.2 Create useScrollAnimation hook
     - Implement `hooks/useScrollAnimation.ts` using Motion's useScroll and useTransform
     - Return scrollYProgress, parallaxY, and opacity values
     - Configure spring physics (stiffness: 100, damping: 20)
     - Support different parallax rates for foreground/background elements
     - _Requirements: 6.1, 6.2, 6.3, 6.5_
 
-  - [~] 2.3 Create useMagneticHover hook
+  - [-] 2.3 Create useMagneticHover hook
     - Implement `hooks/useMagneticHover.ts` using useMotionValue and useTransform
     - Accept strength parameter to control magnetic effect intensity
     - Return x, y motion values and mouse event handlers
     - Implement cursor-tracking logic outside React render cycle
     - _Requirements: 7.1, 7.2, 7.4_
 
-  - [~] 2.4 Create animation configuration utilities
+  - [ ] 2.4 Create animation configuration utilities
     - Create `utils/animationConfig.ts` with shared spring physics constants
     - Define stagger configuration (staggerChildren: 0.1)
     - Export reusable animation variants for entrance, exit, hover states

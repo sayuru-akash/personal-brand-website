@@ -2,25 +2,76 @@
 
 /* CSS Custom Properties for design tokens */
 :root {
-  /* Color tokens */
+  /* Color tokens - 90% neutral, 8% secondary, 2% accent */
   --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
   --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
+  
+  /* Accent color - emerald green (avoiding purple/blue AI aesthetic) */
   --color-accent: #10b981;
+  --color-accent-light: #34d399;
+  --color-accent-dark: #059669;
   
   /* Typography tokens */
-  --font-sans: 'Geist', 'Satoshi', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
-  --font-japanese: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+  --font-sans: var(--font-geist-sans), 'Geist', 'Satoshi', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-mono: var(--font-geist-mono), 'Geist Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Courier New', monospace;
+  --font-japanese: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', 'MS Gothic', sans-serif;
   
-  /* Spacing tokens for asymmetric offsets */
+  /* Typography scale */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  --text-6xl: 3.75rem;    /* 60px */
+  --text-7xl: 4.5rem;     /* 72px */
+  --text-8xl: 6rem;       /* 96px */
+  --text-9xl: 8rem;       /* 128px */
+  
+  /* Spacing tokens for asymmetric offsets (Japanese Ma principle) */
   --offset-xs: 8px;
   --offset-sm: 12px;
   --offset-md: 16px;
   --offset-lg: 24px;
   --offset-xl: 32px;
+  --offset-2xl: 48px;
+  --offset-3xl: 64px;
+  
+  /* Animation tokens */
+  --spring-stiffness: 100;
+  --spring-damping: 20;
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  
+  /* Layout tokens */
+  --max-width: 1400px;
+  --content-width: 65ch;
+  --section-padding: clamp(2rem, 8vw, 8rem);
+  
+  /* Shadow tokens with tinted shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(23, 23, 23, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(23, 23, 23, 0.1), 0 2px 4px -1px rgba(23, 23, 23, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(23, 23, 23, 0.1), 0 4px 6px -2px rgba(23, 23, 23, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(23, 23, 23, 0.1), 0 10px 10px -5px rgba(23, 23, 23, 0.04);
 }
 
-/* Base styles */
-* {
+/* Base reset and normalization */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -28,6 +79,8 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
+  line-height: 1.75;
 }
 
 body {
@@ -37,49 +90,166 @@ body {
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   position: relative;
+  overflow-x: hidden;
 }
 
-/* Grain texture overlay (4% opacity) - Japanese aesthetic */
+/* Grain texture overlay (4% opacity) - Japanese aesthetic principle */
 body::before {
   content: '';
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
   z-index: 9999;
   opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   background-repeat: repeat;
+  background-size: 400px 400px;
+  will-change: auto;
 }
 
-/* Typography base styles */
+/* Typography hierarchy with Japanese influence */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   letter-spacing: -0.025em;
-  line-height: 1.2;
+  line-height: 1.1;
+  color: var(--color-neutral-900);
+  font-family: var(--font-sans);
 }
 
+h1 {
+  font-size: clamp(var(--text-4xl), 8vw, var(--text-6xl));
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+h2 {
+  font-size: clamp(var(--text-3xl), 6vw, var(--text-5xl));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+h3 {
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+h4 {
+  font-size: clamp(var(--text-xl), 3vw, var(--text-3xl));
+  font-weight: 600;
+}
+
+h5 {
+  font-size: clamp(var(--text-lg), 2.5vw, var(--text-2xl));
+  font-weight: 500;
+}
+
+h6 {
+  font-size: clamp(var(--text-base), 2vw, var(--text-xl));
+  font-weight: 500;
+}
+
+/* Body text with optimal reading width */
 p {
-  max-width: 65ch;
+  max-width: var(--content-width);
+  line-height: 1.75;
+  color: var(--color-neutral-700);
+  font-size: var(--text-base);
 }
 
-/* Japanese typography styles */
+/* Large display text */
+.text-display {
+  font-size: clamp(var(--text-6xl), 12vw, var(--text-9xl));
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+}
+
+/* Japanese typography styles with lighter weight */
 .japanese-text {
   font-family: var(--font-japanese);
   font-weight: 300;
   letter-spacing: 0.12em;
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+/* Subtitle text styling */
+.subtitle-text {
+  font-size: clamp(var(--text-lg), 3vw, var(--text-2xl));
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: var(--color-neutral-600);
+}
+
+/* Link styles */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast) ease;
+}
+
+a:hover {
+  color: var(--color-accent-dark);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* Focus styles for accessibility */
 *:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+  border-radius: 2px;
 }
 
-/* Reduced motion support */
+/* Button focus styles */
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Selection styles */
+::selection {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: var(--color-neutral-900);
+}
+
+::-moz-selection {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: var(--color-neutral-900);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-neutral-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neutral-400);
+}
+
+/* Reduced motion support - critical for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -89,30 +259,166 @@ p {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  
+  /* Remove grain texture for reduced motion */
+  body::before {
+    display: none;
+  }
 }
 
-/* Hardware acceleration for animations */
+/* Hardware acceleration utilities for performance */
 .will-animate {
   will-change: transform;
 }
 
-/* Glass effect utility */
-.glass-effect {
-  backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+.gpu-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
-/* Asymmetric offset utilities */
+/* Glass effect utility for premium visual effects */
+.glass-effect {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Asymmetric offset utilities for Japanese Ma principle */
 .offset-xs { transform: translateX(var(--offset-xs)); }
 .offset-sm { transform: translateX(var(--offset-sm)); }
 .offset-md { transform: translateX(var(--offset-md)); }
 .offset-lg { transform: translateX(var(--offset-lg)); }
 .offset-xl { transform: translateX(var(--offset-xl)); }
+.offset-2xl { transform: translateX(var(--offset-2xl)); }
+.offset-3xl { transform: translateX(var(--offset-3xl)); }
 
 .offset-y-xs { transform: translateY(var(--offset-xs)); }
 .offset-y-sm { transform: translateY(var(--offset-sm)); }
 .offset-y-md { transform: translateY(var(--offset-md)); }
 .offset-y-lg { transform: translateY(var(--offset-lg)); }
 .offset-y-xl { transform: translateY(var(--offset-xl)); }
+.offset-y-2xl { transform: translateY(var(--offset-2xl)); }
+.offset-y-3xl { transform: translateY(var(--offset-3xl)); }
+
+/* Negative offsets for asymmetric layouts */
+.-offset-xs { transform: translateX(calc(-1 * var(--offset-xs))); }
+.-offset-sm { transform: translateX(calc(-1 * var(--offset-sm))); }
+.-offset-md { transform: translateX(calc(-1 * var(--offset-md))); }
+.-offset-lg { transform: translateX(calc(-1 * var(--offset-lg))); }
+.-offset-xl { transform: translateX(calc(-1 * var(--offset-xl))); }
+
+.-offset-y-xs { transform: translateY(calc(-1 * var(--offset-xs))); }
+.-offset-y-sm { transform: translateY(calc(-1 * var(--offset-sm))); }
+.-offset-y-md { transform: translateY(calc(-1 * var(--offset-md))); }
+.-offset-y-lg { transform: translateY(calc(-1 * var(--offset-lg))); }
+.-offset-y-xl { transform: translateY(calc(-1 * var(--offset-xl))); }
+
+/* Container utilities */
+.container-fluid {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--section-padding);
+}
+
+/* Section spacing utilities */
+.section-padding {
+  padding: var(--section-padding) 0;
+}
+
+.section-padding-lg {
+  padding: calc(var(--section-padding) * 1.5) 0;
+}
+
+/* Magnetic hover effect base */
+.magnetic-hover {
+  transition: transform var(--transition-normal) cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Tactile feedback utilities */
+.tactile-press {
+  transition: transform var(--transition-fast) ease;
+}
+
+.tactile-press:active {
+  transform: scale(0.98) translateY(1px);
+}
+
+/* Spotlight border effect */
+.spotlight-border {
+  position: relative;
+  background: linear-gradient(var(--color-neutral-50), var(--color-neutral-50)) padding-box,
+              linear-gradient(135deg, transparent 40%, var(--color-accent) 50%, transparent 60%) border-box;
+  border: 1px solid transparent;
+  transition: all var(--transition-normal) ease;
+}
+
+.spotlight-border:hover {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+/* Kinetic typography base */
+.kinetic-text {
+  display: inline-block;
+  transition: transform var(--transition-normal) cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-neutral-50: #ffffff;
+    --color-neutral-900: #000000;
+    --color-accent: #0066cc;
+  }
+  
+  body::before {
+    display: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  body::before {
+    display: none;
+  }
+  
+  .will-animate,
+  .gpu-accelerate {
+    will-change: auto;
+    transform: none;
+  }
+  
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -22,15 +22,6 @@ export default function ProjectsSection() {
     target: containerRef,
     offset: ['start end', 'end start']
   });
-  
-  const getRowSpan = (aspectRatio: string) => {
-    switch (aspectRatio) {
-      case '16/9': return 'md:row-span-2';
-      case '4/3': return 'md:row-span-3';
-      case '1/1': return 'md:row-span-4';
-      default: return 'md:row-span-2';
-    }
-  };
 
   return (
     <section 
@@ -96,12 +87,12 @@ export default function ProjectsSection() {
           </div>
         </motion.div>
 
-        {/* Masonry grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-[140px]">
+        {/* Responsive grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {projects.map((project, index) => (
             <motion.article
               key={project.id}
-              className={`${getRowSpan(project.aspectRatio)} group`}
+              className="group"
               initial={{ opacity: 0, y: 40, scale: 0.95 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -114,7 +105,7 @@ export default function ProjectsSection() {
               onHoverEnd={() => setHoveredProject(null)}
             >
               <motion.div 
-                className="relative h-full bg-neutral-50 border border-neutral-200 rounded-3xl overflow-hidden"
+                className="relative bg-neutral-50 border border-neutral-200 rounded-3xl overflow-hidden"
                 whileHover={{ 
                   y: -8,
                   boxShadow: '0 12px 24px rgba(0,0,0,0.04)',
@@ -130,7 +121,7 @@ export default function ProjectsSection() {
                 />
 
                 {/* Content */}
-                <div className="relative h-full p-8 lg:p-10 flex flex-col justify-between">
+                <div className="relative p-8 lg:p-10 flex flex-col gap-6">
                   
                   {/* Header */}
                   <div className="space-y-6">

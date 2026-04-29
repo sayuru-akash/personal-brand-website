@@ -1,37 +1,47 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { heroContent } from '@/data/portfolio';
 import { 
   entranceVariants, 
   staggerContainerVariants, 
   springPhysics
 } from '@/utils/animationConfig';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useRef } from 'react';
 
 /**
  * HeroSection Component
  * 
  * Implements asymmetric layout with large display heading and Japanese subtitle.
  * Features staggered entrance animations and perpetual floating SVG motif.
- * Includes scroll-linked parallax effects for depth and immersion.
+ * Includes smooth "sucking up" scroll effect for immersive transitions.
  * 
  * Requirements: 1.1, 1.4, 1.5, 1.6, 1.7, 6.1, 6.2, 6.7, 8.2, 8.4, 10.3, 11.1
  */
 export default function HeroSection() {
-  // Parallax effects for background elements
-  // Background elements move slower (0.2) for depth perception
-  const { parallaxY: bgParallaxY } = useScrollAnimation({ 
-    parallaxRate: 0.2 
+  const containerRef = useRef<HTMLElement>(null);
+  
+  // Smooth "sucking up" scroll effect
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start']
   });
   
-  // Foreground elements move faster (0.5) for depth perception
-  const { parallaxY: fgParallaxY } = useScrollAnimation({ 
-    parallaxRate: 0.5 
-  });
+  // Transform values for smooth scroll effect
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.92]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  
+  // Parallax for background elements
+  const bgParallaxY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const fgParallaxY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   
   return (
-    <section className="relative min-h-[100dvh] flex items-center justify-start bg-neutral-50 overflow-hidden">
+    <motion.section 
+      ref={containerRef}
+      className="relative min-h-[100dvh] flex items-center justify-start bg-neutral-50 overflow-hidden"
+      style={{ opacity, scale }}
+    >
       {/* Background grain texture overlay with parallax */}
       <motion.div 
         className="absolute inset-0 opacity-[0.04] pointer-events-none"
@@ -42,7 +52,10 @@ export default function HeroSection() {
       />
 
       {/* Main content container with asymmetric layout */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <motion.div 
+        className="relative z-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8"
+        style={{ y }}
+      >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[100dvh] py-16">
           
           {/* Content area - 40% of space with offset */}
@@ -188,14 +201,15 @@ export default function HeroSection() {
             />
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator with fade on scroll */}
       <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...springPhysics, delay: 3 }}
+        style={{ opacity: useTransform(scrollYProgress, [0, 0.3], [1, 0]) }}
       >
         <motion.div
           className="w-6 h-10 border border-neutral-400 rounded-full flex justify-center"
@@ -209,6 +223,6 @@ export default function HeroSection() {
           />
         </motion.div>
       </motion.div>
-    </section>
+    </motion.section>
   );
 }

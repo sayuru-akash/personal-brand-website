@@ -5,33 +5,31 @@ import ScrollProgress from '@/app/components/ScrollProgress';
 import ProjectsSection from './components/ProjectsSection';
 import SkillsSection from './components/SkillsSection';
 import ContactSection from './components/ContactSection';
-import StaticFallback from './components/StaticFallback';
 
 export default function Home() {
   return (
     <>
-      {/* Static fallback for no-JavaScript users */}
-      <noscript>
-        <StaticFallback />
-      </noscript>
-      
-      {/* Animated version with JavaScript */}
       <AnimationErrorBoundary fallbackLabel="Scroll Progress">
         <ScrollProgress />
       </AnimationErrorBoundary>
+      
       <div className="min-h-screen bg-neutral-50 text-neutral-900">
         <AnimationErrorBoundary fallbackLabel="Hero">
           <HeroSection />
         </AnimationErrorBoundary>
+        
         <AnimationErrorBoundary fallbackLabel="About">
           <AboutSection />
         </AnimationErrorBoundary>
+        
         <AnimationErrorBoundary fallbackLabel="Skills">
           <SkillsSection />
         </AnimationErrorBoundary>
+        
         <AnimationErrorBoundary fallbackLabel="Projects">
           <ProjectsSection />
         </AnimationErrorBoundary>
+        
         <AnimationErrorBoundary fallbackLabel="Contact">
           <ContactSection />
         </AnimationErrorBoundary>

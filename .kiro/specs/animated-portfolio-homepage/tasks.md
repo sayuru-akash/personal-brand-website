@@ -56,28 +56,28 @@ This implementation plan breaks down the animated portfolio homepage into discre
     - Add proper cleanup for media query listener
     - _Requirements: 12.1, 12.2_
 
-  - [-] 2.2 Create useScrollAnimation hook
+  - [x] 2.2 Create useScrollAnimation hook
     - Implement `hooks/useScrollAnimation.ts` using Motion's useScroll and useTransform
     - Return scrollYProgress, parallaxY, and opacity values
     - Configure spring physics (stiffness: 100, damping: 20)
     - Support different parallax rates for foreground/background elements
     - _Requirements: 6.1, 6.2, 6.3, 6.5_
 
-  - [-] 2.3 Create useMagneticHover hook
+  - [x] 2.3 Create useMagneticHover hook
     - Implement `hooks/useMagneticHover.ts` using useMotionValue and useTransform
     - Accept strength parameter to control magnetic effect intensity
     - Return x, y motion values and mouse event handlers
     - Implement cursor-tracking logic outside React render cycle
     - _Requirements: 7.1, 7.2, 7.4_
 
-  - [ ] 2.4 Create animation configuration utilities
+  - [x] 2.4 Create animation configuration utilities
     - Create `utils/animationConfig.ts` with shared spring physics constants
     - Define stagger configuration (staggerChildren: 0.1)
     - Export reusable animation variants for entrance, exit, hover states
     - _Requirements: 1.2, 3.5, 6.5_
 
 - [ ] 3. Implement Hero Section component
-  - [~] 3.1 Create HeroSection Client Component
+  - [-] 3.1 Create HeroSection Client Component
     - Create `app/components/HeroSection.tsx` with "use client" directive
     - Implement asymmetric layout with 40-60% whitespace
     - Add large display heading with Sayuru's name and role

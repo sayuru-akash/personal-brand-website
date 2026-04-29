@@ -100,6 +100,13 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="bg-neutral-50 text-neutral-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+        {/* NoScript message for users with JavaScript disabled */}
+        <noscript>
+          <div className="noscript-message">
+            <strong>JavaScript is disabled.</strong> This portfolio uses animations for enhanced experience, but all content is accessible without JavaScript. Some interactive features may be limited.
+          </div>
+        </noscript>
+        
         {/* Skip to main content for accessibility */}
         <a
           href="#main-content"

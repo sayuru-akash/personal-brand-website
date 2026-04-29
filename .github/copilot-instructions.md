@@ -457,5 +457,5 @@ Keep code clean, animations smooth, and the brand cohesive. ��✨
 ---
 
 **Project Maintained by:** Sayuru Akash  
-**Email:** hello@sayuru.me  
-**Last Reviewed:** 2025-03-09
+**Email:** contact@sayuru.me  
+**Last Reviewed:** 2026-04-30

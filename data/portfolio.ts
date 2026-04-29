@@ -196,7 +196,7 @@ export const projects: Project[] = [
 export const socialLinks: SocialLink[] = [
   {
     platform: 'GitHub',
-    url: 'https://github.com/sayuruakash',
+    url: 'https://github.com/sayuru-akash',
     handle: '@sayuruakash',
   },
   {
@@ -206,12 +206,12 @@ export const socialLinks: SocialLink[] = [
   },
   {
     platform: 'Twitter',
-    url: 'https://twitter.com/sayuruakash',
+    url: 'https://twitter.com/sayuru_akash',
     handle: '@sayuruakash',
   },
   {
     platform: 'Instagram',
-    url: 'https://instagram.com/sayuruakash',
+    url: 'https://instagram.com/sayuru_akash',
     handle: '@sayuruakash',
   },
 ];
@@ -220,7 +220,7 @@ export const socialLinks: SocialLink[] = [
  * Contact section content
  */
 export const contactContent: ContactContent = {
-  email: 'hello@sayuruakash.com',
+  email: 'contact@sayuru.me',
   socialLinks,
   ctaText: "Let's create something exceptional together",
 };

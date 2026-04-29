@@ -1,27 +1,94 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { skillCategories } from '@/data/portfolio';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+
+// Emoji mapping for each individual skill
+const skillEmojis: Record<string, string> = {
+  // Development
+  'Next.js': '⚡',
+  'React': '⚛️',
+  'TypeScript': '📘',
+  'Node.js': '🟢',
+  'Python': '🐍',
+  'PostgreSQL': '🐘',
+  'MongoDB': '🍃',
+  'GraphQL': '🔷',
+  'REST APIs': '🔌',
+  'Git': '🌿',
+  
+  // Design
+  'UI/UX Design': '🎨',
+  'Figma': '🎯',
+  'Adobe XD': '💎',
+  'Prototyping': '🔨',
+  'Design Systems': '📐',
+  'Responsive Design': '📱',
+  'Animation': '✨',
+  
+  // Music Production
+  'FL Studio': '🎹',
+  'Ableton Live': '🎵',
+  'Audio Engineering': '🎧',
+  'Mixing & Mastering': '🎚️',
+  'Sound Design': '🔊',
+  'Composition': '🎼',
+  
+  // Content Writing
+  'Technical Writing': '📝',
+  'Blog Posts': '✍️',
+  'Documentation': '📚',
+  'Copywriting': '💬',
+  'SEO Writing': '🔍',
+  'Content Strategy': '📊',
+  
+  // Investment
+  'Cryptocurrency': '₿',
+  'Blockchain Technology': '⛓️',
+  'Market Analysis': '📈',
+  'Portfolio Management': '💼',
+  'Risk Assessment': '⚖️',
+};
 
 /**
  * SkillsSection Component
  * 
- * PREMIUM VERSION with advanced interactions
+ * PREMIUM VERSION with emoji cursor followers
+ * - Smooth emoji cursor that follows mouse on skill hover
  * - Magnetic hover effects on cards
  * - Smooth scroll-linked reveals
  * - Interactive card tilts
  * - Spotlight effects on hover
- * - Buttery smooth animations
+ * - Buttery smooth animations with spring physics
  */
 export default function SkillsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [hoveredSkill, setHoveredSkill] = useState<{ skill: string; emoji: string } | null>(null);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start']
   });
+
+  // Smooth cursor following with spring physics
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
+  const smoothCursorX = useSpring(cursorX, { stiffness: 120, damping: 20, mass: 0.3 });
+  const smoothCursorY = useSpring(cursorY, { stiffness: 120, damping: 20, mass: 0.3 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (hoveredSkill) {
+        cursorX.set(e.clientX);
+        cursorY.set(e.clientY);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [cursorX, cursorY, hoveredSkill]);
   
   const getGridSpan = (size: 'small' | 'medium' | 'large') => {
     switch (size) {
@@ -65,6 +132,40 @@ export default function SkillsSection() {
           ease: 'easeInOut',
         }}
       />
+
+      {/* Emoji cursor follower - only shows when hovering skills */}
+      {hoveredSkill && (
+        <motion.div
+          className="fixed pointer-events-none z-50 text-5xl"
+          style={{
+            left: smoothCursorX,
+            top: smoothCursorY,
+            x: '-50%',
+            y: '-50%',
+          }}
+          initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          exit={{ opacity: 0, scale: 0.5, rotate: 20 }}
+          transition={{
+            opacity: { duration: 0.2 },
+            scale: { type: 'spring', stiffness: 300, damping: 20 },
+            rotate: { type: 'spring', stiffness: 200, damping: 15 },
+          }}
+        >
+          <motion.div
+            animate={{
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          >
+            {hoveredSkill.emoji}
+          </motion.div>
+        </motion.div>
+      )}
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
         
@@ -142,7 +243,7 @@ export default function SkillsSection() {
                   {/* Category icon/number */}
                   <motion.div 
                     className="mb-6 inline-flex items-center justify-center w-14 h-14 bg-accent/10 rounded-2xl"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    animate={hoveredCard === category.id ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                   >
                     <span className="text-2xl font-bold text-accent">
@@ -170,7 +271,7 @@ export default function SkillsSection() {
                     {category.skills.map((skill, skillIndex) => (
                       <motion.li
                         key={skill}
-                        className="flex items-start gap-3 text-base lg:text-lg text-neutral-700"
+                        className="flex items-start gap-3 text-base lg:text-lg text-neutral-700 cursor-default"
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
@@ -179,6 +280,11 @@ export default function SkillsSection() {
                           delay: index * 0.08 + skillIndex * 0.03 + 0.4,
                           ease: [0.22, 1, 0.36, 1]
                         }}
+                        onMouseEnter={() => setHoveredSkill({ 
+                          skill, 
+                          emoji: skillEmojis[skill] || '✨' 
+                        })}
+                        onMouseLeave={() => setHoveredSkill(null)}
                       >
                         <motion.span 
                           className="mt-2 w-2 h-2 rounded-full bg-accent flex-shrink-0"

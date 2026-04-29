@@ -35,7 +35,7 @@ export default function AboutSection() {
         <motion.div
           className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(188,0,45,0.04) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(100,116,139,0.05) 0%, transparent 70%)',
             y: useTransform(scrollYProgress, [0, 1], [0, -80]),
           }}
         />
@@ -93,11 +93,11 @@ export default function AboutSection() {
               {/* Location & Education cards */}
               <div className="space-y-4 pt-6">
                 <motion.div 
-                  className="group flex items-center gap-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 transition-all duration-300 hover:border-accent/30 hover:shadow-md"
+                  className="group flex items-center gap-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 transition-all duration-300 hover:border-accent/30 hover:shadow-sm"
                   whileHover={{ x: 4 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 >
-                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-accent/10 rounded-xl group-hover:bg-accent/20 transition-colors">
+                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-accent/10 rounded-xl group-hover:bg-slate-500/15 transition-colors">
                     <svg className="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -110,11 +110,11 @@ export default function AboutSection() {
                 </motion.div>
 
                 <motion.div 
-                  className="group flex items-center gap-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 transition-all duration-300 hover:border-accent/30 hover:shadow-md"
+                  className="group flex items-center gap-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 transition-all duration-300 hover:border-accent/30 hover:shadow-sm"
                   whileHover={{ x: 4 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 >
-                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-accent/10 rounded-xl group-hover:bg-accent/20 transition-colors">
+                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-accent/10 rounded-xl group-hover:bg-slate-500/15 transition-colors">
                     <svg className="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
@@ -187,7 +187,7 @@ export default function AboutSection() {
                 {aboutContent.traits.map((trait, index) => (
                   <motion.span
                     key={trait}
-                    className="px-5 py-3 text-base text-neutral-700 bg-white border border-neutral-200 rounded-full hover:border-accent/50 hover:shadow-sm transition-all cursor-default"
+                    className="px-5 py-3 text-base text-neutral-700 bg-white border border-neutral-200 rounded-full hover:border-accent/50 transition-all cursor-default"
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}

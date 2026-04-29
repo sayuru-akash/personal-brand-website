@@ -49,7 +49,7 @@ export default function ProjectsSection() {
       <motion.div
         className="absolute bottom-1/4 right-1/4 w-[700px] h-[700px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(92,92,92,0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(245,245,244,0.3) 0%, transparent 70%)',
           y: useTransform(scrollYProgress, [0, 1], [0, 100]),
         }}
       />
@@ -117,7 +117,7 @@ export default function ProjectsSection() {
                 className="relative h-full bg-neutral-50 border border-neutral-200 rounded-3xl overflow-hidden"
                 whileHover={{ 
                   y: -8,
-                  boxShadow: '0 25px 50px rgba(0,0,0,0.1)',
+                  boxShadow: '0 12px 24px rgba(0,0,0,0.04)',
                 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 25 }}
               >
@@ -125,7 +125,7 @@ export default function ProjectsSection() {
                 <motion.div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                   style={{
-                    background: `linear-gradient(135deg, rgba(188,0,45,0.05) 0%, transparent 60%)`,
+                    background: `linear-gradient(135deg, rgba(250,250,249,0.5) 0%, rgba(245,245,244,0.3) 50%, transparent 80%)`,
                   }}
                 />
 
@@ -211,14 +211,14 @@ export default function ProjectsSection() {
 
                 {/* Hover glow effect */}
                 <motion.div
-                  className="absolute -bottom-20 -right-20 w-40 h-40 bg-accent/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute -bottom-20 -right-20 w-40 h-40 bg-neutral-200/30 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 />
 
                 {/* Animated border on hover */}
                 <motion.div
                   className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(188,0,45,0.1) 0%, transparent 50%)',
+                    background: 'linear-gradient(135deg, rgba(245,245,244,0.4) 0%, transparent 50%)',
                   }}
                 />
               </motion.div>

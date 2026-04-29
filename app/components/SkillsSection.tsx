@@ -52,7 +52,7 @@ export default function SkillsSection() {
       <motion.div
         className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(188,0,45,0.06) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(100,116,139,0.08) 0%, transparent 70%)',
           y: useTransform(scrollYProgress, [0, 1], [0, -100]),
         }}
         animate={{
@@ -115,7 +115,7 @@ export default function SkillsSection() {
                 className="relative h-full bg-white border border-neutral-200 rounded-3xl p-8 lg:p-10 overflow-hidden"
                 whileHover={{ 
                   y: -8,
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
+                  boxShadow: '0 12px 24px rgba(0,0,0,0.04)',
                 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 25 }}
               >
@@ -123,7 +123,7 @@ export default function SkillsSection() {
                 <motion.div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
-                    background: 'radial-gradient(circle at 50% 0%, rgba(188,0,45,0.08) 0%, transparent 60%)',
+                    background: 'radial-gradient(circle at 50% 0%, rgba(100,116,139,0.06) 0%, transparent 60%)',
                   }}
                 />
 
@@ -134,7 +134,7 @@ export default function SkillsSection() {
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                   style={{
-                    background: 'linear-gradient(135deg, rgba(188,0,45,0.1) 0%, transparent 50%)',
+                    background: 'linear-gradient(135deg, rgba(100,116,139,0.08) 0%, transparent 50%)',
                   }}
                 />
 
@@ -201,44 +201,13 @@ export default function SkillsSection() {
 
                 {/* Hover glow effect */}
                 <motion.div
-                  className="absolute -bottom-20 -right-20 w-40 h-40 bg-accent/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute -bottom-20 -right-20 w-40 h-40 bg-slate-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 />
               </motion.div>
             </motion.div>
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <motion.div
-          className="mt-20 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          <p className="text-lg text-neutral-600 mb-6">
-            Interested in working together?
-          </p>
-          <motion.button
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-neutral-900 text-white text-base font-medium rounded-full"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          >
-            <span>Let's Connect</span>
-            <motion.svg
-              className="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              animate={{ x: [0, 4, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </motion.svg>
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   );

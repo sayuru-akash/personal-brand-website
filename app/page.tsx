@@ -2,6 +2,8 @@ import HeroSection from '@/app/components/HeroSection';
 import AboutSection from '@/app/components/AboutSection';
 import AnimationErrorBoundary from '@/app/components/AnimationErrorBoundary';
 import ScrollProgress from '@/app/components/ScrollProgress';
+import ProjectsSection from './components/ProjectsSection';
+import SkillsSection from './components/SkillsSection';
 
 export default function Home() {
   return (
@@ -13,6 +15,12 @@ export default function Home() {
         </AnimationErrorBoundary>
         <AnimationErrorBoundary fallbackLabel="About">
           <AboutSection />
+        </AnimationErrorBoundary>
+        <AnimationErrorBoundary fallbackLabel="Skills">
+          <SkillsSection />
+        </AnimationErrorBoundary>
+        <AnimationErrorBoundary fallbackLabel="Projects">
+          <ProjectsSection />
         </AnimationErrorBoundary>
       </div>
     </>

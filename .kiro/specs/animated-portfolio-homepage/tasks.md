@@ -77,7 +77,7 @@ This implementation plan breaks down the animated portfolio homepage into discre
     - _Requirements: 1.2, 3.5, 6.5_
 
 - [ ] 3. Implement Hero Section component
-  - [-] 3.1 Create HeroSection Client Component
+  - [x] 3.1 Create HeroSection Client Component
     - Create `app/components/HeroSection.tsx` with "use client" directive
     - Implement asymmetric layout with 40-60% whitespace
     - Add large display heading with Sayuru's name and role

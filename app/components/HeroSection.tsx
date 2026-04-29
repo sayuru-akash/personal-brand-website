@@ -5,8 +5,7 @@ import { heroContent } from '@/data/portfolio';
 import { 
   entranceVariants, 
   staggerContainerVariants, 
-  springPhysics,
-  floatAnimation 
+  springPhysics
 } from '@/utils/animationConfig';
 
 /**
@@ -77,7 +76,14 @@ export default function HeroSection() {
             {/* Animated SVG motif */}
             <motion.div
               className="relative"
-              animate={floatAnimation}
+              animate={{
+                y: [-10, 10, -10],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             >
               <svg
                 width="200"

@@ -25,7 +25,7 @@ export function ReducedMotionDemo() {
       </p>
       <div className="mt-4 p-4 bg-gray-100 rounded">
         <p className="text-xs text-gray-700">
-          To test: Go to your system settings and toggle "Reduce motion" or "Prefers reduced motion".
+          To test: Go to your system settings and toggle &quot;Reduce motion&quot; or &quot;Prefers reduced motion&quot;.
           This component will update automatically.
         </p>
       </div>

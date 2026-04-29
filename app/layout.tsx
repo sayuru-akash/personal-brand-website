@@ -1,21 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-
-// Font configuration with display swap for performance
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['300', '400', '500', '600', '700'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['400', '500'],
-});
 
 // Enhanced metadata for SEO and social sharing
 export const metadata: Metadata = {
@@ -44,7 +28,7 @@ export const metadata: Metadata = {
     'Content Creation',
     'Investment',
   ],
-  authors: [{ name: 'Sayuru Akash Amarasinghe', url: 'https://sayuru.dev' }],
+  authors: [{ name: 'Sayuru Akash Amarasinghe', url: 'https://sayuru.me' }],
   creator: 'Sayuru Akash Amarasinghe',
   publisher: 'Sayuru Akash Amarasinghe',
   formatDetection: {
@@ -52,7 +36,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://sayuru.dev'),
+  metadataBase: new URL('https://sayuru.me'),
   alternates: {
     canonical: '/',
   },
@@ -61,7 +45,7 @@ export const metadata: Metadata = {
     description: 'Portfolio showcasing expertise in software development, music production, and entrepreneurship. CEO @ Codezela Technologies, Software Engineering student at Plymouth University.',
     type: 'website',
     locale: 'en_US',
-    url: 'https://sayuru.dev',
+    url: 'https://sayuru.me',
     siteName: 'Sayuru Akash Amarasinghe Portfolio',
     images: [
       {
@@ -89,9 +73,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code',
-  },
 };
 
 // Viewport configuration for mobile optimization
@@ -112,23 +93,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en">
       <head>
-        {/* Preconnect to external domains for performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
         {/* Favicon and app icons */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        
-        {/* Performance hints */}
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
       </head>
-      <body className={`${geistSans.className} antialiased bg-neutral-50 text-neutral-900 selection:bg-emerald-100 selection:text-emerald-900`}>
+      <body className="bg-neutral-50 text-neutral-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">
         {/* Skip to main content for accessibility */}
         <a
           href="#main-content"
@@ -171,7 +142,7 @@ export default function RootLayout({
                 addressLocality: 'Colombo',
                 addressCountry: 'Sri Lanka',
               },
-              url: 'https://sayuru.dev',
+              url: 'https://sayuru.me',
               sameAs: [
                 'https://github.com/sayuru-akash',
                 'https://linkedin.com/in/sayuru-akash',

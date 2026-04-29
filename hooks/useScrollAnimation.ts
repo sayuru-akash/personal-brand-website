@@ -14,7 +14,7 @@ interface UseScrollAnimationOptions {
    * Optional ref to track scroll progress relative to a specific element
    * If not provided, tracks scroll progress relative to the viewport
    */
-  targetRef?: RefObject<HTMLElement>;
+  targetRef?: RefObject<HTMLElement | null>;
   
   /**
    * Offset configuration for when the animation starts and ends

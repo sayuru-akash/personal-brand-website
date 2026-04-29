@@ -7,23 +7,37 @@ import {
   staggerContainerVariants, 
   springPhysics
 } from '@/utils/animationConfig';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 /**
  * HeroSection Component
  * 
  * Implements asymmetric layout with large display heading and Japanese subtitle.
  * Features staggered entrance animations and perpetual floating SVG motif.
+ * Includes scroll-linked parallax effects for depth and immersion.
  * 
- * Requirements: 1.1, 1.4, 1.5, 1.7, 8.2, 8.4, 10.3
+ * Requirements: 1.1, 1.4, 1.5, 1.6, 1.7, 6.1, 6.2, 6.7, 8.2, 8.4, 10.3, 11.1
  */
 export default function HeroSection() {
+  // Parallax effects for background elements
+  // Background elements move slower (0.2) for depth perception
+  const { parallaxY: bgParallaxY } = useScrollAnimation({ 
+    parallaxRate: 0.2 
+  });
+  
+  // Foreground elements move faster (0.5) for depth perception
+  const { parallaxY: fgParallaxY } = useScrollAnimation({ 
+    parallaxRate: 0.5 
+  });
+  
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-start bg-neutral-50 overflow-hidden">
-      {/* Background grain texture overlay */}
-      <div 
+      {/* Background grain texture overlay with parallax */}
+      <motion.div 
         className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          y: bgParallaxY,
         }}
       />
 
@@ -73,9 +87,10 @@ export default function HeroSection() {
 
           {/* Whitespace area - 60% with floating SVG motif */}
           <div className="lg:col-span-7 lg:col-start-6 flex items-center justify-center relative">
-            {/* Animated SVG motif */}
+            {/* Animated SVG motif with parallax */}
             <motion.div
               className="relative"
+              style={{ y: fgParallaxY }}
               animate={{
                 y: [-10, 10, -10],
               }}
@@ -141,9 +156,10 @@ export default function HeroSection() {
               </svg>
             </motion.div>
 
-            {/* Additional floating accent element */}
+            {/* Additional floating accent element with parallax */}
             <motion.div
               className="absolute top-1/4 right-1/4 w-2 h-2 bg-accent rounded-full"
+              style={{ y: bgParallaxY }}
               animate={{
                 y: [-5, 5, -5],
                 opacity: [0.6, 1, 0.6],
@@ -158,6 +174,7 @@ export default function HeroSection() {
 
             <motion.div
               className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-accent-light rounded-full"
+              style={{ y: bgParallaxY }}
               animate={{
                 y: [3, -3, 3],
                 opacity: [0.4, 0.8, 0.4],

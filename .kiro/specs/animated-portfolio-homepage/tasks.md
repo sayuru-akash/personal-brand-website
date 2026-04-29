@@ -86,19 +86,19 @@ This implementation plan breaks down the animated portfolio homepage into discre
     - Apply tight tracking (tracking-tighter) and large scale (text-4xl md:text-6xl)
     - _Requirements: 1.1, 1.4, 1.5, 1.7, 8.2, 8.4, 10.3_
 
-  - [~] 3.2 Add staggered entrance animations to Hero
+  - [x] 3.2 Add staggered entrance animations to Hero
     - Implement staggered animation for heading → subtitle → SVG motif
     - Use spring physics (stiffness: 100, damping: 20)
     - Respect prefers-reduced-motion setting
     - _Requirements: 1.2, 12.1, 12.2_
 
-  - [~] 3.3 Add animated SVG motif with perpetual animation
+  - [x] 3.3 Add animated SVG motif with perpetual animation
     - Create or integrate animated SVG element
     - Implement perpetual float or pulse animation using Motion's animate prop with repeat: Infinity
     - Isolate in memoized component for performance
     - _Requirements: 1.3, 7.3, 11.3_
 
-  - [~] 3.4 Add parallax scroll effects to Hero
+  - [x] 3.4 Add parallax scroll effects to Hero
     - Implement scroll-linked parallax using useScrollAnimation hook
     - Apply parallax transforms to background elements
     - Maintain 60fps performance with hardware-accelerated transforms

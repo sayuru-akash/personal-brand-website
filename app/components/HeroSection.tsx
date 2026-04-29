@@ -2,184 +2,211 @@
 
 import { motion } from 'motion/react';
 import { heroContent } from '@/data/portfolio';
-import { springPhysics } from '@/utils/animationConfig';
+import { 
+  entranceVariants, 
+  staggerContainerVariants, 
+  springPhysics
+} from '@/utils/animationConfig';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
 
+/**
+ * HeroSection Component
+ * 
+ * Implements asymmetric layout with large display heading and Japanese subtitle.
+ * Features staggered entrance animations and perpetual floating SVG motif.
+ * Includes scroll-linked parallax effects for depth and immersion.
+ * 
+ * Requirements: 1.1, 1.4, 1.5, 1.6, 1.7, 6.1, 6.2, 6.7, 8.2, 8.4, 10.3, 11.1
+ */
 export default function HeroSection() {
-  const prefersReducedMotion = useReducedMotion();
+  // Parallax effects for background elements
+  // Background elements move slower (0.2) for depth perception
+  const { parallaxY: bgParallaxY } = useScrollAnimation({ 
+    parallaxRate: 0.2 
+  });
   
-  const { parallaxY: bgParallaxY } = useScrollAnimation({ parallaxRate: 0.15 });
-  const { parallaxY: fgParallaxY } = useScrollAnimation({ parallaxRate: 0.3 });
+  // Foreground elements move faster (0.5) for depth perception
+  const { parallaxY: fgParallaxY } = useScrollAnimation({ 
+    parallaxRate: 0.5 
+  });
   
   return (
-    <section className="relative min-h-[100dvh] flex items-center bg-neutral-50">
-      {/* Subtle mesh gradients */}
-      {!prefersReducedMotion && (
-        <>
-          <motion.div 
-            className="absolute -top-1/4 -right-1/4 w-[1000px] h-[1000px] bg-gradient-to-br from-accent/8 via-accent/4 to-transparent rounded-full blur-3xl pointer-events-none"
-            style={{ y: bgParallaxY }}
-            animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.6, 0.4] }}
-            transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div 
-            className="absolute -bottom-1/4 -left-1/4 w-[800px] h-[800px] bg-gradient-to-tr from-accent-light/6 via-accent-light/3 to-transparent rounded-full blur-3xl pointer-events-none"
-            style={{ y: bgParallaxY }}
-            animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
-          />
-        </>
-      )}
-      
-      {/* Grain texture */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+    <section className="relative min-h-[100dvh] flex items-center justify-start bg-neutral-50 overflow-hidden">
+      {/* Background grain texture overlay with parallax */}
+      <motion.div 
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          y: bgParallaxY,
         }}
       />
 
+      {/* Main content container with asymmetric layout */}
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[100dvh] py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[100dvh] py-16">
           
-          {/* Left: Content */}
+          {/* Content area - 40% of space with offset */}
           <motion.div 
-            className="space-y-6 lg:space-y-8"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ ...springPhysics, delay: 0.1 }}
+            className="lg:col-span-5 lg:col-start-1 space-y-6 offset-md"
+            variants={staggerContainerVariants}
+            initial="hidden"
+            animate="visible"
           >
-            {/* Label */}
-            <div className="space-y-3">
-              <p className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-neutral-500 font-light">
-                ポートフォリオ / Portfolio
-              </p>
-              <motion.div 
-                className="h-px w-20 bg-accent"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 1, delay: 0.3 }}
-                style={{ transformOrigin: 'left' }}
-              />
-            </div>
-
-            {/* Name */}
+            {/* Main heading with staggered entrance */}
             <motion.h1 
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-[-0.03em] leading-[0.9] text-neutral-900"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ...springPhysics, delay: 0.2 }}
+              className="text-4xl md:text-6xl font-bold tracking-tighter leading-none text-neutral-900"
+              variants={entranceVariants}
             >
               {heroContent.name}
             </motion.h1>
 
-            {/* Japanese name */}
+            {/* Japanese subtitle with lighter weight */}
             <motion.p 
-              className="text-sm sm:text-base tracking-[0.15em] text-neutral-500 font-light"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
+              className="japanese-text text-japanese-base font-light text-neutral-600 tracking-wide"
+              variants={entranceVariants}
             >
               {heroContent.nameJapanese}
             </motion.p>
 
-            {/* Role */}
-            <motion.div
-              className="pt-4 lg:pt-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ...springPhysics, delay: 0.6 }}
+            {/* Role statement */}
+            <motion.p 
+              className="text-xl md:text-2xl font-medium text-neutral-700 tracking-tight leading-relaxed max-w-[65ch]"
+              variants={entranceVariants}
             >
-              <p className="text-xl sm:text-2xl lg:text-3xl font-medium text-neutral-700 leading-[1.4] max-w-[24ch]">
-                {heroContent.role}
-              </p>
-            </motion.div>
+              {heroContent.role}
+            </motion.p>
 
             {/* Subtitle */}
             <motion.p 
-              className="text-base sm:text-lg text-neutral-600 leading-relaxed max-w-[42ch] pt-2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.8 }}
+              className="text-base md:text-lg text-neutral-600 leading-relaxed max-w-[65ch]"
+              variants={entranceVariants}
             >
               {heroContent.subtitle}
             </motion.p>
           </motion.div>
 
-          {/* Right: Visual */}
-          <div className="flex items-center justify-center lg:justify-end relative h-[400px] sm:h-[500px] lg:h-[600px]">
+          {/* Whitespace area - 60% with floating SVG motif */}
+          <div className="lg:col-span-7 lg:col-start-6 flex items-center justify-center relative">
+            {/* Animated SVG motif with parallax */}
             <motion.div
-              className="relative w-full max-w-[500px] aspect-square"
-              style={{ y: prefersReducedMotion ? 0 : fgParallaxY }}
+              className="relative"
+              style={{ y: fgParallaxY }}
+              animate={{
+                y: [-10, 10, -10],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             >
-              {/* Outer ring */}
-              <motion.div
-                className="absolute inset-0"
-                animate={prefersReducedMotion ? {} : { rotate: 360 }}
-                transition={{ duration: 80, repeat: Infinity, ease: 'linear' }}
+              <svg
+                width="200"
+                height="200"
+                viewBox="0 0 200 200"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="text-neutral-300"
               >
-                <svg viewBox="0 0 400 400" fill="none" className="w-full h-full">
-                  <circle cx="200" cy="200" r="190" stroke="currentColor" strokeWidth="0.5" className="text-neutral-300" opacity="0.5" />
-                </svg>
-              </motion.div>
-
-              {/* Middle ring */}
-              <motion.div
-                className="absolute inset-[15%]"
-                animate={prefersReducedMotion ? {} : { rotate: -360 }}
-                transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-              >
-                <svg viewBox="0 0 400 400" fill="none" className="w-full h-full">
-                  <circle cx="200" cy="200" r="140" stroke="currentColor" strokeWidth="0.5" strokeDasharray="3 6" className="text-neutral-400" opacity="0.4" />
-                </svg>
-              </motion.div>
-
-              {/* Center */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  className="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-gradient-to-br from-accent/12 to-accent-light/6 backdrop-blur-sm border border-accent/15"
-                  animate={prefersReducedMotion ? {} : { scale: [1, 1.08, 1] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                {/* Minimalist geometric motif inspired by Japanese design */}
+                <motion.circle
+                  cx="100"
+                  cy="100"
+                  r="80"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                  fill="none"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ ...springPhysics, duration: 2, delay: 1 }}
                 />
-              </div>
-
-              {/* Accent dots */}
-              {!prefersReducedMotion && (
-                <>
-                  <motion.div
-                    className="absolute top-[20%] left-[25%] w-2 h-2 bg-accent/50 rounded-full"
-                    animate={{ opacity: [0.3, 0.7, 0.3] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                  />
-                  <motion.div
-                    className="absolute bottom-[30%] right-[20%] w-1.5 h-1.5 bg-accent-light/50 rounded-full"
-                    animate={{ opacity: [0.2, 0.6, 0.2] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-                  />
-                </>
-              )}
+                <motion.circle
+                  cx="100"
+                  cy="100"
+                  r="40"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                  fill="none"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 0.6 }}
+                  transition={{ ...springPhysics, duration: 2, delay: 1.5 }}
+                />
+                <motion.line
+                  x1="100"
+                  y1="20"
+                  x2="100"
+                  y2="180"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 0.4 }}
+                  transition={{ ...springPhysics, duration: 2, delay: 2 }}
+                />
+                <motion.line
+                  x1="20"
+                  y1="100"
+                  x2="180"
+                  y2="100"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 0.4 }}
+                  transition={{ ...springPhysics, duration: 2, delay: 2.2 }}
+                />
+              </svg>
             </motion.div>
+
+            {/* Additional floating accent element with parallax */}
+            <motion.div
+              className="absolute top-1/4 right-1/4 w-2 h-2 bg-accent rounded-full"
+              style={{ y: bgParallaxY }}
+              animate={{
+                y: [-5, 5, -5],
+                opacity: [0.6, 1, 0.6],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: 0.5,
+              }}
+            />
+
+            <motion.div
+              className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-accent-light rounded-full"
+              style={{ y: bgParallaxY }}
+              animate={{
+                y: [3, -3, 3],
+                opacity: [0.4, 0.8, 0.4],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: 1.2,
+              }}
+            />
           </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ...springPhysics, delay: 3 }}
       >
         <motion.div
-          className="flex flex-col items-center gap-2 cursor-pointer"
-          whileHover={{ y: 4 }}
-          transition={springPhysics}
+          className="w-6 h-10 border border-neutral-400 rounded-full flex justify-center"
+          animate={{ opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-light">
-            Scroll
-          </span>
-          <div className="w-px h-10 sm:h-12 bg-gradient-to-b from-neutral-300 to-transparent" />
+          <motion.div
+            className="w-1 h-3 bg-neutral-400 rounded-full mt-2"
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          />
         </motion.div>
       </motion.div>
     </section>

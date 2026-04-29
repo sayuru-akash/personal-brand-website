@@ -4,6 +4,7 @@ import AnimationErrorBoundary from '@/app/components/AnimationErrorBoundary';
 import ScrollProgress from '@/app/components/ScrollProgress';
 import ProjectsSection from './components/ProjectsSection';
 import SkillsSection from './components/SkillsSection';
+import ContactSection from './components/ContactSection';
 
 export default function Home() {
   return (
@@ -21,6 +22,9 @@ export default function Home() {
         </AnimationErrorBoundary>
         <AnimationErrorBoundary fallbackLabel="Projects">
           <ProjectsSection />
+        </AnimationErrorBoundary>
+        <AnimationErrorBoundary fallbackLabel="Contact">
+          <ContactSection />
         </AnimationErrorBoundary>
       </div>
     </>

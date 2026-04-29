@@ -1,1 +1,118 @@
 @import "tailwindcss";
+
+/* CSS Custom Properties for design tokens */
+:root {
+  /* Color tokens */
+  --color-neutral-50: #fafafa;
+  --color-neutral-900: #171717;
+  --color-accent: #10b981;
+  
+  /* Typography tokens */
+  --font-sans: 'Geist', 'Satoshi', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-japanese: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+  
+  /* Spacing tokens for asymmetric offsets */
+  --offset-xs: 8px;
+  --offset-sm: 12px;
+  --offset-md: 16px;
+  --offset-lg: 24px;
+  --offset-xl: 32px;
+}
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-900);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Grain texture overlay (4% opacity) - Japanese aesthetic */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Typography base styles */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+p {
+  max-width: 65ch;
+}
+
+/* Japanese typography styles */
+.japanese-text {
+  font-family: var(--font-japanese);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hardware acceleration for animations */
+.will-animate {
+  will-change: transform;
+}
+
+/* Glass effect utility */
+.glass-effect {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Asymmetric offset utilities */
+.offset-xs { transform: translateX(var(--offset-xs)); }
+.offset-sm { transform: translateX(var(--offset-sm)); }
+.offset-md { transform: translateX(var(--offset-md)); }
+.offset-lg { transform: translateX(var(--offset-lg)); }
+.offset-xl { transform: translateX(var(--offset-xl)); }
+
+.offset-y-xs { transform: translateY(var(--offset-xs)); }
+.offset-y-sm { transform: translateY(var(--offset-sm)); }
+.offset-y-md { transform: translateY(var(--offset-md)); }
+.offset-y-lg { transform: translateY(var(--offset-lg)); }
+.offset-y-xl { transform: translateY(var(--offset-xl)); }

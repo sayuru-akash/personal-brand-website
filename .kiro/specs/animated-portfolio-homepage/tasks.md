@@ -21,7 +21,7 @@ This implementation plan breaks down the animated portfolio homepage into discre
 ## Tasks
 
 - [ ] 1. Project setup and configuration
-  - [~] 1.1 Configure Tailwind CSS v4 with custom design tokens
+  - [-] 1.1 Configure Tailwind CSS v4 with custom design tokens
     - Create `tailwind.config.ts` with custom color palette (90% neutrals, 8% muted tones, 2% accent)
     - Configure typography scale with Sans-Serif font stack (Geist, Satoshi, Cabinet Grotesk)
     - Set up responsive breakpoints (sm: 640px, md: 768px, lg: 1024px, xl: 1280px)

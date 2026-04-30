@@ -39,23 +39,14 @@ export default function HeroSection() {
   return (
     <motion.section 
       ref={containerRef}
-      className="relative min-h-[100dvh] flex items-center justify-start bg-neutral-50 overflow-hidden"
-      style={{ opacity, scale }}
+      className="relative min-h-[100dvh] flex items-center justify-start bg-white overflow-hidden"
+      style={{ scale }}
     >
-      {/* Background grain texture overlay with parallax */}
-      <motion.div 
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          y: bgParallaxY,
-        }}
-      />
-
       {/* Smooth gradient fade to next section */}
       <motion.div
         className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.8) 100%)',
+          background: 'linear-gradient(to bottom, transparent 0%, white 100%)',
           opacity: useTransform(scrollYProgress, [0, 0.3], [0, 1]),
         }}
       />

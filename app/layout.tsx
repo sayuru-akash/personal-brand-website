@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Sayuru Akash Amarasinghe | Full-stack Developer & Musical Artist',
-    description: 'Portfolio showcasing expertise in software development, music production, and entrepreneurship. CEO @ Codezela Technologies, Software Engineering student at Plymouth University.',
+    description: 'Portfolio showcasing expertise in software development, music production, and entrepreneurship. CEO @ Codezela Technologies, BSc Software Engineering graduate from Plymouth University.',
     type: 'website',
     locale: 'en_US',
     url: 'https://sayuru.me',
@@ -96,7 +96,7 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className="bg-neutral-50 text-neutral-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+      <body className="bg-white text-neutral-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">
         {/* NoScript message for users with JavaScript disabled */}
         <noscript>
           <div className="noscript-message">

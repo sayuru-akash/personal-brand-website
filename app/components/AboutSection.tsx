@@ -101,38 +101,126 @@ export default function AboutSection() {
                 {aboutContent.bio}
               </p>
               
-              {/* Location & Education cards */}
+              {/* Location & Education cards with premium micro-interactions */}
               <div className="space-y-4 pt-6">
                 <motion.div 
-                  className="group flex items-center gap-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 transition-all duration-300 hover:border-accent/30 hover:shadow-sm"
+                  className="group relative flex items-center gap-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 overflow-hidden cursor-default"
                   whileHover={{ x: 4 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                  onHoverStart={() => {}}
                 >
-                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-accent/10 rounded-xl group-hover:bg-slate-500/15 transition-colors">
-                    <svg className="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  {/* Animated background on hover */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-accent/5 to-transparent"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                  
+                  {/* Icon with rotation and scale */}
+                  <motion.div 
+                    className="relative flex-shrink-0 w-12 h-12 flex items-center justify-center bg-white rounded-xl border border-neutral-200 group-hover:border-accent/30 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  >
+                    <motion.svg 
+                      className="w-6 h-6 text-accent" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor" 
+                      strokeWidth={2}
+                      whileHover={{ scale: 1.1 }}
+                      animate={{ rotate: [0, 5, -5, 0] }}
+                      transition={{ 
+                        rotate: { duration: 0.5, ease: 'easeInOut' }
+                      }}
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.15em] text-neutral-500 mb-1">Location</p>
-                    <p className="text-base font-medium text-neutral-900">{aboutContent.location}</p>
+                    </motion.svg>
+                    
+                    {/* Ripple effect on hover */}
+                    <motion.div
+                      className="absolute inset-0 rounded-xl border-2 border-accent"
+                      initial={{ scale: 1, opacity: 0 }}
+                      whileHover={{ scale: 1.5, opacity: 0 }}
+                      transition={{ duration: 0.6 }}
+                    />
+                  </motion.div>
+                  
+                  <div className="relative">
+                    <motion.p 
+                      className="text-xs uppercase tracking-[0.15em] text-neutral-500 mb-1"
+                      whileHover={{ x: 2 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    >
+                      Location
+                    </motion.p>
+                    <motion.p 
+                      className="text-base font-medium text-neutral-900"
+                      whileHover={{ x: 2 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25, delay: 0.05 }}
+                    >
+                      {aboutContent.location}
+                    </motion.p>
                   </div>
                 </motion.div>
 
                 <motion.div 
-                  className="group flex items-center gap-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 transition-all duration-300 hover:border-accent/30 hover:shadow-sm"
+                  className="group relative flex items-center gap-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 overflow-hidden cursor-default"
                   whileHover={{ x: 4 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 >
-                  <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-accent/10 rounded-xl group-hover:bg-slate-500/15 transition-colors">
-                    <svg className="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  {/* Animated background on hover */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-accent/5 to-transparent"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                  
+                  {/* Icon with page flip animation */}
+                  <motion.div 
+                    className="relative flex-shrink-0 w-12 h-12 flex items-center justify-center bg-white rounded-xl border border-neutral-200 group-hover:border-accent/30 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  >
+                    <motion.svg 
+                      className="w-6 h-6 text-accent" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor" 
+                      strokeWidth={2}
+                      whileHover={{ rotateY: 180 }}
+                      transition={{ duration: 0.6, ease: 'easeInOut' }}
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.15em] text-neutral-500 mb-1">Education</p>
-                    <p className="text-base font-medium text-neutral-900">{aboutContent.education}</p>
+                    </motion.svg>
+                    
+                    {/* Ripple effect on hover */}
+                    <motion.div
+                      className="absolute inset-0 rounded-xl border-2 border-accent"
+                      initial={{ scale: 1, opacity: 0 }}
+                      whileHover={{ scale: 1.5, opacity: 0 }}
+                      transition={{ duration: 0.6 }}
+                    />
+                  </motion.div>
+                  
+                  <div className="relative">
+                    <motion.p 
+                      className="text-xs uppercase tracking-[0.15em] text-neutral-500 mb-1"
+                      whileHover={{ x: 2 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    >
+                      Education
+                    </motion.p>
+                    <motion.p 
+                      className="text-base font-medium text-neutral-900"
+                      whileHover={{ x: 2 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25, delay: 0.05 }}
+                    >
+                      {aboutContent.education}
+                    </motion.p>
                   </div>
                 </motion.div>
               </div>

@@ -28,7 +28,7 @@ export const heroContent: HeroContent = {
  * About section biographical content
  */
 export const aboutContent: AboutContent = {
-  bio: 'A multi-talented full-stack developer, and musical artist from Colombo, Sri Lanka. Currently pursuing Software Engineering at Plymouth University, UK, while leading Codezela Technologies as CEO. Passionate about creating exceptional digital experiences that blend technical excellence with creative vision.',
+  bio: 'A multi-talented full-stack developer, startup founder, and musical artist from Colombo, Sri Lanka. Graduate in Software Engineering from Plymouth University, UK, currently leading Codezela Technologies as CEO. Passionate about creating exceptional digital experiences that blend technical excellence with creative vision.',
   roles: [
     'Full-stack Developer',
     'Musical Artist',
@@ -45,7 +45,7 @@ export const aboutContent: AboutContent = {
     'Android enthusiast',
   ],
   location: 'Colombo, Sri Lanka',
-  education: 'Software Engineering, Plymouth University, UK',
+  education: 'BSc Software Engineering, Plymouth University, UK',
 };
 
 /**

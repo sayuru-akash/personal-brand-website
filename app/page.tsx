@@ -13,7 +13,7 @@ export default function Home() {
         <ScrollProgress />
       </AnimationErrorBoundary>
       
-      <div className="min-h-screen bg-neutral-50 text-neutral-900">
+      <div className="min-h-screen bg-white text-neutral-900">
         <AnimationErrorBoundary fallbackLabel="Hero">
           <HeroSection />
         </AnimationErrorBoundary>

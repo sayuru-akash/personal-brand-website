@@ -198,7 +198,7 @@ export default function AboutSection() {
                 {aboutContent.traits.map((trait, index) => (
                   <motion.span
                     key={trait}
-                    className="relative inline-flex items-center gap-2 px-5 py-3 text-base text-neutral-700 bg-white border border-neutral-200 rounded-full hover:border-accent/50 transition-all cursor-default"
+                    className="inline-block"
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
@@ -207,36 +207,40 @@ export default function AboutSection() {
                       delay: 0.7 + index * 0.03,
                       ease: [0.22, 1, 0.36, 1]
                     }}
-                    animate={hoveredInterest === trait ? { 
-                      scale: 1.05,
-                    } : { 
-                      scale: 1,
-                    }}
-                    onHoverStart={() => setHoveredInterest(trait)}
-                    onHoverEnd={() => setHoveredInterest(null)}
                   >
-                    <span>{trait}</span>
-                    
-                    {/* Emoji appears after text on hover */}
                     <motion.span
-                      className="text-xl"
-                      initial={{ opacity: 0, scale: 0, width: 0 }}
-                      animate={hoveredInterest === trait ? {
-                        opacity: 1,
+                      className="inline-flex items-center gap-2 px-5 py-3 text-base text-neutral-700 bg-white border border-neutral-200 rounded-full hover:border-accent/50 transition-all cursor-default"
+                      animate={hoveredInterest === trait ? { 
+                        scale: 1.05,
+                      } : { 
                         scale: 1,
-                        width: 'auto',
-                      } : {
-                        opacity: 0,
-                        scale: 0,
-                        width: 0,
                       }}
-                      transition={{
-                        type: 'spring',
-                        stiffness: 400,
-                        damping: 20,
-                      }}
+                      onMouseEnter={() => setHoveredInterest(trait)}
+                      onMouseLeave={() => setHoveredInterest(null)}
                     >
-                      {interestEmojis[trait] || '✨'}
+                      <span>{trait}</span>
+                      
+                      {/* Emoji appears after text on hover */}
+                      <motion.span
+                        className="text-xl inline-block overflow-hidden"
+                        initial={{ opacity: 0, scale: 0, width: 0 }}
+                        animate={hoveredInterest === trait ? {
+                          opacity: 1,
+                          scale: 1,
+                          width: 'auto',
+                        } : {
+                          opacity: 0,
+                          scale: 0,
+                          width: 0,
+                        }}
+                        transition={{
+                          type: 'spring',
+                          stiffness: 400,
+                          damping: 20,
+                        }}
+                      >
+                        {interestEmojis[trait] || '✨'}
+                      </motion.span>
                     </motion.span>
                   </motion.span>
                 ))}

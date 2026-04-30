@@ -271,7 +271,7 @@ export default function SkillsSection() {
                     {category.skills.map((skill, skillIndex) => (
                       <motion.li
                         key={skill}
-                        className="flex items-start gap-3 text-base lg:text-lg text-neutral-700 cursor-default"
+                        className="flex items-start gap-3 text-base lg:text-lg text-neutral-700"
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
@@ -280,11 +280,6 @@ export default function SkillsSection() {
                           delay: index * 0.08 + skillIndex * 0.03 + 0.4,
                           ease: [0.22, 1, 0.36, 1]
                         }}
-                        onMouseEnter={() => setHoveredSkill({ 
-                          skill, 
-                          emoji: skillEmojis[skill] || '✨' 
-                        })}
-                        onMouseLeave={() => setHoveredSkill(null)}
                       >
                         <motion.span 
                           className="mt-2 w-2 h-2 rounded-full bg-accent flex-shrink-0"
@@ -297,7 +292,14 @@ export default function SkillsSection() {
                             repeat: hoveredCard === category.id ? Infinity : 0,
                           }}
                         />
-                        <span className="leading-relaxed group-hover:text-neutral-900 transition-colors">
+                        <span 
+                          className="leading-relaxed group-hover:text-neutral-900 transition-colors cursor-default inline-block"
+                          onMouseEnter={() => setHoveredSkill({ 
+                            skill, 
+                            emoji: skillEmojis[skill] || '✨' 
+                          })}
+                          onMouseLeave={() => setHoveredSkill(null)}
+                        >
                           {skill}
                         </span>
                       </motion.li>

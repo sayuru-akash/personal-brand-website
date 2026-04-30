@@ -1,8 +1,39 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { projects } from '@/data/portfolio';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+
+// Hook for counting animation
+function useCountAnimation(end: number, duration: number = 2000) {
+  const [count, setCount] = useState(0);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    let startTime: number;
+    let animationFrame: number;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      
+      // Easing function for smooth deceleration
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * end));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [end, duration, isInView]);
+
+  return { count, setIsInView };
+}
 
 /**
  * ProjectsSection Component
@@ -253,7 +284,7 @@ export default function ProjectsSection() {
           ))}
         </div>
 
-        {/* Bottom stats */}
+        {/* Bottom stats with counting animation */}
         <motion.div
           className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8"
           initial={{ opacity: 0, y: 20 }}
@@ -261,36 +292,112 @@ export default function ProjectsSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {[
-            { label: 'Projects Completed', value: projects.length },
-            { label: 'Years Experience', value: '5+' },
-            { label: 'Technologies', value: '20+' },
-            { label: 'Happy Clients', value: '100%' },
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-            >
-              <motion.div 
-                className="text-4xl md:text-5xl font-bold text-accent mb-2"
-                initial={{ scale: 0.5 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.5 + index * 0.1 }}
-              >
-                {stat.value}
-              </motion.div>
-              <div className="text-sm text-neutral-600 uppercase tracking-[0.15em]">
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
+          <StatCard value={projects.length} label="Projects Completed" index={0} />
+          <StatCard value="5+" label="Years Experience" index={1} isString />
+          <StatCard value="20+" label="Technologies" index={2} isString />
+          <StatCard value="100%" label="Happy Clients" index={3} isString />
         </motion.div>
       </div>
     </section>
+  );
+}
+
+// StatCard component with counting animation
+function StatCard({ 
+  value, 
+  label, 
+  index, 
+  isString = false 
+}: { 
+  value: number | string; 
+  label: string; 
+  index: number; 
+  isString?: boolean;
+}) {
+  const numericValue = typeof value === 'number' ? value : parseInt(value) || 0;
+  const { count, setIsInView } = useCountAnimation(numericValue, 2000);
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.div
+      className="text-center group cursor-default"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ 
+        opacity: 1, 
+        y: 0,
+      }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+      onViewportEnter={() => setIsInView(true)}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+    >
+      <motion.div 
+        className="relative text-4xl md:text-5xl font-bold text-accent mb-2 inline-block"
+        initial={{ scale: 0.5 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ type: 'spring', stiffness: 200, damping: 20, delay: 0.5 + index * 0.1 }}
+        animate={isHovered ? {
+          scale: 1.1,
+          y: -5,
+        } : {
+          scale: 1,
+          y: 0,
+        }}
+      >
+        {/* Glow effect on hover */}
+        <motion.div
+          className="absolute inset-0 blur-xl rounded-full"
+          initial={{ opacity: 0 }}
+          animate={isHovered ? {
+            opacity: 0.3,
+            scale: 1.5,
+          } : {
+            opacity: 0,
+            scale: 1,
+          }}
+          transition={{ duration: 0.3 }}
+          style={{
+            background: 'radial-gradient(circle, rgba(100,116,139,0.6) 0%, transparent 70%)',
+          }}
+        />
+        
+        {/* Number with counting animation */}
+        <span className="relative">
+          {isString ? value : count}
+        </span>
+
+        {/* Sparkle effect on hover */}
+        {isHovered && (
+          <>
+            <motion.span
+              className="absolute -top-2 -right-2 text-xl"
+              initial={{ opacity: 0, scale: 0, rotate: -180 }}
+              animate={{ opacity: [0, 1, 0], scale: [0, 1, 0.5], rotate: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+            >
+              ✨
+            </motion.span>
+            <motion.span
+              className="absolute -bottom-2 -left-2 text-xl"
+              initial={{ opacity: 0, scale: 0, rotate: 180 }}
+              animate={{ opacity: [0, 1, 0], scale: [0, 1, 0.5], rotate: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+            >
+              ✨
+            </motion.span>
+          </>
+        )}
+      </motion.div>
+      
+      <motion.div 
+        className="text-sm text-neutral-600 uppercase tracking-[0.15em] group-hover:text-accent transition-colors"
+        animate={isHovered ? { y: -2 } : { y: 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      >
+        {label}
+      </motion.div>
+    </motion.div>
   );
 }

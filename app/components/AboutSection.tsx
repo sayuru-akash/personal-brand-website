@@ -2,7 +2,17 @@
 
 import { motion, useScroll, useTransform } from 'motion/react';
 import { aboutContent } from '@/data/portfolio';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+
+// Emoji mapping for interests
+const interestEmojis: Record<string, string> = {
+  'Coffee enthusiast': '☕',
+  'Tech lover': '💻',
+  'Crypto holder': '₿',
+  'Music addict': '🎵',
+  'Netflix fan': '🎬',
+  'Android enthusiast': '🤖',
+};
 
 /**
  * AboutSection Component
@@ -10,12 +20,13 @@ import { useRef } from 'react';
  * PREMIUM VERSION with smooth interactions
  * - Scroll-triggered content reveals with smooth easing
  * - Staggered card animations
- * - Hover-aware interactive elements
+ * - Hover-aware interactive elements with emojis
  * - Depth through layered motion
  * - Clean, professional aesthetic
  */
 export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [hoveredInterest, setHoveredInterest] = useState<string | null>(null);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -187,7 +198,7 @@ export default function AboutSection() {
                 {aboutContent.traits.map((trait, index) => (
                   <motion.span
                     key={trait}
-                    className="px-5 py-3 text-base text-neutral-700 bg-white border border-neutral-200 rounded-full hover:border-accent/50 transition-all cursor-default"
+                    className="relative inline-flex items-center gap-2 px-5 py-3 text-base text-neutral-700 bg-white border border-neutral-200 rounded-full hover:border-accent/50 transition-all cursor-default"
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
@@ -196,9 +207,37 @@ export default function AboutSection() {
                       delay: 0.7 + index * 0.03,
                       ease: [0.22, 1, 0.36, 1]
                     }}
-                    whileHover={{ scale: 1.05, y: -2 }}
+                    animate={hoveredInterest === trait ? { 
+                      scale: 1.05,
+                    } : { 
+                      scale: 1,
+                    }}
+                    onHoverStart={() => setHoveredInterest(trait)}
+                    onHoverEnd={() => setHoveredInterest(null)}
                   >
-                    {trait}
+                    <span>{trait}</span>
+                    
+                    {/* Emoji appears after text on hover */}
+                    <motion.span
+                      className="text-xl"
+                      initial={{ opacity: 0, scale: 0, width: 0 }}
+                      animate={hoveredInterest === trait ? {
+                        opacity: 1,
+                        scale: 1,
+                        width: 'auto',
+                      } : {
+                        opacity: 0,
+                        scale: 0,
+                        width: 0,
+                      }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 400,
+                        damping: 20,
+                      }}
+                    >
+                      {interestEmojis[trait] || '✨'}
+                    </motion.span>
                   </motion.span>
                 ))}
               </div>

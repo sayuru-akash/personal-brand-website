@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { contactContent } from '@/data/portfolio';
 import { springPhysics } from '@/utils/animationConfig';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useState } from 'react';
 
 /**
  * ContactSection Component
@@ -16,6 +17,20 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
  */
 export default function ContactSection() {
   const prefersReducedMotion = useReducedMotion();
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [isEmailHovered, setIsEmailHovered] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopyEmail = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      await navigator.clipboard.writeText(contactContent.email);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  };
   
   return (
     <section 
@@ -77,16 +92,149 @@ export default function ContactSection() {
               {contactContent.ctaText}
             </h2>
 
-            {/* Email - primary contact method */}
-            <motion.a
-              href={`mailto:${contactContent.email}`}
-              className="inline-block text-xl sm:text-2xl lg:text-3xl font-medium text-accent hover:text-accent-dark transition-colors duration-300"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={springPhysics}
+            {/* Email - primary contact method with premium interaction */}
+            <motion.div
+              className="relative inline-block"
+              onHoverStart={() => setIsEmailHovered(true)}
+              onHoverEnd={() => setIsEmailHovered(false)}
             >
-              {contactContent.email}
-            </motion.a>
+              {/* Glow effect on hover */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl blur-2xl"
+                initial={{ opacity: 0 }}
+                animate={isEmailHovered ? { 
+                  opacity: 0.15,
+                  scale: 1.1,
+                } : { 
+                  opacity: 0,
+                  scale: 1,
+                }}
+                transition={{ duration: 0.4 }}
+                style={{
+                  background: 'radial-gradient(circle, rgba(100,116,139,0.4) 0%, transparent 70%)',
+                }}
+              />
+
+              <motion.a
+                href={`mailto:${contactContent.email}`}
+                onClick={handleCopyEmail}
+                className="relative inline-block text-xl sm:text-2xl lg:text-3xl font-medium text-accent overflow-hidden cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={springPhysics}
+              >
+                {/* Animated underline */}
+                <motion.div
+                  className="absolute bottom-0 left-0 h-[2px] bg-accent"
+                  initial={{ width: '0%' }}
+                  animate={isEmailHovered ? { 
+                    width: '100%',
+                  } : { 
+                    width: '0%',
+                  }}
+                  transition={{ 
+                    duration: 0.5,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                />
+
+                {/* Character-by-character reveal */}
+                {contactContent.email.split('').map((char, index) => (
+                  <motion.span
+                    key={index}
+                    className="inline-block"
+                    initial={{ y: 0 }}
+                    animate={isEmailHovered ? {
+                      y: [-2, 0],
+                    } : {
+                      y: 0,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      delay: index * 0.02,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    {char}
+                  </motion.span>
+                ))}
+
+                {/* Copy icon / Checkmark - appears on hover, changes on copy */}
+                <motion.span
+                  className="inline-block ml-3 align-middle"
+                  initial={{ opacity: 0, x: -10, scale: 0.8 }}
+                  animate={isEmailHovered || isCopied ? {
+                    opacity: 1,
+                    x: 0,
+                    scale: 1,
+                  } : {
+                    opacity: 0,
+                    x: -10,
+                    scale: 0.8,
+                  }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 400,
+                    damping: 20,
+                  }}
+                >
+                  {isCopied ? (
+                    // Checkmark icon when copied
+                    <motion.svg
+                      className="w-6 h-6 sm:w-7 sm:h-7 text-green-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 500,
+                        damping: 15,
+                      }}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </motion.svg>
+                  ) : (
+                    // Copy icon
+                    <svg 
+                      className="w-6 h-6 sm:w-7 sm:h-7" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor" 
+                      strokeWidth={2}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  )}
+                </motion.span>
+              </motion.a>
+
+              {/* "Copied!" tooltip */}
+              <motion.div
+                className="absolute -top-12 left-1/2 -translate-x-1/2 px-4 py-2 bg-neutral-900 text-white text-sm font-medium rounded-lg whitespace-nowrap pointer-events-none"
+                initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                animate={isCopied ? {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                } : {
+                  opacity: 0,
+                  y: 10,
+                  scale: 0.9,
+                }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 400,
+                  damping: 20,
+                }}
+              >
+                Copied to clipboard!
+                {/* Tooltip arrow */}
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-900 rotate-45" />
+              </motion.div>
+            </motion.div>
           </motion.div>
 
           {/* Social links - minimal presentation */}
@@ -99,12 +247,9 @@ export default function ContactSection() {
           >
             <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
               {contactContent.socialLinks.map((link, index) => (
-                <motion.a
+                <motion.div
                   key={link.platform}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex flex-col items-center gap-2 text-neutral-600 hover:text-accent transition-colors duration-300"
+                  className="relative"
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -112,16 +257,57 @@ export default function ContactSection() {
                     ...springPhysics, 
                     delay: 0.7 + (index * 0.05) 
                   }}
-                  whileHover={{ y: -2 }}
-                  aria-label={`${link.platform}: ${link.handle}`}
+                  onHoverStart={() => setHoveredLink(link.platform)}
+                  onHoverEnd={() => setHoveredLink(null)}
                 >
-                  <span className="text-sm font-medium tracking-wide">
-                    {link.platform}
-                  </span>
-                  <span className="text-xs text-neutral-500 group-hover:text-accent transition-colors duration-300">
-                    {link.handle}
-                  </span>
-                </motion.a>
+                  <motion.a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 text-neutral-600 hover:text-accent transition-colors duration-300"
+                    whileHover={{ y: -2 }}
+                    aria-label={`${link.platform}: ${link.handle}`}
+                  >
+                    <span className="text-sm font-medium tracking-wide">
+                      {link.platform}
+                    </span>
+                    <span className="text-xs text-neutral-500 transition-colors duration-300" style={{ color: hoveredLink === link.platform ? 'var(--accent)' : undefined }}>
+                      {link.handle}
+                    </span>
+                  </motion.a>
+
+                  {/* Beautiful curved arrow pointing up - appears below on hover */}
+                  <motion.div
+                    className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-accent pointer-events-none"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={hoveredLink === link.platform ? { 
+                      opacity: 1, 
+                      y: 0 
+                    } : { 
+                      opacity: 0, 
+                      y: -10 
+                    }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  >
+                    <svg 
+                      width="40" 
+                      height="40" 
+                      viewBox="0 0 40 40" 
+                      fill="none" 
+                      className="text-accent"
+                    >
+                      {/* Curved arrow path pointing upward */}
+                      <path
+                        d="M20 35 Q15 25, 20 15 L20 8 M20 8 L16 12 M20 8 L24 12"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        fill="none"
+                      />
+                    </svg>
+                  </motion.div>
+                </motion.div>
               ))}
             </div>
           </motion.div>

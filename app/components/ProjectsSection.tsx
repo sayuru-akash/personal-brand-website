@@ -5,7 +5,7 @@ import { projects } from '@/data/portfolio';
 import { useRef, useState, useEffect } from 'react';
 
 // Hook for counting animation
-function useCountAnimation(end: number, duration: number = 2000) {
+function useCountAnimation(end: number, duration: number = 1500) {
   const [count, setCount] = useState(0);
   const [isInView, setIsInView] = useState(false);
 
@@ -292,10 +292,10 @@ export default function ProjectsSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <StatCard value={projects.length} label="Projects Completed" index={0} />
-          <StatCard value="5+" label="Years Experience" index={1} isString />
-          <StatCard value="20+" label="Technologies" index={2} isString />
-          <StatCard value="100%" label="Happy Clients" index={3} isString />
+          <StatCard value={200} label="Projects Completed" index={0} suffix="+" />
+          <StatCard value={7} label="Years Experience" index={1} suffix="+" />
+          <StatCard value={50} label="Technologies" index={2} suffix="+" />
+          <StatCard value={99} label="Client Satisfaction" index={3} suffix="%+" />
         </motion.div>
       </div>
     </section>
@@ -306,16 +306,15 @@ export default function ProjectsSection() {
 function StatCard({ 
   value, 
   label, 
-  index, 
-  isString = false 
+  index,
+  suffix = ''
 }: { 
-  value: number | string; 
+  value: number; 
   label: string; 
-  index: number; 
-  isString?: boolean;
+  index: number;
+  suffix?: string;
 }) {
-  const numericValue = typeof value === 'number' ? value : parseInt(value) || 0;
-  const { count, setIsInView } = useCountAnimation(numericValue, 2000);
+  const { count, setIsInView } = useCountAnimation(value, 1500);
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -365,7 +364,7 @@ function StatCard({
         
         {/* Number with counting animation */}
         <span className="relative">
-          {isString ? value : count}
+          {count}{suffix}
         </span>
 
         {/* Sparkle effect on hover */}

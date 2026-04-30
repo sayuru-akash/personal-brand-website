@@ -51,6 +51,15 @@ export default function HeroSection() {
         }}
       />
 
+      {/* Smooth gradient fade to next section */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.8) 100%)',
+          opacity: useTransform(scrollYProgress, [0, 0.3], [0, 1]),
+        }}
+      />
+
       {/* Main content container with asymmetric layout */}
       <motion.div 
         className="relative z-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8"
@@ -169,36 +178,7 @@ export default function HeroSection() {
               </svg>
             </motion.div>
 
-            {/* Additional floating accent element with parallax */}
-            <motion.div
-              className="absolute top-1/4 right-1/4 w-2 h-2 bg-accent rounded-full"
-              style={{ y: bgParallaxY }}
-              animate={{
-                y: [-5, 5, -5],
-                opacity: [0.6, 1, 0.6],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: 0.5,
-              }}
-            />
-
-            <motion.div
-              className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-accent-light rounded-full"
-              style={{ y: bgParallaxY }}
-              animate={{
-                y: [3, -3, 3],
-                opacity: [0.4, 0.8, 0.4],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: 1.2,
-              }}
-            />
+            {/* Removed green accent dots for cleaner design */}
           </div>
         </div>
       </motion.div>

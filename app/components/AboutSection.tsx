@@ -27,6 +27,7 @@ const interestEmojis: Record<string, string> = {
 export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredInterest, setHoveredInterest] = useState<string | null>(null);
+  const [hoveredRole, setHoveredRole] = useState<string | null>(null);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -101,50 +102,59 @@ export default function AboutSection() {
                 {aboutContent.bio}
               </p>
               
-              {/* Location & Education cards with premium micro-interactions */}
+              {/* Location & Education cards with unique micro-interactions */}
               <div className="space-y-4 pt-6">
+                {/* Location Card - Pin drop animation */}
                 <motion.div 
                   className="group relative flex items-center gap-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 overflow-hidden cursor-default"
                   whileHover={{ x: 4 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                  onHoverStart={() => {}}
                 >
                   {/* Animated background on hover */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-accent/5 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-transparent"
                     initial={{ x: '-100%' }}
                     whileHover={{ x: 0 }}
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   />
                   
-                  {/* Icon with rotation and scale */}
+                  {/* Icon with pin drop animation */}
                   <motion.div 
-                    className="relative flex-shrink-0 w-12 h-12 flex items-center justify-center bg-white rounded-xl border border-neutral-200 group-hover:border-accent/30 transition-colors"
+                    className="relative flex-shrink-0 w-12 h-12 flex items-center justify-center bg-white rounded-xl border border-neutral-200 group-hover:border-red-500/30 transition-colors"
                     whileHover={{ scale: 1.1 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                   >
                     <motion.svg 
-                      className="w-6 h-6 text-accent" 
+                      className="w-6 h-6 text-red-500" 
                       fill="none" 
                       viewBox="0 0 24 24" 
                       stroke="currentColor" 
                       strokeWidth={2}
-                      whileHover={{ scale: 1.1 }}
-                      animate={{ rotate: [0, 5, -5, 0] }}
+                      whileHover={{ 
+                        y: [-8, 0],
+                        scale: [0.8, 1.1, 1]
+                      }}
                       transition={{ 
-                        rotate: { duration: 0.5, ease: 'easeInOut' }
+                        duration: 0.5,
+                        ease: [0.34, 1.56, 0.64, 1]
                       }}
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </motion.svg>
                     
-                    {/* Ripple effect on hover */}
+                    {/* Pulse effect */}
                     <motion.div
-                      className="absolute inset-0 rounded-xl border-2 border-accent"
-                      initial={{ scale: 1, opacity: 0 }}
-                      whileHover={{ scale: 1.5, opacity: 0 }}
-                      transition={{ duration: 0.6 }}
+                      className="absolute inset-0 rounded-xl border-2 border-red-500"
+                      animate={{ 
+                        scale: [1, 1.4, 1.4],
+                        opacity: [0.5, 0, 0]
+                      }}
+                      transition={{ 
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: 'easeOut'
+                      }}
                     />
                   </motion.div>
                   
@@ -166,6 +176,7 @@ export default function AboutSection() {
                   </div>
                 </motion.div>
 
+                {/* Education Card - Book opening animation */}
                 <motion.div 
                   className="group relative flex items-center gap-4 p-5 bg-neutral-50 rounded-2xl border border-neutral-200 overflow-hidden cursor-default"
                   whileHover={{ x: 4 }}
@@ -173,37 +184,48 @@ export default function AboutSection() {
                 >
                   {/* Animated background on hover */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-accent/5 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent"
                     initial={{ x: '-100%' }}
                     whileHover={{ x: 0 }}
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   />
                   
-                  {/* Icon with page flip animation */}
+                  {/* Icon with book pages turning */}
                   <motion.div 
-                    className="relative flex-shrink-0 w-12 h-12 flex items-center justify-center bg-white rounded-xl border border-neutral-200 group-hover:border-accent/30 transition-colors"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                    className="relative flex-shrink-0 w-12 h-12 flex items-center justify-center bg-white rounded-xl border border-neutral-200 group-hover:border-blue-500/30 transition-colors"
+                    style={{ perspective: 1000 }}
                   >
                     <motion.svg 
-                      className="w-6 h-6 text-accent" 
+                      className="w-6 h-6 text-blue-500" 
                       fill="none" 
                       viewBox="0 0 24 24" 
                       stroke="currentColor" 
                       strokeWidth={2}
-                      whileHover={{ rotateY: 180 }}
-                      transition={{ duration: 0.6, ease: 'easeInOut' }}
+                      whileHover={{ 
+                        rotateY: [0, -15, 15, 0],
+                        scale: [1, 1.05, 1.05, 1]
+                      }}
+                      transition={{ 
+                        duration: 0.8,
+                        ease: 'easeInOut'
+                      }}
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </motion.svg>
                     
-                    {/* Ripple effect on hover */}
+                    {/* Sparkle effect */}
                     <motion.div
-                      className="absolute inset-0 rounded-xl border-2 border-accent"
-                      initial={{ scale: 1, opacity: 0 }}
-                      whileHover={{ scale: 1.5, opacity: 0 }}
+                      className="absolute -top-1 -right-1 text-blue-500 text-xs"
+                      initial={{ opacity: 0, scale: 0, rotate: -45 }}
+                      whileHover={{ 
+                        opacity: [0, 1, 0],
+                        scale: [0, 1.2, 0],
+                        rotate: [0, 180, 360]
+                      }}
                       transition={{ duration: 0.6 }}
-                    />
+                    >
+                      ✨
+                    </motion.div>
                   </motion.div>
                   
                   <div className="relative">
@@ -243,30 +265,112 @@ export default function AboutSection() {
               </div>
               
               <div className="space-y-3">
-                {aboutContent.roles.map((role, index) => (
-                  <motion.div
-                    key={role}
-                    className="group flex items-start gap-4 p-4 rounded-xl hover:bg-neutral-50 transition-colors"
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ 
-                      duration: 0.5, 
-                      delay: 0.5 + index * 0.05,
-                      ease: [0.22, 1, 0.36, 1]
-                    }}
-                    whileHover={{ x: 4 }}
-                  >
-                    <motion.div 
-                      className="mt-2 w-2 h-2 rounded-full bg-accent flex-shrink-0"
-                      whileHover={{ scale: 1.5 }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                    />
-                    <span className="text-lg text-neutral-700 group-hover:text-neutral-900 transition-colors">
-                      {role}
-                    </span>
-                  </motion.div>
-                ))}
+                {aboutContent.roles.map((role, index) => {
+                  // Map roles to icon files
+                  const iconMap: Record<string, string> = {
+                    'Full-stack Developer': '/icons/developer.svg',
+                    'Musical Artist': '/icons/music.svg',
+                    'CEO @ Codezela Technologies': '/icons/ceo.svg',
+                    'Content Writer': '/icons/writer.svg',
+                    'Investor': '/icons/investor.svg',
+                  };
+                  
+                  const isHovered = hoveredRole === role;
+                  
+                  return (
+                    <motion.div
+                      key={role}
+                      className="group relative flex items-center justify-between gap-4 p-4 rounded-xl overflow-visible cursor-default"
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ 
+                        duration: 0.5, 
+                        delay: 0.5 + index * 0.05,
+                        ease: [0.22, 1, 0.36, 1]
+                      }}
+                      onMouseEnter={() => setHoveredRole(role)}
+                      onMouseLeave={() => setHoveredRole(null)}
+                    >
+                      {/* Expanding background on hover */}
+                      <motion.div
+                        className="absolute inset-0 bg-emerald-50/50 rounded-xl"
+                        initial={{ scaleX: 0, originX: 0 }}
+                        animate={isHovered ? { scaleX: 1 } : { scaleX: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      />
+                      
+                      <div className="relative flex items-center gap-4">
+                        {/* Animated bullet point */}
+                        <motion.div 
+                          className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"
+                          animate={{ 
+                            scale: [1, 1.3, 1],
+                            opacity: [0.7, 1, 0.7]
+                          }}
+                          transition={{ 
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                            delay: index * 0.2
+                          }}
+                        />
+                        
+                        {/* Role text */}
+                        <motion.span 
+                          className="relative text-lg text-neutral-700 group-hover:text-neutral-900 transition-colors"
+                          animate={isHovered ? { x: 4 } : { x: 0 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                        >
+                          {role}
+                        </motion.span>
+                      </div>
+                      
+                      {/* Custom SVG icon appearing from right */}
+                      <motion.div
+                        className="relative w-6 h-6 flex-shrink-0"
+                        initial={{ opacity: 0, x: 20, scale: 0.8 }}
+                        animate={isHovered ? { 
+                          opacity: 1, 
+                          x: 0, 
+                          scale: 1,
+                        } : {
+                          opacity: 0,
+                          x: 20,
+                          scale: 0.8,
+                        }}
+                        transition={{ 
+                          type: 'spring',
+                          stiffness: 300,
+                          damping: 20,
+                        }}
+                      >
+                        <motion.img 
+                          src={iconMap[role] || '/icons/developer.svg'} 
+                          alt="" 
+                          className="w-full h-full"
+                          animate={isHovered ? {
+                            rotate: [0, -10, 10, 0]
+                          } : {
+                            rotate: 0
+                          }}
+                          transition={{ 
+                            duration: 0.6, 
+                            ease: 'easeInOut' 
+                          }}
+                        />
+                      </motion.div>
+                      
+                      {/* Accent line that grows on hover */}
+                      <motion.div
+                        className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500 rounded-r-full"
+                        initial={{ scaleY: 0, originY: 0.5 }}
+                        animate={isHovered ? { scaleY: 1 } : { scaleY: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      />
+                    </motion.div>
+                  );
+                })}
               </div>
             </motion.div>
 

@@ -37,19 +37,156 @@ export default function HeroSection() {
   const fgParallaxY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   
   return (
-    <motion.section 
-      ref={containerRef}
-      className="relative min-h-[100dvh] flex items-center justify-start bg-white overflow-hidden"
-      style={{ scale }}
-    >
-      {/* Smooth gradient fade to next section */}
+    <>
+      {/* Fixed sky background layer - sits behind the hero section */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+        className="fixed inset-0 pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, transparent 0%, white 100%)',
-          opacity: useTransform(scrollYProgress, [0, 0.3], [0, 1]),
+          opacity: useTransform(scrollYProgress, [0, 0.15, 0.4, 0.6], [0, 1, 1, 0]),
+          zIndex: 0,
         }}
-      />
+      >
+        {/* Sky gradient */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, #bae6fd 0%, #e0f2fe 30%, #f0f9ff 60%, #ffffff 100%)',
+          }}
+        />
+
+        {/* Animated clouds - Layer 1 (far) */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Cloud 1 */}
+          <motion.div
+            className="absolute"
+            style={{
+              top: '15%',
+              left: '10%',
+              x: useTransform(scrollYProgress, [0, 1], [0, 100]),
+              y: useTransform(scrollYProgress, [0, 1], [0, -30]),
+            }}
+          >
+            <svg width="120" height="60" viewBox="0 0 120 60" fill="none">
+              <ellipse cx="30" cy="35" rx="25" ry="20" fill="white" opacity="0.7" />
+              <ellipse cx="50" cy="30" rx="30" ry="25" fill="white" opacity="0.7" />
+              <ellipse cx="75" cy="32" rx="28" ry="22" fill="white" opacity="0.7" />
+              <ellipse cx="95" cy="38" rx="22" ry="18" fill="white" opacity="0.7" />
+            </svg>
+          </motion.div>
+
+          {/* Cloud 2 */}
+          <motion.div
+            className="absolute"
+            style={{
+              top: '25%',
+              right: '15%',
+              x: useTransform(scrollYProgress, [0, 1], [0, -80]),
+              y: useTransform(scrollYProgress, [0, 1], [0, -25]),
+            }}
+          >
+            <svg width="100" height="50" viewBox="0 0 100 50" fill="none">
+              <ellipse cx="25" cy="30" rx="20" ry="16" fill="white" opacity="0.6" />
+              <ellipse cx="42" cy="26" rx="24" ry="20" fill="white" opacity="0.6" />
+              <ellipse cx="62" cy="28" rx="22" ry="18" fill="white" opacity="0.6" />
+              <ellipse cx="78" cy="32" rx="18" ry="15" fill="white" opacity="0.6" />
+            </svg>
+          </motion.div>
+
+          {/* Cloud 3 */}
+          <motion.div
+            className="absolute"
+            style={{
+              top: '45%',
+              left: '60%',
+              x: useTransform(scrollYProgress, [0, 1], [0, 120]),
+              y: useTransform(scrollYProgress, [0, 1], [0, -20]),
+            }}
+          >
+            <svg width="90" height="45" viewBox="0 0 90 45" fill="none">
+              <ellipse cx="22" cy="28" rx="18" ry="15" fill="white" opacity="0.65" />
+              <ellipse cx="38" cy="24" rx="22" ry="18" fill="white" opacity="0.65" />
+              <ellipse cx="56" cy="26" rx="20" ry="16" fill="white" opacity="0.65" />
+              <ellipse cx="70" cy="30" rx="16" ry="13" fill="white" opacity="0.65" />
+            </svg>
+          </motion.div>
+        </div>
+
+        {/* Animated clouds - Layer 2 (near) */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Cloud 4 */}
+          <motion.div
+            className="absolute"
+            style={{
+              top: '20%',
+              left: '40%',
+              x: useTransform(scrollYProgress, [0, 1], [0, 150]),
+              y: useTransform(scrollYProgress, [0, 1], [0, -40]),
+            }}
+          >
+            <svg width="140" height="70" viewBox="0 0 140 70" fill="none">
+              <ellipse cx="35" cy="40" rx="30" ry="24" fill="white" opacity="0.85" />
+              <ellipse cx="60" cy="35" rx="35" ry="28" fill="white" opacity="0.85" />
+              <ellipse cx="90" cy="37" rx="32" ry="26" fill="white" opacity="0.85" />
+              <ellipse cx="115" cy="43" rx="25" ry="20" fill="white" opacity="0.85" />
+            </svg>
+          </motion.div>
+
+          {/* Cloud 5 */}
+          <motion.div
+            className="absolute"
+            style={{
+              top: '35%',
+              right: '25%',
+              x: useTransform(scrollYProgress, [0, 1], [0, -100]),
+              y: useTransform(scrollYProgress, [0, 1], [0, -35]),
+            }}
+          >
+            <svg width="110" height="55" viewBox="0 0 110 55" fill="none">
+              <ellipse cx="28" cy="33" rx="24" ry="19" fill="white" opacity="0.8" />
+              <ellipse cx="48" cy="29" rx="28" ry="23" fill="white" opacity="0.8" />
+              <ellipse cx="72" cy="31" rx="26" ry="21" fill="white" opacity="0.8" />
+              <ellipse cx="90" cy="36" rx="20" ry="16" fill="white" opacity="0.8" />
+            </svg>
+          </motion.div>
+
+          {/* Cloud 6 */}
+          <motion.div
+            className="absolute"
+            style={{
+              top: '50%',
+              left: '5%',
+              x: useTransform(scrollYProgress, [0, 1], [0, 130]),
+              y: useTransform(scrollYProgress, [0, 1], [0, -28]),
+            }}
+          >
+            <svg width="130" height="65" viewBox="0 0 130 65" fill="none">
+              <ellipse cx="32" cy="38" rx="28" ry="22" fill="white" opacity="0.75" />
+              <ellipse cx="55" cy="33" rx="32" ry="26" fill="white" opacity="0.75" />
+              <ellipse cx="82" cy="35" rx="30" ry="24" fill="white" opacity="0.75" />
+              <ellipse cx="105" cy="40" rx="23" ry="18" fill="white" opacity="0.75" />
+            </svg>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* Hero section with scaling */}
+      <motion.section 
+        ref={containerRef}
+        className="relative min-h-[100dvh] flex items-center justify-start overflow-hidden"
+        style={{ 
+          scale,
+          zIndex: 1,
+          backgroundColor: 'transparent',
+        }}
+      >
+        {/* Smooth gradient fade to next section */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, transparent 0%, white 100%)',
+            opacity: useTransform(scrollYProgress, [0.4, 0.6], [0, 1]),
+          }}
+        />
 
       {/* Main content container with asymmetric layout */}
       <motion.div 
@@ -195,5 +332,6 @@ export default function HeroSection() {
         </motion.div>
       </motion.div>
     </motion.section>
+    </>
   );
 }

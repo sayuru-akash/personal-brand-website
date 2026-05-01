@@ -28,11 +28,24 @@ export default function ContactSection() {
     offset: ['start end', 'end start']
   });
   
-  // Smooth color transition - starts earlier and transitions longer
+  // Clean smooth transition - white to dark blue
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.7],
-    ['#ffffff', '#0f1729', '#0f1729']
+    [0, 0.5],
+    ['#ffffff', '#0f1729']
+  );
+  
+  // Smooth text color transitions
+  const textColor = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    ['#171717', '#ffffff']
+  );
+  
+  const subtleTextColor = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    ['#737373', '#ffffff']
   );
 
   const handleCopyEmail = async (e: React.MouseEvent) => {
@@ -72,12 +85,12 @@ export default function ContactSection() {
       style={{ backgroundColor }}
       aria-labelledby="contact-heading"
     >
-      {/* Smooth gradient transition overlay at top */}
+      {/* Smooth gradient transition overlay at top - no white shadow */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-32 pointer-events-none"
+        className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, transparent 100%)',
-          opacity: useTransform(scrollYProgress, [0, 0.3], [1, 0]),
+          background: 'linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 20%, rgba(255,255,255,0.3) 50%, transparent 100%)',
+          opacity: useTransform(scrollYProgress, [0, 0.5], [1, 0]),
         }}
       />
 
@@ -190,7 +203,7 @@ export default function ContactSection() {
             <motion.p 
               className="text-xs uppercase tracking-[0.2em] font-light"
               style={{
-                color: useTransform(scrollYProgress, [0, 0.3], ['#737373', '#ffffff']),
+                color: subtleTextColor,
               }}
             >
               連絡 / Contact
@@ -198,7 +211,7 @@ export default function ContactSection() {
             <motion.div 
               className="h-[1px] w-16"
               style={{
-                backgroundColor: useTransform(scrollYProgress, [0, 0.3], ['#a3a3a3', '#ffffff']),
+                backgroundColor: subtleTextColor,
                 opacity: 0.7,
               }}
               initial={{ scaleX: 0 }}
@@ -220,7 +233,7 @@ export default function ContactSection() {
               id="contact-heading"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.02em] leading-[1.1] max-w-[20ch] mx-auto"
               style={{
-                color: useTransform(scrollYProgress, [0, 0.3], ['#171717', '#ffffff']),
+                color: textColor,
               }}
             >
               {contactContent.ctaText}
@@ -427,7 +440,7 @@ export default function ContactSection() {
         <motion.p 
           className="text-[10px] uppercase tracking-[0.2em] font-light"
           style={{
-            color: useTransform(scrollYProgress, [0, 0.3], ['#737373', '#ffffff']),
+            color: subtleTextColor,
             opacity: 0.8,
           }}
         >

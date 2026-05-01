@@ -4,14 +4,111 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'moti
 import { contactContent } from '@/data/portfolio';
 import { springPhysics } from '@/utils/animationConfig';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, type RefObject } from 'react';
+
+type ContactParticle = {
+  left: number;
+  top: number;
+  delay: number;
+  duration: number;
+};
+
+const CONTACT_PARTICLES: ContactParticle[] = [
+  { left: 10, top: 20, delay: 0, duration: 5.4 },
+  { left: 25, top: 60, delay: 0.5, duration: 6 },
+  { left: 40, top: 15, delay: 1, duration: 5.8 },
+  { left: 55, top: 75, delay: 1.5, duration: 6.4 },
+  { left: 70, top: 30, delay: 2, duration: 5.4 },
+  { left: 85, top: 50, delay: 2.5, duration: 6.1 },
+  { left: 15, top: 85, delay: 3, duration: 5.7 },
+  { left: 60, top: 45, delay: 3.5, duration: 6.2 },
+  { left: 80, top: 70, delay: 4, duration: 5.5 },
+  { left: 35, top: 90, delay: 4.5, duration: 6.3 },
+  { left: 90, top: 25, delay: 0.2, duration: 5.6 },
+  { left: 5, top: 55, delay: 0.7, duration: 6.2 },
+  { left: 50, top: 10, delay: 1.2, duration: 5.9 },
+  { left: 75, top: 80, delay: 1.7, duration: 6.4 },
+  { left: 20, top: 40, delay: 2.2, duration: 5.6 },
+];
+
+function InteractiveParticle({
+  particle,
+  mouseX,
+  mouseY,
+  containerRef,
+}: {
+  particle: ContactParticle;
+  mouseX: ReturnType<typeof useMotionValue<number>>;
+  mouseY: ReturnType<typeof useMotionValue<number>>;
+  containerRef: RefObject<HTMLElement | null>;
+}) {
+  const particleX = useMotionValue(0);
+  const particleY = useMotionValue(0);
+  const smoothX = useSpring(particleX, { stiffness: 72, damping: 22, mass: 0.45 });
+  const smoothY = useSpring(particleY, { stiffness: 72, damping: 22, mass: 0.45 });
+
+  useEffect(() => {
+    const unsubscribeX = mouseX.on('change', (x) => {
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const particleScreenX = rect.left + (rect.width * particle.left / 100);
+      const particleScreenY = rect.top + (rect.height * particle.top / 100);
+      const distanceX = x - particleScreenX;
+      const distanceY = mouseY.get() - particleScreenY;
+      const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+      const attractionRadius = 280;
+
+      if (distance < attractionRadius) {
+        const strength = (1 - distance / attractionRadius) * 58;
+        particleX.set(distanceX * strength * 0.012);
+        particleY.set(distanceY * strength * 0.012);
+      } else {
+        particleX.set(0);
+        particleY.set(0);
+      }
+    });
+
+    const unsubscribeY = mouseY.on('change', () => {
+      mouseX.set(mouseX.get());
+    });
+
+    return () => {
+      unsubscribeX();
+      unsubscribeY();
+    };
+  }, [containerRef, mouseX, mouseY, particle.left, particle.top, particleX, particleY]);
+
+  return (
+    <motion.div
+      className="absolute h-1.5 w-1.5 rounded-full bg-emerald-500/70 shadow-[0_0_20px_rgba(16,185,129,0.48)] ring-1 ring-white/70"
+      style={{
+        left: `${particle.left}%`,
+        top: `${particle.top}%`,
+        x: smoothX,
+        y: smoothY,
+      }}
+      animate={{
+        y: [0, -38, 0],
+        opacity: [0.28, 0.92, 0.28],
+        scale: [0.75, 1.45, 0.75],
+      }}
+      transition={{
+        duration: particle.duration,
+        repeat: Infinity,
+        delay: particle.delay,
+        ease: 'easeInOut',
+      }}
+    />
+  );
+}
 
 /**
  * ContactSection Component
  * 
- * PREMIUM VERSION with smooth aurora background
+ * PREMIUM VERSION with smooth daylight background
  * - Smooth transition from previous section
- * - Animated aurora borealis gradient waves
+ * - Animated cyan/emerald atmospheric gradients
  * - Floating particles (client-only)
  * - Professional, luxurious aesthetic
  */
@@ -42,25 +139,29 @@ export default function ContactSection() {
     offset: ['start end', 'end start']
   });
   
-  // Projects ends on white; Contact enters through a short edge blend, then a dusk mist.
-  const edgeVeilOpacity = useTransform(scrollYProgress, [0, 0.1, 0.26], [0.88, 0.5, 0]);
-  const duskMistOpacity = useTransform(scrollYProgress, [0, 0.18, 0.44], [0.85, 0.62, 0]);
-  const auroraOpacity = useTransform(scrollYProgress, [0, 0.18, 0.44], [0.42, 0.76, 1]);
+  // Projects ends on white; Contact stays light and gains atmosphere as it enters.
+  const edgeVeilOpacity = useTransform(scrollYProgress, [0, 0.14, 0.34], [0.8, 0.42, 0]);
+  const baseWashOpacity = useTransform(scrollYProgress, [0, 0.26, 0.7, 1], [0.18, 0.78, 1, 0.74]);
+  const cyanWashOpacity = useTransform(scrollYProgress, [0, 0.22, 0.62, 1], [0, 0.56, 0.86, 0.52]);
+  const emeraldWashOpacity = useTransform(scrollYProgress, [0, 0.34, 0.78, 1], [0, 0.34, 0.66, 0.46]);
+  const atmosphereOpacity = useTransform(scrollYProgress, [0, 0.2, 0.58], [0.42, 0.82, 1]);
+  const gridOpacity = useTransform(scrollYProgress, [0, 0.38, 1], [0.012, 0.038, 0.026]);
+  const gridY = useTransform(scrollYProgress, [0, 1], [-28, 28]);
 
-  // Smooth text color transitions, delayed until the dark base is established.
+  // Keep the section in the same neutral system as the rest of the page.
   const textColor = useTransform(
     scrollYProgress,
-    [0, 0.2, 0.46],
-    ['#171717', '#334155', '#ffffff']
+    [0, 0.36],
+    ['#171717', '#0f172a']
   );
   
   const subtleTextColor = useTransform(
     scrollYProgress,
-    [0, 0.2, 0.46],
-    ['#737373', '#64748b', '#ffffff']
+    [0, 0.36],
+    ['#737373', '#475569']
   );
 
-  const handleCopyEmail = async (e: React.MouseEvent) => {
+  const handleCopyEmail = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     try {
       await navigator.clipboard.writeText(contactContent.email);
@@ -71,152 +172,94 @@ export default function ContactSection() {
     }
   };
 
-  // Static particle positions (no hydration issues)
-  const particles = [
-    { left: 10, top: 20, delay: 0, duration: 4 },
-    { left: 25, top: 60, delay: 0.5, duration: 5 },
-    { left: 40, top: 15, delay: 1, duration: 4.5 },
-    { left: 55, top: 75, delay: 1.5, duration: 5.5 },
-    { left: 70, top: 30, delay: 2, duration: 4 },
-    { left: 85, top: 50, delay: 2.5, duration: 5 },
-    { left: 15, top: 85, delay: 3, duration: 4.5 },
-    { left: 60, top: 45, delay: 3.5, duration: 5 },
-    { left: 80, top: 70, delay: 4, duration: 4 },
-    { left: 35, top: 90, delay: 4.5, duration: 5.5 },
-    { left: 90, top: 25, delay: 0.2, duration: 4.2 },
-    { left: 5, top: 55, delay: 0.7, duration: 5.2 },
-    { left: 50, top: 10, delay: 1.2, duration: 4.7 },
-    { left: 75, top: 80, delay: 1.7, duration: 5.3 },
-    { left: 20, top: 40, delay: 2.2, duration: 4.3 },
-  ];
-
-  // Interactive particle component
-  const InteractiveParticle = ({ particle }: { particle: typeof particles[0] }) => {
-    const particleX = useMotionValue(0);
-    const particleY = useMotionValue(0);
-    
-    const smoothX = useSpring(particleX, { stiffness: 50, damping: 20, mass: 0.5 });
-    const smoothY = useSpring(particleY, { stiffness: 50, damping: 20, mass: 0.5 });
-    
-    useEffect(() => {
-      const unsubscribeX = mouseX.on('change', (x) => {
-        if (!containerRef.current) return;
-        
-        const rect = containerRef.current.getBoundingClientRect();
-        const particleScreenX = rect.left + (rect.width * particle.left / 100);
-        const particleScreenY = rect.top + (rect.height * particle.top / 100);
-        
-        const distanceX = x - particleScreenX;
-        const distanceY = mouseY.get() - particleScreenY;
-        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-        
-        // Magnetic attraction radius
-        const attractionRadius = 200;
-        
-        if (distance < attractionRadius) {
-          // Smooth attraction toward cursor
-          const strength = (1 - distance / attractionRadius) * 30;
-          particleX.set(distanceX * strength * 0.01);
-          particleY.set(distanceY * strength * 0.01);
-        } else {
-          particleX.set(0);
-          particleY.set(0);
-        }
-      });
-      
-      const unsubscribeY = mouseY.on('change', () => {
-        mouseX.set(mouseX.get());
-      });
-      
-      return () => {
-        unsubscribeX();
-        unsubscribeY();
-      };
-    }, [particle, particleX, particleY]);
-    
-    return (
-      <motion.div
-        className="absolute w-1 h-1 bg-white/70 rounded-full"
-        style={{
-          left: `${particle.left}%`,
-          top: `${particle.top}%`,
-          x: smoothX,
-          y: smoothY,
-        }}
-        animate={{
-          y: [0, -50, 0],
-          opacity: [0, 1, 0],
-          scale: [0, 1.5, 0],
-        }}
-        transition={{
-          duration: particle.duration,
-          repeat: Infinity,
-          delay: particle.delay,
-          ease: 'easeInOut',
-        }}
-      />
-    );
-  };
-  
   return (
     <motion.section 
       ref={containerRef}
       className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
-      style={{ backgroundColor: '#0f1729' }}
+      style={{
+        backgroundColor: '#ffffff',
+      }}
       aria-labelledby="contact-heading"
     >
-      {/* Smooth aurora background */}
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 24%, #ecfeff 66%, #f8fafc 100%)',
+          opacity: baseWashOpacity,
+        }}
+      />
+
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse 95% 70% at 70% 18%, rgba(14,165,233,0.2) 0%, rgba(224,242,254,0.34) 32%, transparent 72%)',
+          opacity: cyanWashOpacity,
+        }}
+      />
+
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse 82% 58% at 18% 78%, rgba(16,185,129,0.18) 0%, rgba(209,250,229,0.28) 36%, transparent 74%)',
+          opacity: emeraldWashOpacity,
+        }}
+      />
+
+      {/* Smooth daylight atmosphere */}
       {!prefersReducedMotion && (
-        <motion.div className="absolute inset-0" style={{ opacity: auroraOpacity }}>
-          {/* Aurora Layer 1 - Purple glow */}
+        <motion.div className="absolute inset-0" style={{ opacity: atmosphereOpacity }}>
+          {/* Sky wash */}
           <motion.div
             className="absolute inset-0"
             style={{
-              background: 'radial-gradient(ellipse 120% 80% at 50% 0%, rgba(147, 51, 234, 0.2) 0%, transparent 70%)',
-              filter: 'blur(60px)',
+              background: 'radial-gradient(ellipse 95% 70% at 72% 8%, rgba(14,165,233,0.18) 0%, rgba(224,242,254,0.32) 34%, transparent 72%)',
+              filter: 'blur(48px)',
             }}
             animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
+              x: ['-2%', '2%', '-2%'],
+              scale: [1, 1.08, 1],
+              opacity: [0.72, 1, 0.72],
             }}
             transition={{
-              duration: 25,
+              duration: 24,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
 
-          {/* Aurora Layer 2 - Blue glow */}
+          {/* Emerald field */}
           <motion.div
             className="absolute inset-0"
             style={{
-              background: 'radial-gradient(ellipse 100% 70% at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 70%)',
-              filter: 'blur(60px)',
+              background: 'radial-gradient(ellipse 80% 60% at 18% 72%, rgba(16,185,129,0.16) 0%, rgba(209,250,229,0.22) 34%, transparent 74%)',
+              filter: 'blur(54px)',
             }}
             animate={{
-              scale: [1.1, 1, 1.1],
-              opacity: [0.25, 0.4, 0.25],
+              x: ['2%', '-2%', '2%'],
+              y: ['1%', '-2%', '1%'],
+              scale: [1.04, 1, 1.04],
+              opacity: [0.64, 0.94, 0.64],
             }}
             transition={{
-              duration: 30,
+              duration: 28,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
           />
 
-          {/* Aurora Layer 3 - Emerald glow */}
+          {/* Soft neutral lens */}
           <motion.div
             className="absolute inset-0"
             style={{
-              background: 'radial-gradient(ellipse 90% 90% at 80% 60%, rgba(16, 185, 129, 0.12) 0%, transparent 70%)',
-              filter: 'blur(60px)',
+              background: 'radial-gradient(ellipse 70% 58% at 52% 46%, rgba(255,255,255,0.92) 0%, rgba(241,245,249,0.52) 42%, transparent 78%)',
+              filter: 'blur(36px)',
             }}
             animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.2, 0.35, 0.2],
+              scale: [1, 1.06, 1],
+              opacity: [0.86, 0.62, 0.86],
             }}
             transition={{
-              duration: 35,
+              duration: 32,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
@@ -224,8 +267,14 @@ export default function ContactSection() {
 
           {/* Interactive floating particles - swim toward cursor */}
           <div suppressHydrationWarning>
-            {particles.map((particle, i) => (
-              <InteractiveParticle key={i} particle={particle} />
+            {CONTACT_PARTICLES.map((particle, i) => (
+              <InteractiveParticle
+                key={i}
+                particle={particle}
+                mouseX={mouseX}
+                mouseY={mouseY}
+                containerRef={containerRef}
+              />
             ))}
           </div>
         </motion.div>
@@ -236,35 +285,28 @@ export default function ContactSection() {
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to bottom, #0f1729 0%, #1a2332 100%)',
+            background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 42%, #ecfeff 100%)',
           }}
         />
       )}
 
-      {/* Short edge blend from Projects; fades before Contact fills the viewport */}
+      {/* Short white edge blend from Projects; resolves before Contact owns the viewport */}
       <motion.div
-        className="absolute inset-x-0 top-0 h-[34vh] pointer-events-none z-[2]"
+        className="absolute inset-x-0 top-0 h-[28vh] pointer-events-none z-[2]"
         style={{
-          background: 'linear-gradient(to bottom, #ffffff 0%, rgba(255,255,255,0.76) 36%, rgba(255,255,255,0) 100%)',
+          background: 'linear-gradient(to bottom, #ffffff 0%, rgba(255,255,255,0.78) 42%, rgba(255,255,255,0) 100%)',
           opacity: edgeVeilOpacity,
         }}
       />
 
-      {/* Dusk mist bridges white Projects into the aurora without leaving a white panel */}
+      {/* Fine surface grid gives the light section depth without making it busy */}
       <motion.div
-        className="absolute inset-x-0 top-0 h-[64vh] pointer-events-none z-[1]"
+        className="absolute inset-0 pointer-events-none z-[1]"
         style={{
-          background: [
-            'linear-gradient(',
-            '135deg,',
-            'rgba(224,242,254,0.72) 0%,',
-            'rgba(56,189,248,0.28) 34%,',
-            'rgba(16,185,129,0.16) 58%,',
-            'rgba(15,23,41,0) 100%',
-            ')',
-          ].join(' '),
-          filter: 'blur(18px)',
-          opacity: duskMistOpacity,
+          backgroundImage: 'linear-gradient(to right, #0f172a 1px, transparent 1px), linear-gradient(to bottom, #0f172a 1px, transparent 1px)',
+          backgroundSize: '64px 64px',
+          opacity: gridOpacity,
+          y: gridY,
         }}
       />
 
@@ -449,14 +491,14 @@ export default function ContactSection() {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-2 text-white/80 hover:text-accent transition-colors duration-300"
+                    className="flex flex-col items-center gap-2 text-neutral-700 hover:text-accent transition-colors duration-300"
                     whileHover={{ y: -2 }}
                     aria-label={`${link.platform}: ${link.handle}`}
                   >
                     <span className="text-sm font-medium tracking-wide">
                       {link.platform}
                     </span>
-                    <span className="text-xs text-white/60 transition-colors duration-300" style={{ color: hoveredLink === link.platform ? 'var(--accent)' : undefined }}>
+                    <span className="text-xs text-neutral-500 transition-colors duration-300" style={{ color: hoveredLink === link.platform ? 'var(--accent)' : undefined }}>
                       {link.handle}
                     </span>
                   </motion.a>
@@ -493,7 +535,7 @@ export default function ContactSection() {
               transition={{ duration: 1.5, delay: 1 }}
             >
               <motion.div
-                className="w-1 h-1 bg-white/50 rounded-full"
+                className="w-1 h-1 bg-accent/50 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.5, 0.8, 0.5],

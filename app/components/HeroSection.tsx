@@ -35,12 +35,19 @@ export default function HeroSection() {
   const fgParallaxY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   
   return (
-    <>
-      {/* Fixed sky background layer - sits behind the hero section */}
+    <motion.section 
+      ref={containerRef}
+      className="relative min-h-[100dvh] flex items-center justify-start overflow-hidden"
+      style={{ 
+        zIndex: 1,
+        backgroundColor: 'white',
+      }}
+    >
+      {/* Sky background layer - part of the hero, so it cannot show viewport box edges */}
       <motion.div
-        className="fixed inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          opacity: useTransform(scrollYProgress, [0, 0.15, 0.4, 0.6], [0, 1, 1, 0]),
+          opacity: useTransform(scrollYProgress, [0, 0.15, 0.72, 1], [0.86, 1, 0.96, 0.68]),
           zIndex: 0,
         }}
       >
@@ -64,12 +71,17 @@ export default function HeroSection() {
               y: useTransform(scrollYProgress, [0, 1], [0, -30]),
             }}
           >
-            <svg width="120" height="60" viewBox="0 0 120 60" fill="none">
-              <ellipse cx="30" cy="35" rx="25" ry="20" fill="white" opacity="0.7" />
-              <ellipse cx="50" cy="30" rx="30" ry="25" fill="white" opacity="0.7" />
-              <ellipse cx="75" cy="32" rx="28" ry="22" fill="white" opacity="0.7" />
-              <ellipse cx="95" cy="38" rx="22" ry="18" fill="white" opacity="0.7" />
-            </svg>
+            <motion.div
+              animate={{ x: [0, 34, 0], y: [0, -6, 0] }}
+              transition={{ duration: 34, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <svg width="120" height="60" viewBox="0 0 120 60" fill="none">
+                <ellipse cx="30" cy="35" rx="25" ry="20" fill="white" opacity="0.7" />
+                <ellipse cx="50" cy="30" rx="30" ry="25" fill="white" opacity="0.7" />
+                <ellipse cx="75" cy="32" rx="28" ry="22" fill="white" opacity="0.7" />
+                <ellipse cx="95" cy="38" rx="22" ry="18" fill="white" opacity="0.7" />
+              </svg>
+            </motion.div>
           </motion.div>
 
           {/* Cloud 2 */}
@@ -82,12 +94,17 @@ export default function HeroSection() {
               y: useTransform(scrollYProgress, [0, 1], [0, -25]),
             }}
           >
-            <svg width="100" height="50" viewBox="0 0 100 50" fill="none">
-              <ellipse cx="25" cy="30" rx="20" ry="16" fill="white" opacity="0.6" />
-              <ellipse cx="42" cy="26" rx="24" ry="20" fill="white" opacity="0.6" />
-              <ellipse cx="62" cy="28" rx="22" ry="18" fill="white" opacity="0.6" />
-              <ellipse cx="78" cy="32" rx="18" ry="15" fill="white" opacity="0.6" />
-            </svg>
+            <motion.div
+              animate={{ x: [0, -26, 0], y: [0, -5, 0] }}
+              transition={{ duration: 38, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+            >
+              <svg width="100" height="50" viewBox="0 0 100 50" fill="none">
+                <ellipse cx="25" cy="30" rx="20" ry="16" fill="white" opacity="0.6" />
+                <ellipse cx="42" cy="26" rx="24" ry="20" fill="white" opacity="0.6" />
+                <ellipse cx="62" cy="28" rx="22" ry="18" fill="white" opacity="0.6" />
+                <ellipse cx="78" cy="32" rx="18" ry="15" fill="white" opacity="0.6" />
+              </svg>
+            </motion.div>
           </motion.div>
 
           {/* Cloud 3 */}
@@ -100,12 +117,17 @@ export default function HeroSection() {
               y: useTransform(scrollYProgress, [0, 1], [0, -20]),
             }}
           >
-            <svg width="90" height="45" viewBox="0 0 90 45" fill="none">
-              <ellipse cx="22" cy="28" rx="18" ry="15" fill="white" opacity="0.65" />
-              <ellipse cx="38" cy="24" rx="22" ry="18" fill="white" opacity="0.65" />
-              <ellipse cx="56" cy="26" rx="20" ry="16" fill="white" opacity="0.65" />
-              <ellipse cx="70" cy="30" rx="16" ry="13" fill="white" opacity="0.65" />
-            </svg>
+            <motion.div
+              animate={{ x: [0, 30, 0], y: [0, 4, 0] }}
+              transition={{ duration: 42, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
+            >
+              <svg width="90" height="45" viewBox="0 0 90 45" fill="none">
+                <ellipse cx="22" cy="28" rx="18" ry="15" fill="white" opacity="0.65" />
+                <ellipse cx="38" cy="24" rx="22" ry="18" fill="white" opacity="0.65" />
+                <ellipse cx="56" cy="26" rx="20" ry="16" fill="white" opacity="0.65" />
+                <ellipse cx="70" cy="30" rx="16" ry="13" fill="white" opacity="0.65" />
+              </svg>
+            </motion.div>
           </motion.div>
         </div>
 
@@ -121,12 +143,17 @@ export default function HeroSection() {
               y: useTransform(scrollYProgress, [0, 1], [0, -40]),
             }}
           >
-            <svg width="140" height="70" viewBox="0 0 140 70" fill="none">
-              <ellipse cx="35" cy="40" rx="30" ry="24" fill="white" opacity="0.85" />
-              <ellipse cx="60" cy="35" rx="35" ry="28" fill="white" opacity="0.85" />
-              <ellipse cx="90" cy="37" rx="32" ry="26" fill="white" opacity="0.85" />
-              <ellipse cx="115" cy="43" rx="25" ry="20" fill="white" opacity="0.85" />
-            </svg>
+            <motion.div
+              animate={{ x: [0, 44, 0], y: [0, -8, 0] }}
+              transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+            >
+              <svg width="140" height="70" viewBox="0 0 140 70" fill="none">
+                <ellipse cx="35" cy="40" rx="30" ry="24" fill="white" opacity="0.85" />
+                <ellipse cx="60" cy="35" rx="35" ry="28" fill="white" opacity="0.85" />
+                <ellipse cx="90" cy="37" rx="32" ry="26" fill="white" opacity="0.85" />
+                <ellipse cx="115" cy="43" rx="25" ry="20" fill="white" opacity="0.85" />
+              </svg>
+            </motion.div>
           </motion.div>
 
           {/* Cloud 5 */}
@@ -139,12 +166,17 @@ export default function HeroSection() {
               y: useTransform(scrollYProgress, [0, 1], [0, -35]),
             }}
           >
-            <svg width="110" height="55" viewBox="0 0 110 55" fill="none">
-              <ellipse cx="28" cy="33" rx="24" ry="19" fill="white" opacity="0.8" />
-              <ellipse cx="48" cy="29" rx="28" ry="23" fill="white" opacity="0.8" />
-              <ellipse cx="72" cy="31" rx="26" ry="21" fill="white" opacity="0.8" />
-              <ellipse cx="90" cy="36" rx="20" ry="16" fill="white" opacity="0.8" />
-            </svg>
+            <motion.div
+              animate={{ x: [0, -36, 0], y: [0, 7, 0] }}
+              transition={{ duration: 32, repeat: Infinity, ease: 'easeInOut', delay: 1.1 }}
+            >
+              <svg width="110" height="55" viewBox="0 0 110 55" fill="none">
+                <ellipse cx="28" cy="33" rx="24" ry="19" fill="white" opacity="0.8" />
+                <ellipse cx="48" cy="29" rx="28" ry="23" fill="white" opacity="0.8" />
+                <ellipse cx="72" cy="31" rx="26" ry="21" fill="white" opacity="0.8" />
+                <ellipse cx="90" cy="36" rx="20" ry="16" fill="white" opacity="0.8" />
+              </svg>
+            </motion.div>
           </motion.div>
 
           {/* Cloud 6 */}
@@ -157,39 +189,43 @@ export default function HeroSection() {
               y: useTransform(scrollYProgress, [0, 1], [0, -28]),
             }}
           >
-            <svg width="130" height="65" viewBox="0 0 130 65" fill="none">
-              <ellipse cx="32" cy="38" rx="28" ry="22" fill="white" opacity="0.75" />
-              <ellipse cx="55" cy="33" rx="32" ry="26" fill="white" opacity="0.75" />
-              <ellipse cx="82" cy="35" rx="30" ry="24" fill="white" opacity="0.75" />
-              <ellipse cx="105" cy="40" rx="23" ry="18" fill="white" opacity="0.75" />
-            </svg>
+            <motion.div
+              animate={{ x: [0, 40, 0], y: [0, -7, 0] }}
+              transition={{ duration: 36, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            >
+              <svg width="130" height="65" viewBox="0 0 130 65" fill="none">
+                <ellipse cx="32" cy="38" rx="28" ry="22" fill="white" opacity="0.75" />
+                <ellipse cx="55" cy="33" rx="32" ry="26" fill="white" opacity="0.75" />
+                <ellipse cx="82" cy="35" rx="30" ry="24" fill="white" opacity="0.75" />
+                <ellipse cx="105" cy="40" rx="23" ry="18" fill="white" opacity="0.75" />
+              </svg>
+            </motion.div>
           </motion.div>
         </div>
+
+        {/* White wash keeps the hero-to-about transition soft during scroll */}
+        <motion.div
+          className="absolute inset-x-0 bottom-0 h-[62vh]"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.72) 58%, #ffffff 100%)',
+            opacity: useTransform(scrollYProgress, [0.12, 0.42, 0.78], [0.18, 0.82, 1]),
+          }}
+        />
       </motion.div>
 
-      {/* Hero section with scaling */}
-      <motion.section 
-        ref={containerRef}
-        className="relative min-h-[100dvh] flex items-center justify-start overflow-hidden"
-        style={{ 
-          scale,
-          zIndex: 1,
-          backgroundColor: 'transparent',
-        }}
-      >
-        {/* Smooth gradient fade to next section */}
+      {/* Smooth gradient fade to next section */}
         <motion.div
           className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
           style={{
             background: 'linear-gradient(to bottom, transparent 0%, white 100%)',
-            opacity: useTransform(scrollYProgress, [0.4, 0.6], [0, 1]),
+            opacity: useTransform(scrollYProgress, [0.18, 0.46], [0.35, 1]),
           }}
         />
 
       {/* Main content container with asymmetric layout */}
       <motion.div 
         className="relative z-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8"
-        style={{ y }}
+        style={{ y, scale }}
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[100dvh] py-16">
           
@@ -330,6 +366,5 @@ export default function HeroSection() {
         </motion.div>
       </motion.div>
     </motion.section>
-    </>
   );
 }

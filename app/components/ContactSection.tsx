@@ -1,10 +1,10 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { contactContent } from '@/data/portfolio';
 import { springPhysics } from '@/utils/animationConfig';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 /**
  * ContactSection Component
@@ -22,6 +22,20 @@ export default function ContactSection() {
   const [isCopied, setIsCopied] = useState(false);
   
   const containerRef = useRef<HTMLElement>(null);
+  
+  // Mouse position tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [mouseX, mouseY]);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -77,6 +91,74 @@ export default function ContactSection() {
     { left: 75, top: 80, delay: 1.7, duration: 5.3 },
     { left: 20, top: 40, delay: 2.2, duration: 4.3 },
   ];
+
+  // Interactive particle component
+  const InteractiveParticle = ({ particle, index }: { particle: typeof particles[0]; index: number }) => {
+    const particleX = useMotionValue(0);
+    const particleY = useMotionValue(0);
+    
+    const smoothX = useSpring(particleX, { stiffness: 50, damping: 20, mass: 0.5 });
+    const smoothY = useSpring(particleY, { stiffness: 50, damping: 20, mass: 0.5 });
+    
+    useEffect(() => {
+      const unsubscribeX = mouseX.on('change', (x) => {
+        if (!containerRef.current) return;
+        
+        const rect = containerRef.current.getBoundingClientRect();
+        const particleScreenX = rect.left + (rect.width * particle.left / 100);
+        const particleScreenY = rect.top + (rect.height * particle.top / 100);
+        
+        const distanceX = x - particleScreenX;
+        const distanceY = mouseY.get() - particleScreenY;
+        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        
+        // Magnetic attraction radius
+        const attractionRadius = 200;
+        
+        if (distance < attractionRadius) {
+          // Smooth attraction toward cursor
+          const strength = (1 - distance / attractionRadius) * 30;
+          particleX.set(distanceX * strength * 0.01);
+          particleY.set(distanceY * strength * 0.01);
+        } else {
+          particleX.set(0);
+          particleY.set(0);
+        }
+      });
+      
+      const unsubscribeY = mouseY.on('change', () => {
+        mouseX.set(mouseX.get());
+      });
+      
+      return () => {
+        unsubscribeX();
+        unsubscribeY();
+      };
+    }, [particle]);
+    
+    return (
+      <motion.div
+        className="absolute w-1 h-1 bg-white/70 rounded-full"
+        style={{
+          left: `${particle.left}%`,
+          top: `${particle.top}%`,
+          x: smoothX,
+          y: smoothY,
+        }}
+        animate={{
+          y: [0, -50, 0],
+          opacity: [0, 1, 0],
+          scale: [0, 1.5, 0],
+        }}
+        transition={{
+          duration: particle.duration,
+          repeat: Infinity,
+          delay: particle.delay,
+          ease: 'easeInOut',
+        }}
+      />
+    );
+  };
   
   return (
     <motion.section 
@@ -151,28 +233,10 @@ export default function ContactSection() {
             }}
           />
 
-          {/* Floating particles - client only, no hydration */}
+          {/* Interactive floating particles - swim toward cursor */}
           <div suppressHydrationWarning>
             {particles.map((particle, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-white/70 rounded-full"
-                style={{
-                  left: `${particle.left}%`,
-                  top: `${particle.top}%`,
-                }}
-                animate={{
-                  y: [0, -50, 0],
-                  opacity: [0, 1, 0],
-                  scale: [0, 1.5, 0],
-                }}
-                transition={{
-                  duration: particle.duration,
-                  repeat: Infinity,
-                  delay: particle.delay,
-                  ease: 'easeInOut',
-                }}
-              />
+              <InteractiveParticle key={i} particle={particle} index={i} />
             ))}
           </div>
         </div>

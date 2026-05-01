@@ -28,12 +28,10 @@ export default function HeroSection() {
   });
   
   // Transform values for smooth scroll effect
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.92]);
   const y = useTransform(scrollYProgress, [0, 1], [0, -150]);
   
-  // Parallax for background elements
-  const bgParallaxY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  // Parallax for foreground elements
   const fgParallaxY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   
   return (

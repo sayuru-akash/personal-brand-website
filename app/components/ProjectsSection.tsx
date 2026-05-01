@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'motion/react';
 import { projects } from '@/data/portfolio';
 import { useRef, useState, useEffect } from 'react';
 
@@ -91,42 +91,46 @@ export default function ProjectsSection() {
       />
 
       {/* Floating preview image - appears at viewport top-right on hover */}
-      {hoveredProject && (
-        <motion.div
-          className="fixed top-24 right-12 z-50 pointer-events-none"
-          initial={{ opacity: 0, scale: 0.85, y: -30, x: 30 }}
-          animate={{ 
-            opacity: 1, 
-            scale: 1, 
-            y: 0,
-            x: 0,
-          }}
-          exit={{ 
-            opacity: 0, 
-            scale: 0.85, 
-            y: -30,
-            x: 30,
-          }}
-          transition={{ 
-            duration: 0.5,
-            ease: [0.22, 1, 0.36, 1]
-          }}
-        >
-          <div className="w-64 h-64 rounded-2xl overflow-hidden shadow-2xl bg-neutral-900 ring-1 ring-white/20 backdrop-blur-sm">
-            {/* Project preview */}
-            <div className="absolute inset-0 bg-gradient-to-br from-accent/30 via-neutral-800 to-neutral-900 flex items-center justify-center">
-              <div className="text-center text-white p-4">
-                <div className="text-6xl font-bold mb-3 opacity-20">
-                  {projects.find(p => p.id === hoveredProject)?.title.charAt(0)}
-                </div>
-                <div className="text-base font-semibold px-2">
-                  {projects.find(p => p.id === hoveredProject)?.title}
+      <AnimatePresence mode="wait">
+        {hoveredProject && (
+          <motion.div
+            key={hoveredProject}
+            className="fixed top-24 right-12 z-50 pointer-events-none"
+            initial={{ opacity: 0, scale: 0.85, y: -30, x: 30 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              y: 0,
+              x: 0,
+            }}
+            exit={{ 
+              opacity: 0, 
+              scale: 0.85, 
+              y: -30,
+              x: 30,
+            }}
+            transition={{ 
+              type: 'spring',
+              stiffness: 300,
+              damping: 25,
+            }}
+          >
+            <div className="w-64 h-64 rounded-2xl overflow-hidden shadow-2xl bg-neutral-900 ring-1 ring-white/20 backdrop-blur-sm">
+              {/* Project preview */}
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/30 via-neutral-800 to-neutral-900 flex items-center justify-center">
+                <div className="text-center text-white p-4">
+                  <div className="text-6xl font-bold mb-3 opacity-20">
+                    {projects.find(p => p.id === hoveredProject)?.title.charAt(0)}
+                  </div>
+                  <div className="text-base font-semibold px-2">
+                    {projects.find(p => p.id === hoveredProject)?.title}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
         

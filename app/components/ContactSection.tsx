@@ -1,25 +1,39 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { contactContent } from '@/data/portfolio';
 import { springPhysics } from '@/utils/animationConfig';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 /**
  * ContactSection Component
  * 
- * Minimal contact section with dominant whitespace (60%+) and subtle animations.
- * Follows Japanese Ma principle with one primary call-to-action element.
- * Clean, professional, and elegant.
- * 
- * Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6
+ * PREMIUM VERSION with smooth aurora background
+ * - Smooth transition from previous section
+ * - Animated aurora borealis gradient waves
+ * - Floating particles (client-only)
+ * - Professional, luxurious aesthetic
  */
 export default function ContactSection() {
   const prefersReducedMotion = useReducedMotion();
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [isEmailHovered, setIsEmailHovered] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  
+  const containerRef = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start']
+  });
+  
+  // Smooth color transition - starts earlier and transitions longer
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7],
+    ['#ffffff', '#0f1729', '#0f1729']
+  );
 
   const handleCopyEmail = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -31,29 +45,137 @@ export default function ContactSection() {
       console.error('Failed to copy email:', err);
     }
   };
+
+  // Static particle positions (no hydration issues)
+  const particles = [
+    { left: 10, top: 20, delay: 0, duration: 4 },
+    { left: 25, top: 60, delay: 0.5, duration: 5 },
+    { left: 40, top: 15, delay: 1, duration: 4.5 },
+    { left: 55, top: 75, delay: 1.5, duration: 5.5 },
+    { left: 70, top: 30, delay: 2, duration: 4 },
+    { left: 85, top: 50, delay: 2.5, duration: 5 },
+    { left: 15, top: 85, delay: 3, duration: 4.5 },
+    { left: 60, top: 45, delay: 3.5, duration: 5 },
+    { left: 80, top: 70, delay: 4, duration: 4 },
+    { left: 35, top: 90, delay: 4.5, duration: 5.5 },
+    { left: 90, top: 25, delay: 0.2, duration: 4.2 },
+    { left: 5, top: 55, delay: 0.7, duration: 5.2 },
+    { left: 50, top: 10, delay: 1.2, duration: 4.7 },
+    { left: 75, top: 80, delay: 1.7, duration: 5.3 },
+    { left: 20, top: 40, delay: 2.2, duration: 4.3 },
+  ];
   
   return (
-    <section 
-      className="relative min-h-[100dvh] flex items-center justify-center bg-neutral-50"
+    <motion.section 
+      ref={containerRef}
+      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
+      style={{ backgroundColor }}
       aria-labelledby="contact-heading"
     >
-      {/* Subtle background gradient */}
+      {/* Smooth gradient transition overlay at top */}
+      <motion.div
+        className="absolute top-0 left-0 right-0 h-32 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, transparent 100%)',
+          opacity: useTransform(scrollYProgress, [0, 0.3], [1, 0]),
+        }}
+      />
+
+      {/* Smooth aurora background */}
       {!prefersReducedMotion && (
-        <motion.div 
-          className="absolute bottom-1/4 left-1/3 w-[500px] h-[500px] bg-gradient-to-br from-accent/4 to-transparent rounded-full blur-3xl pointer-events-none"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: 'easeInOut',
+        <div className="absolute inset-0">
+          {/* Aurora Layer 1 - Purple glow */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(ellipse 120% 80% at 50% 0%, rgba(147, 51, 234, 0.2) 0%, transparent 70%)',
+              filter: 'blur(60px)',
+            }}
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+
+          {/* Aurora Layer 2 - Blue glow */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(ellipse 100% 70% at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 70%)',
+              filter: 'blur(60px)',
+            }}
+            animate={{
+              scale: [1.1, 1, 1.1],
+              opacity: [0.25, 0.4, 0.25],
+            }}
+            transition={{
+              duration: 30,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+
+          {/* Aurora Layer 3 - Emerald glow */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(ellipse 90% 90% at 80% 60%, rgba(16, 185, 129, 0.12) 0%, transparent 70%)',
+              filter: 'blur(60px)',
+            }}
+            animate={{
+              scale: [1, 1.15, 1],
+              opacity: [0.2, 0.35, 0.2],
+            }}
+            transition={{
+              duration: 35,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+
+          {/* Floating particles - client only, no hydration */}
+          <div suppressHydrationWarning>
+            {particles.map((particle, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-white/70 rounded-full"
+                style={{
+                  left: `${particle.left}%`,
+                  top: `${particle.top}%`,
+                }}
+                animate={{
+                  y: [0, -50, 0],
+                  opacity: [0, 1, 0],
+                  scale: [0, 1.5, 0],
+                }}
+                transition={{
+                  duration: particle.duration,
+                  repeat: Infinity,
+                  delay: particle.delay,
+                  ease: 'easeInOut',
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Fallback for reduced motion */}
+      {prefersReducedMotion && (
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to bottom, #0f1729 0%, #1a2332 100%)',
           }}
         />
       )}
 
-      {/* Main content - centered with dominant whitespace */}
+      {/* Main content */}
       <div className="relative z-10 w-full max-w-[900px] mx-auto px-6 sm:px-8 lg:px-12 py-16">
         
         <motion.div 
@@ -65,11 +187,20 @@ export default function ContactSection() {
         >
           {/* Section label */}
           <div className="flex flex-col items-center gap-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-neutral-500 font-light">
+            <motion.p 
+              className="text-xs uppercase tracking-[0.2em] font-light"
+              style={{
+                color: useTransform(scrollYProgress, [0, 0.3], ['#737373', '#ffffff']),
+              }}
+            >
               連絡 / Contact
-            </p>
+            </motion.p>
             <motion.div 
-              className="h-[1px] w-16 bg-accent"
+              className="h-[1px] w-16"
+              style={{
+                backgroundColor: useTransform(scrollYProgress, [0, 0.3], ['#a3a3a3', '#ffffff']),
+                opacity: 0.7,
+              }}
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
@@ -77,7 +208,7 @@ export default function ContactSection() {
             />
           </div>
 
-          {/* Primary CTA - dominant element */}
+          {/* Primary CTA */}
           <motion.div
             className="space-y-8"
             initial={{ opacity: 0, y: 30 }}
@@ -85,33 +216,36 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ ...springPhysics, delay: 0.4 }}
           >
-            <h2 
+            <motion.h2 
               id="contact-heading"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.02em] leading-[1.1] text-neutral-900 max-w-[20ch] mx-auto"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-[-0.02em] leading-[1.1] max-w-[20ch] mx-auto"
+              style={{
+                color: useTransform(scrollYProgress, [0, 0.3], ['#171717', '#ffffff']),
+              }}
             >
               {contactContent.ctaText}
-            </h2>
+            </motion.h2>
 
-            {/* Email - primary contact method with premium interaction */}
+            {/* Email with premium interaction */}
             <motion.div
               className="relative inline-block"
               onHoverStart={() => setIsEmailHovered(true)}
               onHoverEnd={() => setIsEmailHovered(false)}
             >
-              {/* Glow effect on hover */}
+              {/* Glow effect */}
               <motion.div
                 className="absolute inset-0 rounded-2xl blur-2xl"
                 initial={{ opacity: 0 }}
                 animate={isEmailHovered ? { 
-                  opacity: 0.15,
-                  scale: 1.1,
+                  opacity: 0.4,
+                  scale: 1.2,
                 } : { 
                   opacity: 0,
                   scale: 1,
                 }}
                 transition={{ duration: 0.4 }}
                 style={{
-                  background: 'radial-gradient(circle, rgba(100,116,139,0.4) 0%, transparent 70%)',
+                  background: 'radial-gradient(circle, rgba(16,185,129,0.6) 0%, transparent 70%)',
                 }}
               />
 
@@ -127,28 +261,16 @@ export default function ContactSection() {
                 <motion.div
                   className="absolute bottom-0 left-0 h-[2px] bg-accent"
                   initial={{ width: '0%' }}
-                  animate={isEmailHovered ? { 
-                    width: '100%',
-                  } : { 
-                    width: '0%',
-                  }}
-                  transition={{ 
-                    duration: 0.5,
-                    ease: [0.22, 1, 0.36, 1]
-                  }}
+                  animate={isEmailHovered ? { width: '100%' } : { width: '0%' }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 />
 
-                {/* Character-by-character reveal */}
+                {/* Character animation */}
                 {contactContent.email.split('').map((char, index) => (
                   <motion.span
                     key={index}
                     className="inline-block"
-                    initial={{ y: 0 }}
-                    animate={isEmailHovered ? {
-                      y: [-2, 0],
-                    } : {
-                      y: 0,
-                    }}
+                    animate={isEmailHovered ? { y: [-2, 0] } : { y: 0 }}
                     transition={{
                       duration: 0.3,
                       delay: index * 0.02,
@@ -159,47 +281,33 @@ export default function ContactSection() {
                   </motion.span>
                 ))}
 
-                {/* Copy icon / Checkmark - appears on hover, changes on copy */}
+                {/* Copy icon */}
                 <motion.span
                   className="inline-block ml-3 align-middle"
                   initial={{ opacity: 0, x: -10, scale: 0.8 }}
                   animate={isEmailHovered || isCopied ? {
-                    opacity: 1,
-                    x: 0,
-                    scale: 1,
+                    opacity: 1, x: 0, scale: 1,
                   } : {
-                    opacity: 0,
-                    x: -10,
-                    scale: 0.8,
+                    opacity: 0, x: -10, scale: 0.8,
                   }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 400,
-                    damping: 20,
-                  }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                 >
                   {isCopied ? (
-                    // Checkmark icon when copied
                     <motion.svg
-                      className="w-6 h-6 sm:w-7 sm:h-7 text-green-500"
+                      className="w-6 h-6 sm:w-7 sm:h-7 text-green-400"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
                       strokeWidth={2.5}
                       initial={{ scale: 0, rotate: -180 }}
                       animate={{ scale: 1, rotate: 0 }}
-                      transition={{
-                        type: 'spring',
-                        stiffness: 500,
-                        damping: 15,
-                      }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 15 }}
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </motion.svg>
                   ) : (
-                    // Copy icon
                     <svg 
-                      className="w-6 h-6 sm:w-7 sm:h-7" 
+                      className="w-6 h-6 sm:w-7 sm:h-7 text-accent" 
                       fill="none" 
                       viewBox="0 0 24 24" 
                       stroke="currentColor" 
@@ -211,33 +319,20 @@ export default function ContactSection() {
                 </motion.span>
               </motion.a>
 
-              {/* "Copied!" tooltip */}
+              {/* Tooltip */}
               <motion.div
-                className="absolute -top-12 left-1/2 -translate-x-1/2 px-4 py-2 bg-neutral-900 text-white text-sm font-medium rounded-lg whitespace-nowrap pointer-events-none"
+                className="absolute -top-12 left-1/2 -translate-x-1/2 px-4 py-2 bg-white text-neutral-900 text-sm font-medium rounded-lg whitespace-nowrap pointer-events-none"
                 initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                animate={isCopied ? {
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                } : {
-                  opacity: 0,
-                  y: 10,
-                  scale: 0.9,
-                }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 400,
-                  damping: 20,
-                }}
+                animate={isCopied ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 10, scale: 0.9 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               >
                 Copied to clipboard!
-                {/* Tooltip arrow */}
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-neutral-900 rotate-45" />
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45" />
               </motion.div>
             </motion.div>
           </motion.div>
 
-          {/* Social links - minimal presentation */}
+          {/* Social links */}
           <motion.div
             className="pt-8"
             initial={{ opacity: 0 }}
@@ -253,10 +348,7 @@ export default function ContactSection() {
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ 
-                    ...springPhysics, 
-                    delay: 0.7 + (index * 0.05) 
-                  }}
+                  transition={{ ...springPhysics, delay: 0.7 + (index * 0.05) }}
                   onHoverStart={() => setHoveredLink(link.platform)}
                   onHoverEnd={() => setHoveredLink(null)}
                 >
@@ -264,46 +356,32 @@ export default function ContactSection() {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex flex-col items-center gap-2 text-neutral-600 hover:text-accent transition-colors duration-300"
+                    className="flex flex-col items-center gap-2 text-white/80 hover:text-accent transition-colors duration-300"
                     whileHover={{ y: -2 }}
                     aria-label={`${link.platform}: ${link.handle}`}
                   >
                     <span className="text-sm font-medium tracking-wide">
                       {link.platform}
                     </span>
-                    <span className="text-xs text-neutral-500 transition-colors duration-300" style={{ color: hoveredLink === link.platform ? 'var(--accent)' : undefined }}>
+                    <span className="text-xs text-white/60 transition-colors duration-300" style={{ color: hoveredLink === link.platform ? 'var(--accent)' : undefined }}>
                       {link.handle}
                     </span>
                   </motion.a>
 
-                  {/* Beautiful curved arrow pointing up - appears below on hover */}
+                  {/* Arrow */}
                   <motion.div
                     className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-accent pointer-events-none"
                     initial={{ opacity: 0, y: -10 }}
-                    animate={hoveredLink === link.platform ? { 
-                      opacity: 1, 
-                      y: 0 
-                    } : { 
-                      opacity: 0, 
-                      y: -10 
-                    }}
+                    animate={hoveredLink === link.platform ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                   >
-                    <svg 
-                      width="40" 
-                      height="40" 
-                      viewBox="0 0 40 40" 
-                      fill="none" 
-                      className="text-accent"
-                    >
-                      {/* Curved arrow path pointing upward */}
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
                       <path
                         d="M20 35 Q15 25, 20 15 L20 8 M20 8 L16 12 M20 8 L24 12"
                         stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        fill="none"
                       />
                     </svg>
                   </motion.div>
@@ -312,7 +390,7 @@ export default function ContactSection() {
             </div>
           </motion.div>
 
-          {/* Subtle decorative element */}
+          {/* Decorative dot */}
           {!prefersReducedMotion && (
             <motion.div
               className="pt-16 flex justify-center"
@@ -322,10 +400,10 @@ export default function ContactSection() {
               transition={{ duration: 1.5, delay: 1 }}
             >
               <motion.div
-                className="w-1 h-1 bg-accent/40 rounded-full"
+                className="w-1 h-1 bg-white/50 rounded-full"
                 animate={{
                   scale: [1, 1.5, 1],
-                  opacity: [0.4, 0.7, 0.4],
+                  opacity: [0.5, 0.8, 0.5],
                 }}
                 transition={{
                   duration: 3,
@@ -338,7 +416,7 @@ export default function ContactSection() {
         </motion.div>
       </div>
 
-      {/* Footer note - minimal */}
+      {/* Footer */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0 }}
@@ -346,10 +424,16 @@ export default function ContactSection() {
         viewport={{ once: true }}
         transition={{ delay: 1.2, duration: 1 }}
       >
-        <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-light">
+        <motion.p 
+          className="text-[10px] uppercase tracking-[0.2em] font-light"
+          style={{
+            color: useTransform(scrollYProgress, [0, 0.3], ['#737373', '#ffffff']),
+            opacity: 0.8,
+          }}
+        >
           {new Date().getFullYear()} — Sayuru Akash
-        </p>
+        </motion.p>
       </motion.div>
-    </section>
+    </motion.section>
   );
 }

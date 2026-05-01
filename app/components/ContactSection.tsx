@@ -42,24 +42,22 @@ export default function ContactSection() {
     offset: ['start end', 'end start']
   });
   
-  // Clean smooth transition - white to dark blue
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.5],
-    ['#ffffff', '#0f1729']
-  );
-  
-  // Smooth text color transitions
+  // Projects ends on white; Contact enters through a short edge blend, then a dusk mist.
+  const edgeVeilOpacity = useTransform(scrollYProgress, [0, 0.1, 0.26], [0.88, 0.5, 0]);
+  const duskMistOpacity = useTransform(scrollYProgress, [0, 0.18, 0.44], [0.85, 0.62, 0]);
+  const auroraOpacity = useTransform(scrollYProgress, [0, 0.18, 0.44], [0.42, 0.76, 1]);
+
+  // Smooth text color transitions, delayed until the dark base is established.
   const textColor = useTransform(
     scrollYProgress,
-    [0, 0.5],
-    ['#171717', '#ffffff']
+    [0, 0.2, 0.46],
+    ['#171717', '#334155', '#ffffff']
   );
   
   const subtleTextColor = useTransform(
     scrollYProgress,
-    [0, 0.5],
-    ['#737373', '#ffffff']
+    [0, 0.2, 0.46],
+    ['#737373', '#64748b', '#ffffff']
   );
 
   const handleCopyEmail = async (e: React.MouseEvent) => {
@@ -93,7 +91,7 @@ export default function ContactSection() {
   ];
 
   // Interactive particle component
-  const InteractiveParticle = ({ particle, index }: { particle: typeof particles[0]; index: number }) => {
+  const InteractiveParticle = ({ particle }: { particle: typeof particles[0] }) => {
     const particleX = useMotionValue(0);
     const particleY = useMotionValue(0);
     
@@ -134,7 +132,7 @@ export default function ContactSection() {
         unsubscribeX();
         unsubscribeY();
       };
-    }, [particle]);
+    }, [particle, particleX, particleY]);
     
     return (
       <motion.div
@@ -164,21 +162,12 @@ export default function ContactSection() {
     <motion.section 
       ref={containerRef}
       className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
-      style={{ backgroundColor }}
+      style={{ backgroundColor: '#0f1729' }}
       aria-labelledby="contact-heading"
     >
-      {/* Smooth gradient transition overlay at top - no white shadow */}
-      <motion.div
-        className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 20%, rgba(255,255,255,0.3) 50%, transparent 100%)',
-          opacity: useTransform(scrollYProgress, [0, 0.5], [1, 0]),
-        }}
-      />
-
       {/* Smooth aurora background */}
       {!prefersReducedMotion && (
-        <div className="absolute inset-0">
+        <motion.div className="absolute inset-0" style={{ opacity: auroraOpacity }}>
           {/* Aurora Layer 1 - Purple glow */}
           <motion.div
             className="absolute inset-0"
@@ -236,10 +225,10 @@ export default function ContactSection() {
           {/* Interactive floating particles - swim toward cursor */}
           <div suppressHydrationWarning>
             {particles.map((particle, i) => (
-              <InteractiveParticle key={i} particle={particle} index={i} />
+              <InteractiveParticle key={i} particle={particle} />
             ))}
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* Fallback for reduced motion */}
@@ -251,6 +240,33 @@ export default function ContactSection() {
           }}
         />
       )}
+
+      {/* Short edge blend from Projects; fades before Contact fills the viewport */}
+      <motion.div
+        className="absolute inset-x-0 top-0 h-[34vh] pointer-events-none z-[2]"
+        style={{
+          background: 'linear-gradient(to bottom, #ffffff 0%, rgba(255,255,255,0.76) 36%, rgba(255,255,255,0) 100%)',
+          opacity: edgeVeilOpacity,
+        }}
+      />
+
+      {/* Dusk mist bridges white Projects into the aurora without leaving a white panel */}
+      <motion.div
+        className="absolute inset-x-0 top-0 h-[64vh] pointer-events-none z-[1]"
+        style={{
+          background: [
+            'linear-gradient(',
+            '135deg,',
+            'rgba(224,242,254,0.72) 0%,',
+            'rgba(56,189,248,0.28) 34%,',
+            'rgba(16,185,129,0.16) 58%,',
+            'rgba(15,23,41,0) 100%',
+            ')',
+          ].join(' '),
+          filter: 'blur(18px)',
+          opacity: duskMistOpacity,
+        }}
+      />
 
       {/* Main content */}
       <div className="relative z-10 w-full max-w-[900px] mx-auto px-6 sm:px-8 lg:px-12 py-16">

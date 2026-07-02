@@ -1,30 +1,30 @@
-import HeroSection from '@/app/components/HeroSection';
-import AboutSection from '@/app/components/AboutSection';
-import AnimationErrorBoundary from '@/app/components/AnimationErrorBoundary';
-import ScrollProgress from '@/app/components/ScrollProgress';
-import FloatingNav from '@/app/components/FloatingNav';
-import SectionDivider from '@/app/components/SectionDivider';
-import SkillsSection from './components/SkillsSection';
-import ContactSection from './components/ContactSection';
+import HeroSection from "@/app/components/HeroSection";
+import AboutSection from "@/app/components/AboutSection";
+import AnimationErrorBoundary from "@/app/components/AnimationErrorBoundary";
+import ScrollProgress from "@/app/components/ScrollProgress";
+import FloatingNav from "@/app/components/FloatingNav";
+import SectionDivider from "@/app/components/SectionDivider";
+import SkillsSection from "./components/SkillsSection";
+import ContactSection from "./components/ContactSection";
 
 const dividerItemsOne = [
-  'Full-stack Development',
-  'Web Design',
-  'Music Production',
-  'Content Writing',
-  'Codezela Technologies',
-  'Colombo, Sri Lanka',
+  "Full-stack Development",
+  "Web Design",
+  "Music Production",
+  "Content Writing",
+  "Codezela Technologies",
+  "Colombo, Sri Lanka",
 ];
 
 const dividerItemsTwo = [
-  'Next.js',
-  'React',
-  'TypeScript',
-  'Figma',
-  'FL Studio',
-  'Sound Design',
-  'Technical Writing',
-  'Market Analysis',
+  "Next.js",
+  "React",
+  "TypeScript",
+  "Figma",
+  "FL Studio",
+  "Sound Design",
+  "Technical Writing",
+  "Market Analysis",
 ];
 
 export default function Home() {
@@ -66,4 +66,3 @@ export default function Home() {
     </>
   );
 }
-

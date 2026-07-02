@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   memo,
@@ -9,7 +9,7 @@ import {
   useState,
   type CSSProperties,
   type ReactNode,
-} from 'react';
+} from "react";
 import {
   AnimatePresence,
   motion,
@@ -21,8 +21,8 @@ import {
   useTransform,
   useVelocity,
   type Variants,
-} from 'motion/react';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+} from "motion/react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 type ShinyTextProps = {
   children: ReactNode;
@@ -36,9 +36,9 @@ type ShinyTextProps = {
 
 export function ShinyText({
   children,
-  className = '',
-  color = 'var(--aka)',
-  shineColor = 'var(--ai)',
+  className = "",
+  color = "var(--aka)",
+  shineColor = "var(--ai)",
   speed = 3.2,
   spread = 118,
   delay = 0.4,
@@ -67,16 +67,23 @@ export function ShinyText({
     const animationDuration = speed * 1000;
     const cycleDuration = animationDuration + delay * 1000;
     const cycleTime = elapsedRef.current % cycleDuration;
-    progress.set(cycleTime < animationDuration ? (cycleTime / animationDuration) * 100 : 100);
+    progress.set(
+      cycleTime < animationDuration
+        ? (cycleTime / animationDuration) * 100
+        : 100,
+    );
   });
 
-  const backgroundPosition = useTransform(progress, (p) => `${150 - p * 2}% center`);
+  const backgroundPosition = useTransform(
+    progress,
+    (p) => `${150 - p * 2}% center`,
+  );
   const gradientStyle: CSSProperties = {
     backgroundImage: `linear-gradient(${spread}deg, ${color} 0%, ${color} 35%, ${shineColor} 50%, ${color} 65%, ${color} 100%)`,
-    backgroundSize: '200% auto',
-    WebkitBackgroundClip: 'text',
-    backgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
+    backgroundSize: "200% auto",
+    WebkitBackgroundClip: "text",
+    backgroundClip: "text",
+    WebkitTextFillColor: "transparent",
   };
 
   return (
@@ -96,10 +103,10 @@ type RoleTickerProps = {
   className?: string;
 };
 
-export function RoleTicker({ roles, className = '' }: RoleTickerProps) {
+export function RoleTicker({ roles, className = "" }: RoleTickerProps) {
   const prefersReducedMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
-  const activeRole = roles[index % roles.length] ?? '';
+  const activeRole = roles[index % roles.length] ?? "";
 
   useEffect(() => {
     if (prefersReducedMotion || roles.length < 2) return;
@@ -119,9 +126,17 @@ export function RoleTicker({ roles, className = '' }: RoleTickerProps) {
         <motion.span
           key={activeRole}
           className="block"
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 22, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          exit={prefersReducedMotion ? undefined : { opacity: 0, y: -22, filter: 'blur(8px)' }}
+          initial={
+            prefersReducedMotion
+              ? false
+              : { opacity: 0, y: 22, filter: "blur(8px)" }
+          }
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={
+            prefersReducedMotion
+              ? undefined
+              : { opacity: 0, y: -22, filter: "blur(8px)" }
+          }
           transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
         >
           {activeRole}
@@ -145,11 +160,11 @@ type MagnetLinesProps = {
 export function MagnetLines({
   rows = 7,
   columns = 7,
-  lineColor = 'var(--ink)',
-  lineWidth = '2px',
-  lineHeight = '32px',
+  lineColor = "var(--ink)",
+  lineWidth = "2px",
+  lineHeight = "32px",
   baseAngle = -16,
-  className = '',
+  className = "",
   style,
 }: MagnetLinesProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -159,7 +174,7 @@ export function MagnetLines({
     const container = containerRef.current;
     if (!container || prefersReducedMotion) return;
 
-    const items = container.querySelectorAll<HTMLSpanElement>('span');
+    const items = container.querySelectorAll<HTMLSpanElement>("span");
 
     const pointLines = (pointer: { x: number; y: number }) => {
       items.forEach((item) => {
@@ -169,13 +184,17 @@ export function MagnetLines({
         const b = pointer.x - centerX;
         const a = pointer.y - centerY;
         const c = Math.sqrt(a * a + b * b) || 1;
-        const rotation = ((Math.acos(b / c) * 180) / Math.PI) * (pointer.y > centerY ? 1 : -1);
-        item.style.setProperty('--rotate', `${rotation}deg`);
+        const rotation =
+          ((Math.acos(b / c) * 180) / Math.PI) * (pointer.y > centerY ? 1 : -1);
+        item.style.setProperty("--rotate", `${rotation}deg`);
       });
     };
 
-    const handlePointerMove = (event: PointerEvent) => pointLines({ x: event.x, y: event.y });
-    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    const handlePointerMove = (event: PointerEvent) =>
+      pointLines({ x: event.x, y: event.y });
+    window.addEventListener("pointermove", handlePointerMove, {
+      passive: true,
+    });
 
     if (items.length) {
       const middle = items[Math.floor(items.length / 2)];
@@ -183,7 +202,7 @@ export function MagnetLines({
       pointLines({ x: rect.x, y: rect.y });
     }
 
-    return () => window.removeEventListener('pointermove', handlePointerMove);
+    return () => window.removeEventListener("pointermove", handlePointerMove);
   }, [rows, columns, prefersReducedMotion]);
 
   return (
@@ -206,9 +225,9 @@ export function MagnetLines({
               backgroundColor: lineColor,
               width: lineWidth,
               height: lineHeight,
-              '--rotate': `${baseAngle}deg`,
-              transform: 'rotate(var(--rotate))',
-              willChange: 'transform',
+              "--rotate": `${baseAngle}deg`,
+              transform: "rotate(var(--rotate))",
+              willChange: "transform",
             } as CSSProperties
           }
         />
@@ -235,13 +254,13 @@ type CursorDotFieldProps = {
 };
 
 export const CursorDotField = memo(function CursorDotField({
-  className = '',
+  className = "",
   dotRadius = 1.6,
   dotSpacing = 18,
   cursorRadius = 180,
   pushStrength = 48,
-  from = 'rgba(214,58,47,0.38)',
-  to = 'rgba(35,79,213,0.34)',
+  from = "rgba(214,58,47,0.38)",
+  to = "rgba(35,79,213,0.34)",
 }: CursorDotFieldProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dotsRef = useRef<Dot[]>([]);
@@ -250,29 +269,32 @@ export const CursorDotField = memo(function CursorDotField({
   const rafRef = useRef<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  const buildDots = useCallback((w: number, h: number) => {
-    const step = dotRadius + dotSpacing;
-    const cols = Math.floor(w / step);
-    const rows = Math.floor(h / step);
-    const padX = (w % step) / 2;
-    const padY = (h % step) / 2;
-    const dots: Dot[] = [];
+  const buildDots = useCallback(
+    (w: number, h: number) => {
+      const step = dotRadius + dotSpacing;
+      const cols = Math.floor(w / step);
+      const rows = Math.floor(h / step);
+      const padX = (w % step) / 2;
+      const padY = (h % step) / 2;
+      const dots: Dot[] = [];
 
-    for (let row = 0; row < rows; row += 1) {
-      for (let col = 0; col < cols; col += 1) {
-        const ax = padX + col * step + step / 2;
-        const ay = padY + row * step + step / 2;
-        dots.push({ ax, ay, sx: ax, sy: ay });
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
+          const ax = padX + col * step + step / 2;
+          const ay = padY + row * step + step / 2;
+          dots.push({ ax, ay, sx: ax, sy: ay });
+        }
       }
-    }
 
-    dotsRef.current = dots;
-  }, [dotRadius, dotSpacing]);
+      dotsRef.current = dots;
+    },
+    [dotRadius, dotSpacing],
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: true });
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -335,18 +357,32 @@ export const CursorDotField = memo(function CursorDotField({
     };
 
     resize();
-    window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', handlePointerMove, { passive: true });
+    window.addEventListener("resize", resize);
+    window.addEventListener("mousemove", handlePointerMove, { passive: true });
     rafRef.current = requestAnimationFrame(tick);
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handlePointerMove);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", handlePointerMove);
     };
-  }, [buildDots, cursorRadius, dotRadius, from, prefersReducedMotion, pushStrength, to]);
+  }, [
+    buildDots,
+    cursorRadius,
+    dotRadius,
+    from,
+    prefersReducedMotion,
+    pushStrength,
+    to,
+  ]);
 
-  return <canvas ref={canvasRef} className={`absolute inset-0 h-full w-full ${className}`} aria-hidden="true" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className={`absolute inset-0 h-full w-full ${className}`}
+      aria-hidden="true"
+    />
+  );
 });
 
 /* ------------------------------------------------------------------ */
@@ -377,7 +413,7 @@ type MarqueeProps = {
  */
 export function Marquee({
   children,
-  className = '',
+  className = "",
   baseVelocity = 4,
   direction = 1,
   scrollSensitivity = 0.8,
@@ -393,9 +429,14 @@ export function Marquee({
     damping: 50,
     stiffness: 400,
   });
-  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, scrollSensitivity], {
-    clamp: false,
-  });
+  const velocityFactor = useTransform(
+    smoothVelocity,
+    [0, 1000],
+    [0, scrollSensitivity],
+    {
+      clamp: false,
+    },
+  );
 
   useEffect(() => {
     const measure = () => {
@@ -403,8 +444,8 @@ export function Marquee({
       trackWidthRef.current = node ? node.offsetWidth : 0;
     };
     measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
   }, []);
 
   useAnimationFrame((_, delta) => {
@@ -413,7 +454,7 @@ export function Marquee({
     if (!width) return;
 
     let moveBy = direction * baseVelocity * (delta / 1000);
-    if (typeof velocityFactor.get() === 'number') {
+    if (typeof velocityFactor.get() === "number") {
       moveBy += direction * moveBy * velocityFactor.get();
     }
     baseX.set(wrap(-width, 0, baseX.get() - moveBy));
@@ -455,9 +496,9 @@ const splitWordContainer: Variants = {
 };
 
 const splitWordChild: Variants = {
-  hidden: { y: '110%' },
+  hidden: { y: "110%" },
   visible: {
-    y: '0%',
+    y: "0%",
     transition: { duration: 0.62, ease: [0.22, 1, 0.36, 1] },
   },
 };
@@ -466,7 +507,7 @@ type SplitWordsProps = {
   text: string;
   className?: string;
   /** render each word in its own mask line so descenders never clip */
-  as?: 'span' | 'div';
+  as?: "span" | "div";
 };
 
 /**
@@ -474,12 +515,16 @@ type SplitWordsProps = {
  * with a stagger. Use it for the large display headings to add motion
  * choreography without extra layout work.
  */
-export function SplitWords({ text, className = '', as = 'span' }: SplitWordsProps) {
+export function SplitWords({
+  text,
+  className = "",
+  as = "span",
+}: SplitWordsProps) {
   const prefersReducedMotion = useReducedMotion();
-  const words = useMemo(() => text.split(' ').filter(Boolean), [text]);
+  const words = useMemo(() => text.split(" ").filter(Boolean), [text]);
 
   if (prefersReducedMotion) {
-    const Tag = as as 'span';
+    const Tag = as as "span";
     return <Tag className={className}>{text}</Tag>;
   }
 
@@ -491,13 +536,16 @@ export function SplitWords({ text, className = '', as = 'span' }: SplitWordsProp
       variants={splitWordContainer}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-80px' }}
+      viewport={{ once: true, margin: "-80px" }}
     >
       {words.map((word, index) => (
-        <span key={`${word}-${index}`} className="inline-flex overflow-hidden pb-[0.15em] -mb-[0.15em] align-bottom">
+        <span
+          key={`${word}-${index}`}
+          className="inline-flex overflow-hidden pb-[0.15em] -mb-[0.15em] align-bottom"
+        >
           <motion.span className="inline-block" variants={splitWordChild}>
             {word}
-            {index < words.length - 1 ? '\u00A0' : ''}
+            {index < words.length - 1 ? "\u00A0" : ""}
           </motion.span>
         </span>
       ))}
@@ -528,8 +576,8 @@ type SpotlightCardProps = {
  */
 export function SpotlightCard({
   children,
-  className = '',
-  glowColor = 'rgba(214, 58, 47, 0.16)',
+  className = "",
+  glowColor = "rgba(214, 58, 47, 0.16)",
   tilt = false,
   motionProps,
   style,
@@ -537,8 +585,14 @@ export function SpotlightCard({
   const prefersReducedMotion = useReducedMotion();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const rotateXRaw = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
-  const rotateYRaw = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
+  const rotateXRaw = useSpring(useMotionValue(0), {
+    stiffness: 150,
+    damping: 18,
+  });
+  const rotateYRaw = useSpring(useMotionValue(0), {
+    stiffness: 150,
+    damping: 18,
+  });
   const rotateX = tilt && !prefersReducedMotion ? rotateXRaw : undefined;
   const rotateY = tilt && !prefersReducedMotion ? rotateYRaw : undefined;
 
@@ -556,7 +610,7 @@ export function SpotlightCard({
         (rotateYRaw as unknown as { set: (v: number) => void }).set(px * 6);
       }
     },
-    [mouseX, mouseY, rotateXRaw, rotateYRaw, tilt, prefersReducedMotion]
+    [mouseX, mouseY, rotateXRaw, rotateYRaw, tilt, prefersReducedMotion],
   );
 
   const handleLeave = useCallback(() => {
@@ -577,7 +631,10 @@ export function SpotlightCard({
         className="pointer-events-none absolute inset-0 z-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{ background }}
       />
-      <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-2 rounded-[inherit] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]" />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-2 rounded-[inherit] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+      />
       <div className="relative z-3 h-full">{children}</div>
     </motion.div>
   );

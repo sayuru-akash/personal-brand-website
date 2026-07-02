@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { ArrowUp, ArrowUpRight } from '@phosphor-icons/react';
-import { AnimatePresence, motion } from 'motion/react';
-import { useEffect, useState } from 'react';
-import { contactContent } from '@/data/portfolio';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { ArrowUp, ArrowUpRight } from "@phosphor-icons/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { contactContent } from "@/data/portfolio";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const sections = [
-  { id: 'profile', label: 'Profile' },
-  { id: 'stack', label: 'Stack' },
-  { id: 'contact', label: 'Contact' },
+  { id: "profile", label: "Profile" },
+  { id: "stack", label: "Stack" },
+  { id: "contact", label: "Contact" },
 ] as const;
 
 /**
@@ -21,13 +21,13 @@ const sections = [
 export default function FloatingNav() {
   const prefersReducedMotion = useReducedMotion();
   const [visible, setVisible] = useState(false);
-  const [active, setActive] = useState<string>('');
+  const [active, setActive] = useState<string>("");
 
   useEffect(() => {
     const reveal = () => setVisible(window.scrollY > window.innerHeight * 0.62);
     reveal();
-    window.addEventListener('scroll', reveal, { passive: true });
-    return () => window.removeEventListener('scroll', reveal);
+    window.addEventListener("scroll", reveal, { passive: true });
+    return () => window.removeEventListener("scroll", reveal);
   }, []);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function FloatingNav() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (intersecting) setActive(intersecting.target.id);
       },
-      { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.25, 0.5, 1] }
+      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 1] },
     );
 
     const targets = sections
@@ -51,10 +51,10 @@ export default function FloatingNav() {
 
   const handleBackToTop = () => {
     if (prefersReducedMotion) {
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      window.scrollTo({ top: 0, behavior: "auto" });
       return;
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -63,9 +63,17 @@ export default function FloatingNav() {
         <motion.nav
           aria-label="Quick navigation"
           className="fixed inset-x-0 bottom-5 z-40 flex justify-center px-4"
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 40, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          exit={prefersReducedMotion ? undefined : { opacity: 0, y: 40, filter: 'blur(8px)' }}
+          initial={
+            prefersReducedMotion
+              ? false
+              : { opacity: 0, y: 40, filter: "blur(8px)" }
+          }
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={
+            prefersReducedMotion
+              ? undefined
+              : { opacity: 0, y: 40, filter: "blur(8px)" }
+          }
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="flex items-center gap-1 rounded-full border border-[var(--line)] bg-[rgba(255,255,255,0.86)] p-1 shadow-[0_18px_50px_-24px_rgba(23,22,19,0.45)] backdrop-blur-xl sm:gap-1.5">
@@ -78,7 +86,10 @@ export default function FloatingNav() {
               <ArrowUp className="h-4 w-4" weight="bold" />
             </button>
 
-            <span aria-hidden="true" className="mx-0.5 hidden h-5 w-px bg-[var(--line)] sm:block" />
+            <span
+              aria-hidden="true"
+              className="mx-0.5 hidden h-5 w-px bg-[var(--line)] sm:block"
+            />
 
             <ul className="hidden items-center gap-0.5 sm:flex">
               {sections.map((section) => {
@@ -88,14 +99,20 @@ export default function FloatingNav() {
                     <a
                       href={`#${section.id}`}
                       className="relative inline-flex items-center rounded-full px-3.5 py-2 text-xs font-bold transition-colors duration-300"
-                      style={{ color: isActive ? 'var(--ink)' : 'var(--muted)' }}
+                      style={{
+                        color: isActive ? "var(--ink)" : "var(--muted)",
+                      }}
                     >
                       {section.label}
                       {isActive && (
                         <motion.span
                           layoutId="floating-nav-active"
                           className="absolute inset-0 -z-10 rounded-full bg-[var(--paper-blue)]"
-                          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 380,
+                            damping: 30,
+                          }}
                         />
                       )}
                     </a>
@@ -112,13 +129,17 @@ export default function FloatingNav() {
                   className="h-1.5 rounded-full transition-all duration-300"
                   style={{
                     width: active === section.id ? 18 : 6,
-                    background: active === section.id ? 'var(--aka)' : 'var(--line)',
+                    background:
+                      active === section.id ? "var(--aka)" : "var(--line)",
                   }}
                 />
               ))}
             </span>
 
-            <span aria-hidden="true" className="mx-0.5 hidden h-5 w-px bg-[var(--line)] sm:block" />
+            <span
+              aria-hidden="true"
+              className="mx-0.5 hidden h-5 w-px bg-[var(--line)] sm:block"
+            />
 
             <a
               href={`mailto:${contactContent.email}`}

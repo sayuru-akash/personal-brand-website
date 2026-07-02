@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import type { SimpleIcon } from 'simple-icons';
+import type { SimpleIcon } from "simple-icons";
 import {
   siBitcoin,
   siDocker,
@@ -24,7 +24,7 @@ import {
   siTypescript,
   siVercel,
   siX,
-} from 'simple-icons';
+} from "simple-icons";
 import {
   Article,
   ChartLineUp,
@@ -46,22 +46,22 @@ import {
   Stack,
   Strategy,
   Waveform,
-} from '@phosphor-icons/react';
+} from "@phosphor-icons/react";
 
 const iconMap: Record<string, SimpleIcon> = {
-  'Next.js': siNextdotjs,
-  'Next.js 16': siNextdotjs,
+  "Next.js": siNextdotjs,
+  "Next.js 16": siNextdotjs,
   React: siReact,
   TypeScript: siTypescript,
-  'Node.js': siNodedotjs,
+  "Node.js": siNodedotjs,
   Python: siPython,
   PostgreSQL: siPostgresql,
   MongoDB: siMongodb,
   GraphQL: siGraphql,
   Git: siGit,
   Figma: siFigma,
-  'Tailwind CSS': siTailwindcss,
-  'Tailwind CSS v4': siTailwindcss,
+  "Tailwind CSS": siTailwindcss,
+  "Tailwind CSS v4": siTailwindcss,
   Docker: siDocker,
   Vercel: siVercel,
   Markdown: siMarkdown,
@@ -74,35 +74,35 @@ const iconMap: Record<string, SimpleIcon> = {
   X: siX,
   Telegram: siTelegram,
   TikTok: siTiktok,
-  'Motion (Framer Motion v12)': siFramer,
+  "Motion (Framer Motion v12)": siFramer,
 };
 
 const fallbackIconMap: Record<string, Icon> = {
-  'REST APIs': Plugs,
+  "REST APIs": Plugs,
   LinkedIn: LinkedinLogo,
   Linkedin: LinkedinLogo,
-  'UI/UX Design': Stack,
-  'Adobe XD': PenNib,
+  "UI/UX Design": Stack,
+  "Adobe XD": PenNib,
   Prototyping: Sparkle,
-  'Design Systems': Stack,
-  'Responsive Design': Globe,
+  "Design Systems": Stack,
+  "Responsive Design": Globe,
   Animation: Pulse,
-  'FL Studio': MusicNotes,
-  'Ableton Live': Waveform,
-  'Audio Engineering': Headphones,
-  'Mixing & Mastering': SlidersHorizontal,
-  'Sound Design': Waveform,
+  "FL Studio": MusicNotes,
+  "Ableton Live": Waveform,
+  "Audio Engineering": Headphones,
+  "Mixing & Mastering": SlidersHorizontal,
+  "Sound Design": Waveform,
   Composition: MusicNotes,
-  'Technical Writing': Article,
-  'Blog Posts': PenNib,
+  "Technical Writing": Article,
+  "Blog Posts": PenNib,
   Documentation: FileText,
   Copywriting: PenNib,
-  'SEO Writing': ChartLineUp,
-  'Content Strategy': Strategy,
-  'Blockchain Technology': Graph,
-  'Market Analysis': ChartLineUp,
-  'Portfolio Management': Database,
-  'Risk Assessment': ShieldCheck,
+  "SEO Writing": ChartLineUp,
+  "Content Strategy": Strategy,
+  "Blockchain Technology": Graph,
+  "Market Analysis": ChartLineUp,
+  "Portfolio Management": Database,
+  "Risk Assessment": ShieldCheck,
   AWS: Globe,
 };
 
@@ -112,7 +112,7 @@ export function hasBrandIcon(name: string) {
 
 export default function BrandIcon({
   name,
-  className = 'h-5 w-5',
+  className = "h-5 w-5",
 }: {
   name: string;
   className?: string;
@@ -124,7 +124,7 @@ export default function BrandIcon({
 
     if (FallbackIcon) {
       return (
-        <IconContext.Provider value={{ weight: 'duotone' }}>
+        <IconContext.Provider value={{ weight: "duotone" }}>
           <FallbackIcon aria-label={name} className={className} />
         </IconContext.Provider>
       );

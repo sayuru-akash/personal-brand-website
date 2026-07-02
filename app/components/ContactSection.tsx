@@ -1,18 +1,39 @@
-'use client';
+"use client";
 
-import { ArrowUpRight, Check, Copy, EnvelopeSimple } from '@phosphor-icons/react';
-import { AnimatePresence, motion, useMotionValue, useSpring } from 'motion/react';
-import { useState } from 'react';
-import BrandIcon from '@/app/components/BrandIcon';
-import { CursorDotField, SplitWords } from '@/app/components/ReactBitsPrimitives';
-import { contactContent } from '@/data/portfolio';
+import {
+  ArrowUpRight,
+  Check,
+  Copy,
+  EnvelopeSimple,
+} from "@phosphor-icons/react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useSpring,
+} from "motion/react";
+import { useState } from "react";
+import BrandIcon from "@/app/components/BrandIcon";
+import {
+  CursorDotField,
+  SplitWords,
+} from "@/app/components/ReactBitsPrimitives";
+import { contactContent } from "@/data/portfolio";
 
 export default function ContactSection() {
   const [isCopied, setIsCopied] = useState(false);
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
-  const smoothX = useSpring(pointerX, { stiffness: 84, damping: 24, mass: 0.5 });
-  const smoothY = useSpring(pointerY, { stiffness: 84, damping: 24, mass: 0.5 });
+  const smoothX = useSpring(pointerX, {
+    stiffness: 84,
+    damping: 24,
+    mass: 0.5,
+  });
+  const smoothY = useSpring(pointerY, {
+    stiffness: 84,
+    damping: 24,
+    mass: 0.5,
+  });
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -45,8 +66,8 @@ export default function ContactSection() {
         style={{
           x: smoothX,
           y: smoothY,
-          translateX: '-50%',
-          translateY: '-50%',
+          translateX: "-50%",
+          translateY: "-50%",
         }}
       />
 
@@ -64,10 +85,12 @@ export default function ContactSection() {
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-120px' }}
+          viewport={{ once: true, margin: "-120px" }}
           transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="font-code text-xs uppercase text-[var(--aka)]">Contact</p>
+          <p className="font-code text-xs uppercase text-[var(--aka)]">
+            Contact
+          </p>
           <h2
             id="contact-heading"
             className="font-display mt-6 block max-w-[10ch] text-6xl leading-[0.9] text-[var(--ink)] sm:text-8xl lg:text-9xl"
@@ -83,13 +106,15 @@ export default function ContactSection() {
           className="self-end overflow-hidden rounded-[2.4rem] border border-[var(--ink)] bg-white p-2 paper-shadow"
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-120px' }}
+          viewport={{ once: true, margin: "-120px" }}
           transition={{ duration: 0.82, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="rounded-[1.85rem] bg-white p-6 sm:p-8">
             <div className="border-b border-[var(--line)] pb-8">
               <div>
-                <p className="font-code text-xs uppercase text-[var(--faint)]">Email</p>
+                <p className="font-code text-xs uppercase text-[var(--faint)]">
+                  Email
+                </p>
                 <a
                   href={`mailto:${contactContent.email}`}
                   className="mt-4 block break-words text-[clamp(1.45rem,5.5vw,3.3rem)] font-black leading-tight text-[var(--ink)] transition-colors duration-300 hover:text-[var(--aka)]"
@@ -115,15 +140,19 @@ export default function ContactSection() {
               >
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.span
-                    key={isCopied ? 'copied' : 'copy'}
+                    key={isCopied ? "copied" : "copy"}
                     className="inline-flex items-center gap-2"
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    {isCopied ? <Check className="h-5 w-5 text-[var(--matcha)]" /> : <Copy className="h-5 w-5" />}
-                    {isCopied ? 'Copied' : 'Copy email'}
+                    {isCopied ? (
+                      <Check className="h-5 w-5 text-[var(--matcha)]" />
+                    ) : (
+                      <Copy className="h-5 w-5" />
+                    )}
+                    {isCopied ? "Copied" : "Copy email"}
                   </motion.span>
                 </AnimatePresence>
               </motion.button>
@@ -139,8 +168,12 @@ export default function ContactSection() {
                   className="fine-link group flex items-center justify-between gap-6 py-5 transition-colors duration-300"
                   initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{
+                    duration: 0.4,
+                    delay: index * 0.05,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
                   whileTap={{ scale: 0.99 }}
                 >
                   <span className="flex items-center gap-4">
@@ -148,8 +181,12 @@ export default function ContactSection() {
                       <BrandIcon name={link.platform} className="h-5 w-5" />
                     </span>
                     <span>
-                      <span className="block text-lg font-bold">{link.platform}</span>
-                      <span className="mt-1 block font-code text-xs text-[var(--faint)]">{link.handle}</span>
+                      <span className="block text-lg font-bold">
+                        {link.platform}
+                      </span>
+                      <span className="mt-1 block font-code text-xs text-[var(--faint)]">
+                        {link.handle}
+                      </span>
                     </span>
                   </span>
                   <ArrowUpRight className="h-5 w-5 text-[var(--aka)] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
@@ -162,14 +199,26 @@ export default function ContactSection() {
 
       <footer className="relative mx-auto mt-20 grid w-full max-w-[1500px] grid-cols-1 gap-6 border-t border-[var(--line)] px-5 pt-8 text-sm text-[var(--muted)] sm:px-8 md:grid-cols-[1fr_auto] lg:px-10">
         <div>
-          <p className="font-code text-xs uppercase text-[var(--faint)]">Copyright 2015-2026</p>
-          <p className="mt-2 font-bold text-[var(--ink)]">Sayuru Akash Amarasinghe / Colombo, Sri Lanka</p>
+          <p className="font-code text-xs uppercase text-[var(--faint)]">
+            Copyright 2015-2026
+          </p>
+          <p className="mt-2 font-bold text-[var(--ink)]">
+            Sayuru Akash Amarasinghe / Colombo, Sri Lanka
+          </p>
         </div>
         <div className="flex flex-wrap items-center gap-4 font-code text-xs uppercase">
-          <a className="fine-link" href="#home">Home</a>
-          <a className="fine-link" href="#profile">Profile</a>
-          <a className="fine-link" href="#stack">Stack</a>
-          <a className="fine-link" href="#contact">Contact</a>
+          <a className="fine-link" href="#home">
+            Home
+          </a>
+          <a className="fine-link" href="#profile">
+            Profile
+          </a>
+          <a className="fine-link" href="#stack">
+            Stack
+          </a>
+          <a className="fine-link" href="#contact">
+            Contact
+          </a>
         </div>
       </footer>
     </section>

@@ -1,24 +1,28 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { ArrowDown, ArrowUpRight } from '@phosphor-icons/react';
-import { motion, useScroll, useTransform } from 'motion/react';
-import { useRef } from 'react';
-import BrandIcon from '@/app/components/BrandIcon';
-import { MagnetLines, RoleTicker, ShinyText } from '@/app/components/ReactBitsPrimitives';
-import SignalLottie from '@/app/components/SignalLottie';
-import { aboutContent, contactContent, heroContent } from '@/data/portfolio';
-import { useMagneticHover } from '@/app/hooks/useMagneticHover';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import Image from "next/image";
+import { ArrowDown, ArrowUpRight } from "@phosphor-icons/react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { useRef } from "react";
+import BrandIcon from "@/app/components/BrandIcon";
+import {
+  MagnetLines,
+  RoleTicker,
+  ShinyText,
+} from "@/app/components/ReactBitsPrimitives";
+import SignalLottie from "@/app/components/SignalLottie";
+import { aboutContent, contactContent, heroContent } from "@/data/portfolio";
+import { useMagneticHover } from "@/app/hooks/useMagneticHover";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const navItems = [
-  { label: 'Home', href: '#home' },
-  { label: 'Profile', href: '#profile' },
-  { label: 'Stack', href: '#stack' },
-  { label: 'Contact', href: '#contact' },
+  { label: "Home", href: "#home" },
+  { label: "Profile", href: "#profile" },
+  { label: "Stack", href: "#stack" },
+  { label: "Contact", href: "#contact" },
 ];
 
-const toolStrip = ['Next.js', 'React', 'TypeScript', 'Figma', 'PostgreSQL'];
+const toolStrip = ["Next.js", "React", "TypeScript", "Figma", "PostgreSQL"];
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -27,7 +31,7 @@ export default function HeroSection() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start start', 'end start'],
+    offset: ["start start", "end start"],
   });
 
   const copyY = useTransform(scrollYProgress, [0, 1], [0, -72]);
@@ -67,12 +71,16 @@ export default function HeroSection() {
         <motion.div
           className="absolute right-[12vw] top-[18vh] h-2.5 w-2.5 rounded-full bg-[var(--ai)]"
           animate={{ y: [0, 20, 0], scale: [1, 1.55, 1] }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
       )}
 
       <header className="relative z-30 mx-auto flex w-full max-w-[1500px] items-center justify-between gap-5 px-5 py-5 sm:px-8 lg:px-10">
-        <a href="#home" className="group block shrink-0" aria-label="Sayuru home">
+        <a
+          href="#home"
+          className="group block shrink-0"
+          aria-label="Sayuru home"
+        >
           <Image
             src="/images/generated/sayuru-wordmark-red.png"
             alt="Sayuru"
@@ -102,7 +110,7 @@ export default function HeroSection() {
           onMouseMove={ctaMagnet.handleMouseMove}
           onMouseLeave={ctaMagnet.handleMouseLeave}
           whileTap={{ scale: 0.96 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+          transition={{ type: "spring", stiffness: 400, damping: 28 }}
         >
           Email
           <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -124,7 +132,11 @@ export default function HeroSection() {
             className="mt-4 text-lg font-bold text-[var(--aka)] sm:text-xl"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.72, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.72,
+              delay: 0.05,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
             {heroContent.nameJapanese}
           </motion.p>
@@ -134,7 +146,11 @@ export default function HeroSection() {
             className="font-display mt-8 max-w-full text-[clamp(2.75rem,12vw,4.6rem)] leading-[0.96] text-[var(--ink)] sm:text-[clamp(4.4rem,7vw,6.25rem)]"
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.88, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.88,
+              delay: 0.1,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
             <span className="block">Sayuru</span>
             <span className="block">Akash</span>
@@ -147,22 +163,33 @@ export default function HeroSection() {
             className="mt-12 grid max-w-[58rem] grid-cols-1 gap-8 border-y border-[var(--line)] py-9 sm:py-10 xl:grid-cols-[minmax(18rem,0.72fr)_minmax(0,1.28fr)] xl:gap-14"
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.82, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.82,
+              delay: 0.2,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
             <div>
-              <p className="font-code text-xs uppercase text-[var(--faint)]">Current mode</p>
+              <p className="font-code text-xs uppercase text-[var(--faint)]">
+                Current mode
+              </p>
               <RoleTicker
                 roles={heroContent.roles}
                 className="font-display mt-4 min-h-[3.6rem] text-3xl leading-[1.08] text-[var(--aka)] sm:min-h-[5.8rem] sm:text-4xl lg:text-[2.65rem]"
               />
               <p className="font-code mt-4 text-xs uppercase text-[var(--muted)]">
-                <ShinyText color="var(--muted)" shineColor="var(--ai)" speed={4.2}>
+                <ShinyText
+                  color="var(--muted)"
+                  shineColor="var(--ai)"
+                  speed={4.2}
+                >
                   {heroContent.role}
                 </ShinyText>
               </p>
             </div>
             <p className="max-w-[45rem] text-xl font-semibold leading-9 text-[var(--muted)] sm:text-2xl sm:leading-10">
-              {heroContent.subtitle} I work across product interfaces, full-stack systems, writing, and sound.
+              {heroContent.subtitle} I work across product interfaces,
+              full-stack systems, writing, and sound.
             </p>
           </motion.div>
 
@@ -170,7 +197,11 @@ export default function HeroSection() {
             className="mt-10 flex max-w-[56rem] flex-wrap gap-3"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.78, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.78,
+              delay: 0.25,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
             {heroContent.signalTags.map((tag, index) => (
               <motion.li
@@ -178,7 +209,11 @@ export default function HeroSection() {
                 className="paper-button inline-flex h-10 items-center rounded-full px-4 font-code text-xs uppercase"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.42, delay: 0.28 + index * 0.035, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: 0.42,
+                  delay: 0.28 + index * 0.035,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.96 }}
               >
@@ -191,7 +226,11 @@ export default function HeroSection() {
             className="mt-8 flex flex-wrap items-center gap-3"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.78, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.78,
+              delay: 0.28,
+              ease: [0.22, 1, 0.36, 1],
+            }}
           >
             {toolStrip.map((tool) => (
               <span
@@ -227,7 +266,10 @@ export default function HeroSection() {
             </div>
 
             <div className="absolute -bottom-5 -left-3 grid h-28 w-28 place-items-center rounded-[1.3rem] border border-[var(--line)] bg-[rgba(255,255,255,0.88)] backdrop-blur-xl sm:h-32 sm:w-32">
-              <SignalLottie className="h-24 w-24 sm:h-28 sm:w-28" variant="tabs" />
+              <SignalLottie
+                className="h-24 w-24 sm:h-28 sm:w-28"
+                variant="tabs"
+              />
             </div>
           </div>
         </motion.div>
@@ -245,7 +287,7 @@ export default function HeroSection() {
       >
         <motion.span
           animate={prefersReducedMotion ? undefined : { y: [0, 4, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
         >
           <ArrowDown className="h-5 w-5" />
         </motion.span>

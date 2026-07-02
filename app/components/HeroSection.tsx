@@ -8,6 +8,7 @@ import BrandIcon from '@/app/components/BrandIcon';
 import { MagnetLines, RoleTicker, ShinyText } from '@/app/components/ReactBitsPrimitives';
 import SignalLottie from '@/app/components/SignalLottie';
 import { aboutContent, contactContent, heroContent } from '@/data/portfolio';
+import { useMagneticHover } from '@/app/hooks/useMagneticHover';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const navItems = [
@@ -22,6 +23,7 @@ const toolStrip = ['Next.js', 'React', 'TypeScript', 'Figma', 'PostgreSQL'];
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const ctaMagnet = useMagneticHover(0.4);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -96,8 +98,10 @@ export default function HeroSection() {
         <motion.a
           href={`mailto:${contactContent.email}`}
           className="ink-button group inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold"
-          whileHover={{ y: -1 }}
-          whileTap={{ scale: 0.97 }}
+          style={{ x: ctaMagnet.x, y: ctaMagnet.y }}
+          onMouseMove={ctaMagnet.handleMouseMove}
+          onMouseLeave={ctaMagnet.handleMouseLeave}
+          whileTap={{ scale: 0.96 }}
           transition={{ type: 'spring', stiffness: 400, damping: 28 }}
         >
           Email
@@ -105,7 +109,7 @@ export default function HeroSection() {
         </motion.a>
       </header>
 
-      <div className="relative z-20 mx-auto grid min-h-[calc(100dvh-90px)] w-full max-w-[1500px] grid-cols-1 items-center gap-24 px-5 pb-24 pt-14 sm:px-8 lg:grid-cols-[minmax(0,0.96fr)_minmax(24rem,0.64fr)] lg:px-10 lg:pb-28 xl:gap-28">
+      <div className="relative z-20 mx-auto grid min-h-[calc(100dvh-90px)] w-full max-w-[1500px] grid-cols-1 items-center gap-16 px-5 pb-20 pt-10 sm:px-8 lg:grid-cols-[minmax(0,0.96fr)_minmax(24rem,0.64fr)] lg:gap-24 lg:px-10 lg:pb-28 lg:pt-14 xl:gap-28">
         <motion.div className="max-w-[60rem]" style={{ y: copyY }}>
           <motion.p
             className="font-code text-xs uppercase text-[var(--muted)]"

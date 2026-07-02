@@ -4,12 +4,24 @@ import {
   memo,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type CSSProperties,
   type ReactNode,
 } from 'react';
-import { AnimatePresence, motion, useAnimationFrame, useMotionValue, useTransform } from 'motion/react';
+import {
+  AnimatePresence,
+  motion,
+  useAnimationFrame,
+  useMotionTemplate,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+  useVelocity,
+  type Variants,
+} from 'motion/react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 type ShinyTextProps = {
@@ -336,3 +348,237 @@ export const CursorDotField = memo(function CursorDotField({
 
   return <canvas ref={canvasRef} className={`absolute inset-0 h-full w-full ${className}`} aria-hidden="true" />;
 });
+
+/* ------------------------------------------------------------------ */
+/* Marquee — kinetic infinite horizontal band, scroll-velocity aware    */
+/* ------------------------------------------------------------------ */
+
+function wrap(min: number, max: number, value: number) {
+  const range = max - min;
+  const wrapped = ((((value - min) % range) + range) % range) + min;
+  return wrapped;
+}
+
+type MarqueeProps = {
+  children: ReactNode;
+  className?: string;
+  /** base pixels per second */
+  baseVelocity?: number;
+  direction?: 1 | -1;
+  /** how strongly scroll velocity multiplies base speed */
+  scrollSensitivity?: number;
+};
+
+/**
+ * Infinite kinetic marquee. Runs off `useAnimationFrame` translating a
+ * duplicated track via a MotionValue (never re-renders React). Speeds up
+ * and reverses direction based on scroll velocity for a premium, alive feel.
+ * Honors reduced motion by rendering a static centered track.
+ */
+export function Marquee({
+  children,
+  className = '',
+  baseVelocity = 4,
+  direction = 1,
+  scrollSensitivity = 0.8,
+}: MarqueeProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const baseX = useMotionValue(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const trackWidthRef = useRef(0);
+
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 50,
+    stiffness: 400,
+  });
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, scrollSensitivity], {
+    clamp: false,
+  });
+
+  useEffect(() => {
+    const measure = () => {
+      const node = trackRef.current?.firstElementChild as HTMLElement | null;
+      trackWidthRef.current = node ? node.offsetWidth : 0;
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  useAnimationFrame((_, delta) => {
+    if (prefersReducedMotion) return;
+    const width = trackWidthRef.current || trackRef.current?.offsetWidth || 0;
+    if (!width) return;
+
+    let moveBy = direction * baseVelocity * (delta / 1000);
+    if (typeof velocityFactor.get() === 'number') {
+      moveBy += direction * moveBy * velocityFactor.get();
+    }
+    baseX.set(wrap(-width, 0, baseX.get() - moveBy));
+  });
+
+  const x = useTransform(baseX, (value) => `${value}px`);
+
+  if (prefersReducedMotion) {
+    return (
+      <div className={`overflow-hidden ${className}`} aria-hidden="true">
+        <div ref={trackRef} className="flex w-max">
+          <div className="flex shrink-0">{children}</div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`overflow-hidden ${className}`} aria-hidden="true">
+      <motion.div ref={trackRef} className="flex w-max" style={{ x }}>
+        <div className="flex shrink-0">{children}</div>
+        <div className="flex shrink-0" aria-hidden="true">
+          {children}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* SplitWords — choreographed word-by-word reveal for headings          */
+/* ------------------------------------------------------------------ */
+
+const splitWordContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.04 },
+  },
+};
+
+const splitWordChild: Variants = {
+  hidden: { y: '110%' },
+  visible: {
+    y: '0%',
+    transition: { duration: 0.62, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+type SplitWordsProps = {
+  text: string;
+  className?: string;
+  /** render each word in its own mask line so descenders never clip */
+  as?: 'span' | 'div';
+};
+
+/**
+ * Splits `text` into words, each lifted into view from behind a clip mask
+ * with a stagger. Use it for the large display headings to add motion
+ * choreography without extra layout work.
+ */
+export function SplitWords({ text, className = '', as = 'span' }: SplitWordsProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const words = useMemo(() => text.split(' ').filter(Boolean), [text]);
+
+  if (prefersReducedMotion) {
+    const Tag = as as 'span';
+    return <Tag className={className}>{text}</Tag>;
+  }
+
+  const Tag = motion[as];
+
+  return (
+    <Tag
+      className={className}
+      variants={splitWordContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px' }}
+    >
+      {words.map((word, index) => (
+        <span key={`${word}-${index}`} className="inline-flex overflow-hidden pb-[0.15em] -mb-[0.15em] align-bottom">
+          <motion.span className="inline-block" variants={splitWordChild}>
+            {word}
+            {index < words.length - 1 ? '\u00A0' : ''}
+          </motion.span>
+        </span>
+      ))}
+    </Tag>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* SpotlightCard — cursor-tracked radial spotlight + tilt               */
+/* ------------------------------------------------------------------ */
+
+type SpotlightCardProps = {
+  children: ReactNode;
+  className?: string;
+  /** rgba() string for the spotlight glow */
+  glowColor?: string;
+  /** enable subtle 3D tilt toward the cursor */
+  tilt?: boolean;
+  /** passthrough for entrance / hover / tap Motion props */
+  motionProps?: Record<string, unknown>;
+  style?: CSSProperties;
+};
+
+/**
+ * A premium card surface: a soft radial spotlight follows the cursor across
+ * the border, with an optional spring-tilt. Spotlight + tilt are driven by
+ * MotionValues outside the React render cycle.
+ */
+export function SpotlightCard({
+  children,
+  className = '',
+  glowColor = 'rgba(214, 58, 47, 0.16)',
+  tilt = false,
+  motionProps,
+  style,
+}: SpotlightCardProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rotateXRaw = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
+  const rotateYRaw = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
+  const rotateX = tilt && !prefersReducedMotion ? rotateXRaw : undefined;
+  const rotateY = tilt && !prefersReducedMotion ? rotateYRaw : undefined;
+
+  const background = useMotionTemplate`radial-gradient(320px circle at ${mouseX}px ${mouseY}px, ${glowColor}, transparent 70%)`;
+
+  const handleMove = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      const rect = event.currentTarget.getBoundingClientRect();
+      mouseX.set(event.clientX - rect.left);
+      mouseY.set(event.clientY - rect.top);
+      if (tilt && !prefersReducedMotion) {
+        const px = (event.clientX - rect.left) / rect.width - 0.5;
+        const py = (event.clientY - rect.top) / rect.height - 0.5;
+        (rotateXRaw as unknown as { set: (v: number) => void }).set(-py * 6);
+        (rotateYRaw as unknown as { set: (v: number) => void }).set(px * 6);
+      }
+    },
+    [mouseX, mouseY, rotateXRaw, rotateYRaw, tilt, prefersReducedMotion]
+  );
+
+  const handleLeave = useCallback(() => {
+    (rotateXRaw as unknown as { set: (v: number) => void }).set(0);
+    (rotateYRaw as unknown as { set: (v: number) => void }).set(0);
+  }, [rotateXRaw, rotateYRaw]);
+
+  return (
+    <motion.div
+      className={`group relative isolate overflow-hidden rounded-3xl border border-[var(--line)] bg-white ${className}`}
+      style={{ rotateX, rotateY, transformPerspective: 1000, ...style }}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      {...motionProps}
+    >
+      <motion.span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ background }}
+      />
+      <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-2 rounded-[inherit] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]" />
+      <div className="relative z-3 h-full">{children}</div>
+    </motion.div>
+  );
+}

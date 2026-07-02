@@ -213,19 +213,14 @@ export const projects: Project[] = [
  */
 export const socialLinks: SocialLink[] = [
   {
-    platform: 'GitHub',
-    url: 'https://github.com/sayuru-akash',
+    platform: 'LinkedIn',
+    url: 'https://linkedin.com/in/sayuruakash',
     handle: '@sayuruakash',
   },
   {
     platform: 'Facebook',
     url: 'https://facebook.com/sayuru.s',
     handle: 'sayuru.s',
-  },
-  {
-    platform: 'LinkedIn',
-    url: 'https://linkedin.com/in/sayuruakash',
-    handle: '@sayuruakash',
   },
   {
     platform: 'Twitter',
@@ -235,6 +230,16 @@ export const socialLinks: SocialLink[] = [
   {
     platform: 'Instagram',
     url: 'https://instagram.com/sayuru_akash',
+    handle: '@sayuruakash',
+  },
+  {
+    platform: 'TikTok',
+    url: 'https://tiktok.com/@sayuru_akash',
+    handle: '@sayuru_akash',
+  },
+  {
+    platform: 'GitHub',
+    url: 'https://github.com/sayuru-akash',
     handle: '@sayuruakash',
   },
   {

@@ -3,6 +3,7 @@
 import { Buildings, GraduationCap, MapPin, Sparkle, Waveform } from '@phosphor-icons/react';
 import Image from 'next/image';
 import { motion } from 'motion/react';
+import { SplitWords, SpotlightCard } from '@/app/components/ReactBitsPrimitives';
 import { aboutContent } from '@/data/portfolio';
 
 const facts = [
@@ -37,9 +38,9 @@ export default function AboutSection() {
           <p className="font-code text-xs uppercase text-[var(--aka)]">Profile</p>
           <h2
             id="profile-heading"
-            className="font-display mt-6 max-w-[10ch] text-6xl leading-[0.92] text-[var(--ink)] sm:text-7xl md:text-8xl"
+            className="font-display mt-6 block max-w-[10ch] text-6xl leading-[0.92] text-[var(--ink)] sm:text-7xl md:text-8xl"
           >
-            Range without noise.
+            <SplitWords text="Range without noise." />
           </h2>
           <p className="mt-8 max-w-[32rem] text-lg leading-8 text-[var(--muted)]">
             Not a role collage. A working practice that moves between code, business, writing, and music.
@@ -116,21 +117,25 @@ export default function AboutSection() {
           >
             <div>
               <p className="font-code text-xs uppercase text-[var(--aka)]">Roles</p>
-              <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 [&>*:last-child]:sm:col-span-2">
                 {aboutContent.roles.map((role, index) => (
-                  <motion.div
+                  <SpotlightCard
                     key={role}
-                    className="paper-button min-h-32 rounded-[1.4rem] p-6 transition-colors duration-300"
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ y: -4 }}
-                    whileTap={{ scale: 0.98 }}
+                    className="min-h-32 p-6"
+                    glowColor="rgba(214,58,47,0.14)"
+                    tilt
+                    motionProps={{
+                      initial: { opacity: 0, y: 16 },
+                      whileInView: { opacity: 1, y: 0 },
+                      viewport: { once: true, margin: '-80px' },
+                      transition: { duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] },
+                      whileHover: { y: -4 },
+                      whileTap: { scale: 0.98 },
+                    }}
                   >
                     <span className="font-code text-xs text-[var(--faint)]">{String(index + 1).padStart(2, '0')}</span>
                     <p className="mt-7 text-xl font-black leading-snug text-[var(--ink)]">{role}</p>
-                  </motion.div>
+                  </SpotlightCard>
                 ))}
               </div>
             </div>

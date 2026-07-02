@@ -182,6 +182,7 @@ export default function RootLayout({
                 'https://github.com/sayuru-akash',
                 'https://linkedin.com/in/sayuru-akash',
                 'https://twitter.com/sayuru_akash',
+                'https://tiktok.com/@sayuru_akash',
               ],
               knowsAbout: [
                 'Software Development',

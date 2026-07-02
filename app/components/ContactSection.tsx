@@ -4,7 +4,7 @@ import { ArrowUpRight, Check, Copy, EnvelopeSimple } from '@phosphor-icons/react
 import { AnimatePresence, motion, useMotionValue, useSpring } from 'motion/react';
 import { useState } from 'react';
 import BrandIcon from '@/app/components/BrandIcon';
-import { CursorDotField } from '@/app/components/ReactBitsPrimitives';
+import { CursorDotField, SplitWords } from '@/app/components/ReactBitsPrimitives';
 import { contactContent } from '@/data/portfolio';
 
 export default function ContactSection() {
@@ -70,9 +70,9 @@ export default function ContactSection() {
           <p className="font-code text-xs uppercase text-[var(--aka)]">Contact</p>
           <h2
             id="contact-heading"
-            className="font-display mt-6 max-w-[10ch] text-6xl leading-[0.9] text-[var(--ink)] sm:text-8xl lg:text-9xl"
+            className="font-display mt-6 block max-w-[10ch] text-6xl leading-[0.9] text-[var(--ink)] sm:text-8xl lg:text-9xl"
           >
-            Send the rough idea.
+            <SplitWords text="Send the rough idea." />
           </h2>
           <p className="mt-8 max-w-[40rem] text-2xl font-semibold leading-snug text-[var(--muted)]">
             {contactContent.ctaText}

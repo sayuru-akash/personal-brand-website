@@ -20,6 +20,7 @@ import {
   siReact,
   siTelegram,
   siTailwindcss,
+  siTiktok,
   siTypescript,
   siVercel,
   siX,
@@ -72,6 +73,7 @@ const iconMap: Record<string, SimpleIcon> = {
   Twitter: siX,
   X: siX,
   Telegram: siTelegram,
+  TikTok: siTiktok,
   'Motion (Framer Motion v12)': siFramer,
 };
 

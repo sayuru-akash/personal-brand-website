@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import BrandIcon, { hasBrandIcon } from '@/app/components/BrandIcon';
+import { SplitWords, SpotlightCard } from '@/app/components/ReactBitsPrimitives';
 import { skillCategories } from '@/data/portfolio';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -69,9 +70,9 @@ export default function SkillsSection() {
           <p className="font-code text-xs uppercase text-[var(--aka)]">Stack</p>
           <h2
             id="stack-heading"
-            className="font-display mt-6 max-w-[9ch] text-6xl leading-[0.9] text-[var(--ink)] sm:text-7xl md:text-8xl"
+            className="font-display mt-6 block max-w-[9ch] text-6xl leading-[0.9] text-[var(--ink)] sm:text-7xl md:text-8xl"
           >
-            Tools
+            <SplitWords text="Tools" />
           </h2>
           <p className="mt-8 max-w-[31rem] text-lg leading-8 text-[var(--muted)]">
             The stack changes by discipline because each mode asks for a different rhythm.
@@ -194,21 +195,24 @@ export default function SkillsSection() {
 
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {activeCategory.skills.map((skill, index) => (
-                      <motion.div
+                      <SpotlightCard
                         key={skill}
-                        className="group min-h-32 rounded-[1.25rem] border border-[var(--line)] bg-white p-5 transition-colors duration-300 hover:bg-[var(--paper-blue)]"
-                        initial={{ opacity: 0, y: 14 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.28, delay: index * 0.025 }}
-                        whileHover={{ y: -3 }}
-                        whileTap={{ scale: 0.98 }}
+                        className="min-h-32 p-5"
+                        glowColor="rgba(35,79,213,0.16)"
+                        motionProps={{
+                          initial: { opacity: 0, y: 14 },
+                          animate: { opacity: 1, y: 0 },
+                          transition: { duration: 0.28, delay: index * 0.025 },
+                          whileHover: { y: -3 },
+                          whileTap: { scale: 0.98 },
+                        }}
                       >
                         <BrandIcon
                           name={skill}
                           className="h-6 w-6 text-[var(--ink)] transition-colors duration-300 group-hover:text-[var(--ai)]"
                         />
                         <p className="mt-6 text-sm font-bold leading-tight text-[var(--ink)]">{skill}</p>
-                      </motion.div>
+                      </SpotlightCard>
                     ))}
                   </div>
                 </motion.div>

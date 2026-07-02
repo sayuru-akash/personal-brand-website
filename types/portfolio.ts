@@ -16,8 +16,12 @@ export interface HeroContent {
   nameJapanese: string;
   /** Primary role statement (e.g., "Full-stack Developer & Musical Artist") */
   role: string;
+  /** Expanded rotating role list */
+  roles: string[];
   /** Additional tagline or subtitle */
   subtitle: string;
+  /** Compact personality or identity tags */
+  signalTags: string[];
 }
 
 /**

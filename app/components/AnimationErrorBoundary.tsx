@@ -32,12 +32,12 @@ export default class AnimationErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <section className="mx-auto max-w-[1400px] px-5 py-24 sm:px-8 lg:px-12">
-          <div className="border-t border-neutral-200 pt-8">
-            <p className="text-sm uppercase tracking-[0.18em] text-neutral-500">
+        <section className="mx-auto max-w-[1500px] bg-[var(--paper)] px-5 py-24 sm:px-8 lg:px-10">
+          <div className="border-t border-[var(--line)] pt-8">
+            <p className="font-code text-sm uppercase text-[var(--faint)]">
               {this.props.fallbackLabel ?? 'Section unavailable'}
             </p>
-            <p className="mt-4 max-w-[42rem] text-base text-neutral-700">
+            <p className="mt-4 max-w-[42rem] text-base text-[var(--muted)]">
               This section is still readable in static mode, but its animation layer failed to load.
             </p>
           </div>

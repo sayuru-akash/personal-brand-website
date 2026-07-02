@@ -4,8 +4,8 @@
   "description": "Portfolio of Sayuru Akash Amarasinghe - Full-stack Developer, Musical Artist, and CEO @ Codezela Technologies",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fafafa",
-  "theme_color": "#10b981",
+  "background_color": "#ffffff",
+  "theme_color": "#d63a2f",
   "orientation": "portrait-primary",
   "icons": [
     {

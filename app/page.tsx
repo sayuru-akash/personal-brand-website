@@ -2,7 +2,6 @@ import HeroSection from '@/app/components/HeroSection';
 import AboutSection from '@/app/components/AboutSection';
 import AnimationErrorBoundary from '@/app/components/AnimationErrorBoundary';
 import ScrollProgress from '@/app/components/ScrollProgress';
-import ProjectsSection from './components/ProjectsSection';
 import SkillsSection from './components/SkillsSection';
 import ContactSection from './components/ContactSection';
 
@@ -13,7 +12,7 @@ export default function Home() {
         <ScrollProgress />
       </AnimationErrorBoundary>
       
-      <div className="min-h-screen bg-white text-neutral-900">
+      <div className="min-h-[100dvh] bg-[var(--paper)] text-[var(--ink)]">
         <AnimationErrorBoundary fallbackLabel="Hero">
           <HeroSection />
         </AnimationErrorBoundary>
@@ -24,10 +23,6 @@ export default function Home() {
         
         <AnimationErrorBoundary fallbackLabel="Skills">
           <SkillsSection />
-        </AnimationErrorBoundary>
-        
-        <AnimationErrorBoundary fallbackLabel="Projects">
-          <ProjectsSection />
         </AnimationErrorBoundary>
         
         <AnimationErrorBoundary fallbackLabel="Contact">

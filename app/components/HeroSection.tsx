@@ -1,370 +1,239 @@
 'use client';
 
+import Image from 'next/image';
+import { ArrowDown, ArrowUpRight } from '@phosphor-icons/react';
 import { motion, useScroll, useTransform } from 'motion/react';
-import { heroContent } from '@/data/portfolio';
-import { 
-  entranceVariants, 
-  staggerContainerVariants, 
-  springPhysics
-} from '@/utils/animationConfig';
 import { useRef } from 'react';
+import BrandIcon from '@/app/components/BrandIcon';
+import { MagnetLines, RoleTicker, ShinyText } from '@/app/components/ReactBitsPrimitives';
+import SignalLottie from '@/app/components/SignalLottie';
+import { aboutContent, contactContent, heroContent } from '@/data/portfolio';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-/**
- * HeroSection Component
- * 
- * Implements asymmetric layout with large display heading and Japanese subtitle.
- * Features staggered entrance animations and perpetual floating SVG motif.
- * Includes smooth "sucking up" scroll effect for immersive transitions.
- * 
- * Requirements: 1.1, 1.4, 1.5, 1.6, 1.7, 6.1, 6.2, 6.7, 8.2, 8.4, 10.3, 11.1
- */
+const navItems = [
+  { label: 'Home', href: '#home' },
+  { label: 'Profile', href: '#profile' },
+  { label: 'Stack', href: '#stack' },
+  { label: 'Contact', href: '#contact' },
+];
+
+const toolStrip = ['Next.js', 'React', 'TypeScript', 'Figma', 'PostgreSQL'];
+
 export default function HeroSection() {
-  const containerRef = useRef<HTMLElement>(null);
-  
-  // Smooth "sucking up" scroll effect
+  const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start']
+    target: sectionRef,
+    offset: ['start start', 'end start'],
   });
-  
-  // Transform values for smooth scroll effect
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.92]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  
-  // Parallax for foreground elements
-  const fgParallaxY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  
+
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, -72]);
+  const visualY = useTransform(scrollYProgress, [0, 1], [0, -36]);
+  const washY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+
   return (
-    <motion.section 
-      ref={containerRef}
-      className="relative min-h-[100dvh] flex items-center justify-start overflow-hidden"
-      style={{ 
-        zIndex: 1,
-        backgroundColor: 'white',
-      }}
+    <section
+      ref={sectionRef}
+      id="home"
+      className="relative isolate min-h-[100dvh] overflow-hidden bg-white"
+      aria-labelledby="hero-heading"
     >
-      {/* Sky background layer - part of the hero, so it cannot show viewport box edges */}
+      <div className="absolute inset-0 ink-grid opacity-30" />
       <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          opacity: useTransform(scrollYProgress, [0, 0.15, 0.72, 1], [0.86, 1, 0.96, 0.68]),
-          zIndex: 0,
-        }}
+        className="absolute -right-24 top-0 h-[28rem] w-[42rem] rounded-bl-[12rem] bg-[rgba(238,244,255,0.58)]"
+        style={{ y: washY }}
+      />
+      <div className="absolute left-0 top-0 h-full w-1 bg-[var(--aka)]/90 sm:w-1.5" />
+      <svg
+        className="absolute inset-x-0 bottom-0 h-20 w-full text-[var(--aka)]"
+        viewBox="0 0 1440 120"
+        fill="none"
+        preserveAspectRatio="none"
+        aria-hidden="true"
       >
-        {/* Sky gradient */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to bottom, #bae6fd 0%, #e0f2fe 30%, #f0f9ff 60%, #ffffff 100%)',
-          }}
+        <path
+          d="M0 78C174 44 295 103 471 70C648 37 764 24 934 63C1112 104 1266 42 1440 65"
+          stroke="currentColor"
+          strokeWidth="10"
+          strokeLinecap="round"
+          opacity="0.86"
         />
+      </svg>
 
-        {/* Animated clouds - Layer 1 (far) */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Cloud 1 */}
-          <motion.div
-            className="absolute"
-            style={{
-              top: '15%',
-              left: '10%',
-              x: useTransform(scrollYProgress, [0, 1], [0, 100]),
-              y: useTransform(scrollYProgress, [0, 1], [0, -30]),
-            }}
-          >
-            <motion.div
-              animate={{ x: [0, 34, 0], y: [0, -6, 0] }}
-              transition={{ duration: 34, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <svg width="120" height="60" viewBox="0 0 120 60" fill="none">
-                <ellipse cx="30" cy="35" rx="25" ry="20" fill="white" opacity="0.7" />
-                <ellipse cx="50" cy="30" rx="30" ry="25" fill="white" opacity="0.7" />
-                <ellipse cx="75" cy="32" rx="28" ry="22" fill="white" opacity="0.7" />
-                <ellipse cx="95" cy="38" rx="22" ry="18" fill="white" opacity="0.7" />
-              </svg>
-            </motion.div>
-          </motion.div>
-
-          {/* Cloud 2 */}
-          <motion.div
-            className="absolute"
-            style={{
-              top: '25%',
-              right: '15%',
-              x: useTransform(scrollYProgress, [0, 1], [0, -80]),
-              y: useTransform(scrollYProgress, [0, 1], [0, -25]),
-            }}
-          >
-            <motion.div
-              animate={{ x: [0, -26, 0], y: [0, -5, 0] }}
-              transition={{ duration: 38, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-            >
-              <svg width="100" height="50" viewBox="0 0 100 50" fill="none">
-                <ellipse cx="25" cy="30" rx="20" ry="16" fill="white" opacity="0.6" />
-                <ellipse cx="42" cy="26" rx="24" ry="20" fill="white" opacity="0.6" />
-                <ellipse cx="62" cy="28" rx="22" ry="18" fill="white" opacity="0.6" />
-                <ellipse cx="78" cy="32" rx="18" ry="15" fill="white" opacity="0.6" />
-              </svg>
-            </motion.div>
-          </motion.div>
-
-          {/* Cloud 3 */}
-          <motion.div
-            className="absolute"
-            style={{
-              top: '45%',
-              left: '60%',
-              x: useTransform(scrollYProgress, [0, 1], [0, 120]),
-              y: useTransform(scrollYProgress, [0, 1], [0, -20]),
-            }}
-          >
-            <motion.div
-              animate={{ x: [0, 30, 0], y: [0, 4, 0] }}
-              transition={{ duration: 42, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-            >
-              <svg width="90" height="45" viewBox="0 0 90 45" fill="none">
-                <ellipse cx="22" cy="28" rx="18" ry="15" fill="white" opacity="0.65" />
-                <ellipse cx="38" cy="24" rx="22" ry="18" fill="white" opacity="0.65" />
-                <ellipse cx="56" cy="26" rx="20" ry="16" fill="white" opacity="0.65" />
-                <ellipse cx="70" cy="30" rx="16" ry="13" fill="white" opacity="0.65" />
-              </svg>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* Animated clouds - Layer 2 (near) */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Cloud 4 */}
-          <motion.div
-            className="absolute"
-            style={{
-              top: '20%',
-              left: '40%',
-              x: useTransform(scrollYProgress, [0, 1], [0, 150]),
-              y: useTransform(scrollYProgress, [0, 1], [0, -40]),
-            }}
-          >
-            <motion.div
-              animate={{ x: [0, 44, 0], y: [0, -8, 0] }}
-              transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-            >
-              <svg width="140" height="70" viewBox="0 0 140 70" fill="none">
-                <ellipse cx="35" cy="40" rx="30" ry="24" fill="white" opacity="0.85" />
-                <ellipse cx="60" cy="35" rx="35" ry="28" fill="white" opacity="0.85" />
-                <ellipse cx="90" cy="37" rx="32" ry="26" fill="white" opacity="0.85" />
-                <ellipse cx="115" cy="43" rx="25" ry="20" fill="white" opacity="0.85" />
-              </svg>
-            </motion.div>
-          </motion.div>
-
-          {/* Cloud 5 */}
-          <motion.div
-            className="absolute"
-            style={{
-              top: '35%',
-              right: '25%',
-              x: useTransform(scrollYProgress, [0, 1], [0, -100]),
-              y: useTransform(scrollYProgress, [0, 1], [0, -35]),
-            }}
-          >
-            <motion.div
-              animate={{ x: [0, -36, 0], y: [0, 7, 0] }}
-              transition={{ duration: 32, repeat: Infinity, ease: 'easeInOut', delay: 1.1 }}
-            >
-              <svg width="110" height="55" viewBox="0 0 110 55" fill="none">
-                <ellipse cx="28" cy="33" rx="24" ry="19" fill="white" opacity="0.8" />
-                <ellipse cx="48" cy="29" rx="28" ry="23" fill="white" opacity="0.8" />
-                <ellipse cx="72" cy="31" rx="26" ry="21" fill="white" opacity="0.8" />
-                <ellipse cx="90" cy="36" rx="20" ry="16" fill="white" opacity="0.8" />
-              </svg>
-            </motion.div>
-          </motion.div>
-
-          {/* Cloud 6 */}
-          <motion.div
-            className="absolute"
-            style={{
-              top: '50%',
-              left: '5%',
-              x: useTransform(scrollYProgress, [0, 1], [0, 130]),
-              y: useTransform(scrollYProgress, [0, 1], [0, -28]),
-            }}
-          >
-            <motion.div
-              animate={{ x: [0, 40, 0], y: [0, -7, 0] }}
-              transition={{ duration: 36, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-            >
-              <svg width="130" height="65" viewBox="0 0 130 65" fill="none">
-                <ellipse cx="32" cy="38" rx="28" ry="22" fill="white" opacity="0.75" />
-                <ellipse cx="55" cy="33" rx="32" ry="26" fill="white" opacity="0.75" />
-                <ellipse cx="82" cy="35" rx="30" ry="24" fill="white" opacity="0.75" />
-                <ellipse cx="105" cy="40" rx="23" ry="18" fill="white" opacity="0.75" />
-              </svg>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        {/* White wash keeps the hero-to-about transition soft during scroll */}
+      {!prefersReducedMotion && (
         <motion.div
-          className="absolute inset-x-0 bottom-0 h-[62vh]"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.72) 58%, #ffffff 100%)',
-            opacity: useTransform(scrollYProgress, [0.12, 0.42, 0.78], [0.18, 0.82, 1]),
-          }}
+          className="absolute right-[12vw] top-[18vh] h-2.5 w-2.5 rounded-full bg-[var(--ai)]"
+          animate={{ y: [0, 20, 0], scale: [1, 1.55, 1] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
         />
-      </motion.div>
+      )}
 
-      {/* Smooth gradient fade to next section */}
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to bottom, transparent 0%, white 100%)',
-            opacity: useTransform(scrollYProgress, [0.18, 0.46], [0.35, 1]),
-          }}
-        />
-
-      {/* Main content container with asymmetric layout */}
-      <motion.div 
-        className="relative z-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8"
-        style={{ y, scale }}
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[100dvh] py-16">
-          
-          {/* Content area - 40% of space with offset */}
-          <motion.div 
-            className="lg:col-span-5 lg:col-start-1 space-y-6 offset-md"
-            variants={staggerContainerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {/* Main heading with staggered entrance */}
-            <motion.h1 
-              className="text-4xl md:text-6xl font-bold tracking-tighter leading-none text-neutral-900"
-              variants={entranceVariants}
-            >
-              {heroContent.name}
-            </motion.h1>
-
-            {/* Japanese subtitle with lighter weight */}
-            <motion.p 
-              className="japanese-text text-japanese-base font-light text-neutral-600 tracking-wide"
-              variants={entranceVariants}
-            >
-              {heroContent.nameJapanese}
-            </motion.p>
-
-            {/* Role statement */}
-            <motion.p 
-              className="text-xl md:text-2xl font-medium text-neutral-700 tracking-tight leading-relaxed max-w-[65ch]"
-              variants={entranceVariants}
-            >
-              {heroContent.role}
-            </motion.p>
-
-            {/* Subtitle */}
-            <motion.p 
-              className="text-base md:text-lg text-neutral-600 leading-relaxed max-w-[65ch]"
-              variants={entranceVariants}
-            >
-              {heroContent.subtitle}
-            </motion.p>
-          </motion.div>
-
-          {/* Whitespace area - 60% with floating SVG motif */}
-          <div className="lg:col-span-7 lg:col-start-6 flex items-center justify-center relative">
-            {/* Animated SVG motif with parallax */}
-            <motion.div
-              className="relative"
-              style={{ y: fgParallaxY }}
-              animate={{
-                y: [-10, 10, -10],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <svg
-                width="200"
-                height="200"
-                viewBox="0 0 200 200"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-neutral-300"
-              >
-                {/* Minimalist geometric motif inspired by Japanese design */}
-                <motion.circle
-                  cx="100"
-                  cy="100"
-                  r="80"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  fill="none"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ ...springPhysics, duration: 2, delay: 1 }}
-                />
-                <motion.circle
-                  cx="100"
-                  cy="100"
-                  r="40"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  fill="none"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 0.6 }}
-                  transition={{ ...springPhysics, duration: 2, delay: 1.5 }}
-                />
-                <motion.line
-                  x1="100"
-                  y1="20"
-                  x2="100"
-                  y2="180"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 0.4 }}
-                  transition={{ ...springPhysics, duration: 2, delay: 2 }}
-                />
-                <motion.line
-                  x1="20"
-                  y1="100"
-                  x2="180"
-                  y2="100"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 0.4 }}
-                  transition={{ ...springPhysics, duration: 2, delay: 2.2 }}
-                />
-              </svg>
-            </motion.div>
-
-            {/* Removed green accent dots for cleaner design */}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Scroll indicator with fade on scroll */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...springPhysics, delay: 3 }}
-        style={{ opacity: useTransform(scrollYProgress, [0, 0.3], [1, 0]) }}
-      >
-        <motion.div
-          className="w-6 h-10 border border-neutral-400 rounded-full flex justify-center"
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <motion.div
-            className="w-1 h-3 bg-neutral-400 rounded-full mt-2"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+      <header className="relative z-30 mx-auto flex w-full max-w-[1500px] items-center justify-between gap-5 px-5 py-5 sm:px-8 lg:px-10">
+        <a href="#home" className="group block shrink-0" aria-label="Sayuru home">
+          <Image
+            src="/images/generated/sayuru-wordmark-red.png"
+            alt="Sayuru"
+            width={1963}
+            height={751}
+            className="h-12 w-[178px] object-contain object-left transition-transform duration-300 group-hover:-translate-y-0.5 sm:h-14 sm:w-[214px]"
+            priority
           />
+        </a>
+
+        <nav className="hidden items-center gap-1 rounded-full border border-[var(--line)] bg-[rgba(255,255,255,0.82)] p-1 text-sm font-bold text-[var(--muted)] backdrop-blur-xl md:flex">
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="nav-pill rounded-full px-4 py-2 transition-colors duration-300"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <a
+          href={`mailto:${contactContent.email}`}
+          className="ink-button group inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition-transform duration-300 active:translate-y-px"
+        >
+          Email
+          <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        </a>
+      </header>
+
+      <div className="relative z-20 mx-auto grid min-h-[calc(100dvh-90px)] w-full max-w-[1500px] grid-cols-1 items-center gap-24 px-5 pb-24 pt-14 sm:px-8 lg:grid-cols-[minmax(0,0.96fr)_minmax(24rem,0.64fr)] lg:px-10 lg:pb-28 xl:gap-28">
+        <motion.div className="max-w-[60rem]" style={{ y: copyY }}>
+          <motion.p
+            className="font-code text-xs uppercase text-[var(--muted)]"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {aboutContent.location} / Codezela Technologies
+          </motion.p>
+
+          <motion.p
+            className="mt-4 text-lg font-bold text-[var(--aka)] sm:text-xl"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.72, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {heroContent.nameJapanese}
+          </motion.p>
+
+          <motion.h1
+            id="hero-heading"
+            className="font-display mt-8 max-w-full text-[clamp(2.75rem,12vw,4.6rem)] leading-[0.96] text-[var(--ink)] sm:text-[clamp(4.4rem,7vw,6.25rem)]"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.88, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="block">Sayuru</span>
+            <span className="block">Akash</span>
+            <span className="hidden text-[clamp(3.2rem,5.95vw,5.35rem)] text-[var(--ai)] sm:block">
+              Amarasinghe
+            </span>
+            <span className="block text-[var(--ai)] sm:hidden">Amara</span>
+            <span className="block text-[var(--ai)] sm:hidden">singhe</span>
+          </motion.h1>
+
+          <motion.div
+            className="mt-12 grid max-w-[58rem] grid-cols-1 gap-8 border-y border-[var(--line)] py-9 sm:py-10 xl:grid-cols-[minmax(18rem,0.72fr)_minmax(0,1.28fr)] xl:gap-14"
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.82, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div>
+              <p className="font-code text-xs uppercase text-[var(--faint)]">Current mode</p>
+              <RoleTicker
+                roles={heroContent.roles}
+                className="font-display mt-4 min-h-[3.6rem] text-3xl leading-[1.08] text-[var(--aka)] sm:min-h-[5.8rem] sm:text-4xl lg:text-[2.65rem]"
+              />
+              <p className="font-code mt-4 text-xs uppercase text-[var(--muted)]">
+                <ShinyText color="var(--muted)" shineColor="var(--ai)" speed={4.2}>
+                  {heroContent.role}
+                </ShinyText>
+              </p>
+            </div>
+            <p className="max-w-[45rem] text-xl font-semibold leading-9 text-[var(--muted)] sm:text-2xl sm:leading-10">
+              {heroContent.subtitle} I work across product interfaces, full-stack systems, writing, and sound.
+            </p>
+          </motion.div>
+
+          <motion.ul
+            className="mt-10 flex max-w-[56rem] flex-wrap gap-3"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.78, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {heroContent.signalTags.map((tag, index) => (
+              <motion.li
+                key={tag}
+                className="paper-button inline-flex h-10 items-center rounded-full px-4 font-code text-xs uppercase"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.42, delay: 0.28 + index * 0.035, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -2 }}
+              >
+                {tag}
+              </motion.li>
+            ))}
+          </motion.ul>
+
+          <motion.div
+            className="mt-8 flex flex-wrap items-center gap-3"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.78, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {toolStrip.map((tool) => (
+              <span
+                key={tool}
+                className="paper-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition-colors duration-300"
+              >
+                <BrandIcon name={tool} className="h-4 w-4" />
+                {tool}
+              </span>
+            ))}
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </motion.section>
+
+        <motion.div className="relative" style={{ y: visualY }}>
+          <div className="relative mx-auto max-w-[32rem] lg:mr-0">
+            <MagnetLines
+              className="absolute -right-10 -top-10 hidden h-52 w-52 opacity-40 lg:grid"
+              rows={7}
+              columns={7}
+              lineColor="var(--ai)"
+              lineWidth="2px"
+              lineHeight="28px"
+            />
+            <div className="paper-shadow relative overflow-hidden rounded-[2.25rem] border border-[var(--ink)] bg-white p-2">
+              <Image
+                src="/images/generated/sayuru-hero-portrait.png"
+                alt="Abstract portrait illustration for Sayuru Akash Amarasinghe"
+                width={1122}
+                height={1402}
+                priority
+                className="aspect-[4/5] w-full rounded-[1.6rem] object-cover"
+              />
+            </div>
+
+            <div className="absolute -bottom-5 -left-3 grid h-28 w-28 place-items-center rounded-[1.3rem] border border-[var(--line)] bg-[rgba(255,255,255,0.88)] backdrop-blur-xl sm:h-32 sm:w-32">
+              <SignalLottie className="h-24 w-24 sm:h-28 sm:w-28" variant="tabs" />
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      <a
+        href="#profile"
+        className="absolute bottom-8 right-8 z-30 hidden h-12 w-12 place-items-center rounded-full border border-[var(--line)] bg-[rgba(255,255,255,0.82)] text-[var(--ink)] backdrop-blur-xl transition-transform duration-300 hover:translate-y-1 md:grid"
+        aria-label="Scroll to profile"
+      >
+        <ArrowDown className="h-5 w-5" />
+      </a>
+    </section>
   );
 }

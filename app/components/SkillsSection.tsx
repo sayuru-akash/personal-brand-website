@@ -1,321 +1,208 @@
 'use client';
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import Image from 'next/image';
+import { useMemo, useState } from 'react';
+import BrandIcon, { hasBrandIcon } from '@/app/components/BrandIcon';
 import { skillCategories } from '@/data/portfolio';
-import { useRef, useState, useEffect } from 'react';
 
-// Emoji mapping for each individual skill
-const skillEmojis: Record<string, string> = {
-  // Development
-  'Next.js': '⚡',
-  'React': '⚛️',
-  'TypeScript': '📘',
-  'Node.js': '🟢',
-  'Python': '🐍',
-  'PostgreSQL': '🐘',
-  'MongoDB': '🍃',
-  'GraphQL': '🔷',
-  'REST APIs': '🔌',
-  'Git': '🌿',
-  
-  // Design
-  'UI/UX Design': '🎨',
-  'Figma': '🎯',
-  'Adobe XD': '💎',
-  'Prototyping': '🔨',
-  'Design Systems': '📐',
-  'Responsive Design': '📱',
-  'Animation': '✨',
-  
-  // Music Production
-  'FL Studio': '🎹',
-  'Ableton Live': '🎵',
-  'Audio Engineering': '🎧',
-  'Mixing & Mastering': '🎚️',
-  'Sound Design': '🔊',
-  'Composition': '🎼',
-  
-  // Content Writing
-  'Technical Writing': '📝',
-  'Blog Posts': '✍️',
-  'Documentation': '📚',
-  'Copywriting': '💬',
-  'SEO Writing': '🔍',
-  'Content Strategy': '📊',
-  
-  // Investment
-  'Cryptocurrency': '₿',
-  'Blockchain Technology': '⛓️',
-  'Market Analysis': '📈',
-  'Portfolio Management': '💼',
-  'Risk Assessment': '⚖️',
+const stackNotes: Record<string, string> = {
+  development: 'The main bench: interfaces, APIs, data, deploys, and the small fixes that make a product feel finished.',
+  design: 'Spacing, hierarchy, prototypes, motion, and handoff decisions that survive implementation.',
+  'music-production': 'Arrangement, sound design, engineering, mix decisions, and the habit of listening until something feels right.',
+  'content-writing': 'Technical writing, docs, and public notes that make complicated systems easier to use.',
+  investment: 'Crypto and market research with attention to risk, timing, and what not to touch.',
 };
 
-/**
- * SkillsSection Component
- * 
- * PREMIUM VERSION with emoji cursor followers
- * - Smooth emoji cursor that follows mouse on skill hover
- * - Magnetic hover effects on cards
- * - Smooth scroll-linked reveals
- * - Interactive card tilts
- * - Spotlight effects on hover
- * - Buttery smooth animations with spring physics
- */
+const categoryTone: Record<string, string> = {
+  development: 'var(--aka)',
+  design: 'var(--ai)',
+  'music-production': 'var(--murasaki)',
+  'content-writing': 'var(--matcha)',
+  investment: 'var(--ink)',
+};
+
 export default function SkillsSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-  const [hoveredSkill, setHoveredSkill] = useState<{ skill: string; emoji: string } | null>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start']
-  });
+  const [activeId, setActiveId] = useState(skillCategories[0]?.id ?? '');
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 110, damping: 24, mass: 0.4 });
+  const smoothY = useSpring(mouseY, { stiffness: 110, damping: 24, mass: 0.4 });
+  const rotateX = useTransform(smoothY, [-220, 220], [7, -7]);
+  const rotateY = useTransform(smoothX, [-220, 220], [-7, 7]);
 
-  // Smooth cursor following with spring physics
-  const cursorX = useMotionValue(0);
-  const cursorY = useMotionValue(0);
-  const smoothCursorX = useSpring(cursorX, { stiffness: 120, damping: 20, mass: 0.3 });
-  const smoothCursorY = useSpring(cursorY, { stiffness: 120, damping: 20, mass: 0.3 });
+  const activeCategory = useMemo(
+    () => skillCategories.find((category) => category.id === activeId) ?? skillCategories[0]!,
+    [activeId]
+  );
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (hoveredSkill) {
-        cursorX.set(e.clientX);
-        cursorY.set(e.clientY);
-      }
-    };
+  const handleMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    mouseX.set(event.clientX - rect.left - rect.width / 2);
+    mouseY.set(event.clientY - rect.top - rect.height / 2);
+  };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [cursorX, cursorY, hoveredSkill]);
-  
-  const getGridSpan = (size: 'small' | 'medium' | 'large') => {
-    switch (size) {
-      case 'large': return 'lg:col-span-2';
-      case 'medium': return 'lg:col-span-1';
-      case 'small': return 'lg:col-span-1';
-      default: return 'lg:col-span-1';
-    }
+  const handleLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
   };
 
   return (
-    <section 
-      ref={containerRef}
-      className="relative min-h-[100dvh] flex items-center bg-neutral-50 py-24 sm:py-32 overflow-hidden"
+    <section
+      id="stack"
+      className="relative isolate overflow-hidden bg-white py-32 text-[var(--ink)] sm:py-40 lg:py-52"
+      aria-labelledby="stack-heading"
     >
-      {/* Animated background grid */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.02]">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(to right, #000 1px, transparent 1px),
-            linear-gradient(to bottom, #000 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
-        }} />
-      </div>
+      <div className="absolute inset-0 ink-grid opacity-25" />
+      <div className="absolute -right-24 top-24 h-72 w-72 rounded-full bg-[rgba(238,244,255,0.72)] blur-3xl" />
+      <div className="absolute -left-24 bottom-24 h-72 w-72 rounded-full bg-[rgba(214,58,47,0.07)] blur-3xl" />
 
-      {/* Floating gradient orbs */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full"
-        style={{
-          background: 'radial-gradient(circle, rgba(100,116,139,0.08) 0%, transparent 70%)',
-          y: useTransform(scrollYProgress, [0, 1], [0, -100]),
-        }}
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-
-      {/* Emoji cursor follower - only shows when hovering skills */}
-      {hoveredSkill && (
+      <div className="relative mx-auto grid w-full max-w-[1500px] grid-cols-1 gap-24 px-5 sm:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:px-10 xl:gap-28">
         <motion.div
-          className="fixed pointer-events-none z-50 text-5xl"
-          style={{
-            left: smoothCursorX,
-            top: smoothCursorY,
-            x: '-50%',
-            y: '-50%',
-          }}
-          initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          exit={{ opacity: 0, scale: 0.5, rotate: 20 }}
-          transition={{
-            opacity: { duration: 0.2 },
-            scale: { type: 'spring', stiffness: 300, damping: 20 },
-            rotate: { type: 'spring', stiffness: 200, damping: 15 },
-          }}
-        >
-          <motion.div
-            animate={{
-              rotate: [0, 10, -10, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          >
-            {hoveredSkill.emoji}
-          </motion.div>
-        </motion.div>
-      )}
-
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
-        
-        {/* Section header */}
-        <motion.div 
-          className="mb-20"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true, margin: '-120px' }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
-          <motion.div 
-            className="inline-flex items-center gap-4 mb-6"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <p className="font-code text-xs uppercase text-[var(--aka)]">Stack</p>
+          <h2
+            id="stack-heading"
+            className="font-display mt-6 max-w-[9ch] text-6xl leading-[0.9] text-[var(--ink)] sm:text-7xl md:text-8xl"
           >
-            <div className="h-[2px] w-12 bg-accent" />
-            <span className="text-sm uppercase tracking-[0.2em] text-accent font-medium">
-              スキル / Skills
-            </span>
-          </motion.div>
-          
-          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-[-0.03em] leading-[0.9] text-neutral-900">
-            Expertise
+            Tools, not trophies.
           </h2>
+          <p className="mt-8 max-w-[31rem] text-lg leading-8 text-[var(--muted)]">
+            The stack changes by discipline because each mode asks for a different rhythm.
+          </p>
+          <motion.div
+            className="mt-16 hidden overflow-hidden rounded-[2rem] border border-[var(--line)] bg-white p-2 lg:block"
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-120px' }}
+            transition={{ duration: 0.76, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Image
+              src="/images/generated/sayuru-stack-interface.png"
+              alt="Abstract interface composition for Sayuru's technical stack"
+              width={1254}
+              height={1254}
+              className="aspect-square w-full rounded-[1.45rem] object-cover"
+              sizes="(min-width: 1024px) 32vw, 90vw"
+            />
+          </motion.div>
         </motion.div>
 
-        {/* Bento grid with enhanced interactions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {skillCategories.map((category, index) => (
-            <motion.div
-              key={category.id}
-              className={`${getGridSpan(category.gridSize)} group`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ 
-                duration: 0.6, 
-                delay: index * 0.08,
-                ease: [0.22, 1, 0.36, 1]
-              }}
-              onHoverStart={() => setHoveredCard(category.id)}
-              onHoverEnd={() => setHoveredCard(null)}
-            >
-              <motion.div 
-                className="relative h-full bg-white border border-neutral-200 rounded-3xl p-8 lg:p-10 overflow-hidden"
-                whileHover={{ 
-                  y: -8,
-                  boxShadow: '0 12px 24px rgba(0,0,0,0.04)',
-                }}
-                transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-              >
-                {/* Spotlight effect on hover */}
-                <motion.div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: 'radial-gradient(circle at 50% 0%, rgba(100,116,139,0.06) 0%, transparent 60%)',
-                  }}
-                />
+        <div className="grid grid-cols-1 gap-12 xl:grid-cols-[0.66fr_1.34fr]">
+          <motion.div
+            className="divide-y divide-[var(--line)] border-y border-[var(--line)]"
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-120px' }}
+            transition={{ duration: 0.78, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {skillCategories.map((category, index) => {
+              const isActive = category.id === activeId;
 
-                {/* Animated border on hover */}
-                <motion.div
-                  className="absolute inset-0 rounded-3xl"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(100,116,139,0.08) 0%, transparent 50%)',
-                  }}
-                />
-
-                <div className="relative z-10">
-                  {/* Category icon/number */}
-                  <motion.div 
-                    className="mb-6 inline-flex items-center justify-center w-14 h-14 bg-accent/10 rounded-2xl"
-                    animate={hoveredCard === category.id ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                  >
-                    <span className="text-2xl font-bold text-accent">
+              return (
+                <button
+                  key={category.id}
+                  type="button"
+                  className="group relative flex w-full items-center justify-between gap-5 py-7 text-left"
+                  onMouseEnter={() => setActiveId(category.id)}
+                  onFocus={() => setActiveId(category.id)}
+                  onClick={() => setActiveId(category.id)}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="stack-active-dot"
+                      className="absolute -left-5 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full"
+                      style={{ background: categoryTone[category.id] }}
+                    />
+                  )}
+                  <span>
+                    <span className="font-code block text-xs text-[var(--faint)]">
                       {String(index + 1).padStart(2, '0')}
                     </span>
+                    <span className="mt-2 block text-2xl font-bold text-[var(--ink)] transition-colors duration-300 group-hover:text-[var(--aka)]">
+                      {category.title}
+                    </span>
+                  </span>
+                  <span className="font-code text-xs text-[var(--faint)]">{category.skills.length}</span>
+                </button>
+              );
+            })}
+          </motion.div>
+
+          <motion.div
+            className="paper-shadow relative min-h-[40rem] overflow-hidden rounded-[2.2rem] border border-[var(--ink)] bg-white p-2"
+            style={{ rotateX, rotateY, transformPerspective: 900 }}
+            onMouseMove={handleMove}
+            onMouseLeave={handleLeave}
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-120px' }}
+            transition={{ duration: 0.78, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[1.65rem] bg-[var(--paper)] text-[var(--ink)]">
+              <div
+                className="absolute inset-x-0 top-0 h-2"
+                style={{ background: categoryTone[activeCategory.id] }}
+              />
+              <div className="flex items-start justify-between gap-8 border-b border-[var(--line)] p-7 sm:p-9">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeCategory.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.24 }}
+                  >
+                    <p className="font-code text-xs uppercase text-[var(--faint)]">active</p>
+                    <h3 className="mt-4 text-4xl font-black leading-none text-[var(--ink)] sm:text-5xl">
+                      {activeCategory.title}
+                    </h3>
                   </motion.div>
-
-                  {/* Category title */}
-                  <h3 className="text-2xl lg:text-3xl font-bold tracking-tight text-neutral-900 mb-6">
-                    {category.title}
-                  </h3>
-
-                  {/* Animated divider */}
-                  <motion.div 
-                    className="h-[2px] bg-gradient-to-r from-accent to-transparent mb-8"
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: index * 0.08 + 0.3 }}
-                    style={{ transformOrigin: 'left' }}
-                  />
-
-                  {/* Skills list */}
-                  <ul className="space-y-3">
-                    {category.skills.map((skill, skillIndex) => (
-                      <motion.li
-                        key={skill}
-                        className="flex items-start gap-3 text-base lg:text-lg text-neutral-700"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ 
-                          duration: 0.4, 
-                          delay: index * 0.08 + skillIndex * 0.03 + 0.4,
-                          ease: [0.22, 1, 0.36, 1]
-                        }}
-                      >
-                        <motion.span 
-                          className="mt-2 w-2 h-2 rounded-full bg-accent flex-shrink-0"
-                          animate={hoveredCard === category.id ? {
-                            scale: [1, 1.5, 1],
-                          } : {}}
-                          transition={{
-                            duration: 0.6,
-                            delay: skillIndex * 0.05,
-                            repeat: hoveredCard === category.id ? Infinity : 0,
-                          }}
-                        />
-                        <span 
-                          className="leading-relaxed group-hover:text-neutral-900 transition-colors cursor-default inline-block"
-                          onMouseEnter={() => setHoveredSkill({ 
-                            skill, 
-                            emoji: skillEmojis[skill] || '✨' 
-                          })}
-                          onMouseLeave={() => setHoveredSkill(null)}
-                        >
-                          {skill}
-                        </span>
-                      </motion.li>
-                    ))}
-                  </ul>
+                </AnimatePresence>
+                <div className="hidden h-16 w-16 place-items-center rounded-full border border-[var(--line)] bg-white md:grid">
+                  <BrandIcon name={activeCategory.skills.find(hasBrandIcon) ?? activeCategory.skills[0] ?? ''} className="h-8 w-8" />
                 </div>
+              </div>
 
-                {/* Hover glow effect */}
+              <AnimatePresence mode="wait">
                 <motion.div
-                  className="absolute -bottom-20 -right-20 w-40 h-40 bg-slate-500/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                />
-              </motion.div>
-            </motion.div>
-          ))}
-        </div>
+                  key={activeCategory.id}
+                  className="flex flex-1 flex-col justify-between gap-12 p-7 sm:p-9"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <p className="max-w-[44rem] text-xl font-semibold leading-8 text-[var(--ink)] sm:text-2xl sm:leading-snug">
+                    {stackNotes[activeCategory.id]}
+                  </p>
 
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {activeCategory.skills.map((skill, index) => (
+                      <motion.div
+                        key={skill}
+                        className="group min-h-32 rounded-[1.25rem] border border-[var(--line)] bg-white p-5 transition-colors duration-300 hover:bg-[var(--paper-blue)]"
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.28, delay: index * 0.025 }}
+                      >
+                        <BrandIcon
+                          name={skill}
+                          className="h-6 w-6 text-[var(--ink)] transition-colors duration-300 group-hover:text-[var(--ai)]"
+                        />
+                        <p className="mt-6 text-sm font-bold leading-tight text-[var(--ink)]">{skill}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

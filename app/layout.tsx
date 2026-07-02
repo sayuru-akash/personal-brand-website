@@ -1,7 +1,29 @@
 import type { Metadata, Viewport } from 'next';
+import { M_PLUS_1_Code, Unbounded, Zen_Kaku_Gothic_New } from 'next/font/google';
+import SmoothScroll from '@/app/components/SmoothScroll';
 import './globals.css';
 
-// Enhanced metadata for SEO and social sharing
+const zenKaku = Zen_Kaku_Gothic_New({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700', '900'],
+  variable: '--font-zen-kaku',
+  display: 'swap',
+});
+
+const unbounded = Unbounded({
+  subsets: ['latin'],
+  weight: ['400', '500', '700', '900'],
+  variable: '--font-unbounded',
+  display: 'swap',
+});
+
+const mPlusCode = M_PLUS_1_Code({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-m-plus-code',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: {
     default: 'Sayuru Akash Amarasinghe | Full-stack Developer & Musical Artist',
@@ -12,7 +34,11 @@ export const metadata: Metadata = {
     'Sayuru Akash Amarasinghe',
     'サユル アーカーシュ',
     'Full-stack Developer',
+    'Front End Developer',
+    'Web Designer',
     'Musical Artist',
+    'Content Writer',
+    'Investor',
     'Codezela Technologies',
     'Sri Lanka',
     'Colombo',
@@ -79,8 +105,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#fafafa' },
-    { media: '(prefers-color-scheme: dark)', color: '#171717' },
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#ffffff' },
   ],
 };
 
@@ -90,33 +116,38 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${zenKaku.variable} ${unbounded.variable} ${mPlusCode.variable}`}
+    >
       <head>
         {/* Favicon and app icons */}
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className="bg-white text-neutral-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+      <body>
         {/* NoScript message for users with JavaScript disabled */}
         <noscript>
-          <div className="noscript-message">
-            <strong>JavaScript is disabled.</strong> This portfolio uses animations for enhanced experience, but all content is accessible without JavaScript. Some interactive features may be limited.
+          <div className="border-b border-[var(--line)] bg-[var(--paper)] px-5 py-3 text-sm text-[var(--ink)]">
+            <strong>JavaScript is disabled.</strong> The portfolio content remains available, but motion and copy interactions are reduced.
           </div>
         </noscript>
         
         {/* Skip to main content for accessibility */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-emerald-600 focus:text-white focus:rounded-md focus:shadow-lg"
+          className="ink-button sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:px-4 focus:py-2"
         >
           Skip to main content
         </a>
         
         {/* Main content wrapper with semantic structure */}
         <div id="root" className="relative min-h-screen">
-          <main id="main-content" className="relative z-10">
-            {children}
-          </main>
+          <SmoothScroll>
+            <main id="main-content" className="relative z-10">
+              {children}
+            </main>
+          </SmoothScroll>
         </div>
         
         {/* Structured data for SEO */}

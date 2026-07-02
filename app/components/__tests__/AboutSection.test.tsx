@@ -36,8 +36,8 @@ describe('AboutSection', () => {
   });
 
   it('includes expected traits', () => {
-    expect(aboutContent.traits).toContain('Coffee enthusiast');
-    expect(aboutContent.traits).toContain('Tech lover');
+    expect(aboutContent.traits).toContain('Coffee maniac');
+    expect(aboutContent.traits).toContain('Tech enthusiast');
   });
 
   it('all roles are non-empty strings', () => {

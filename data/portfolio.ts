@@ -21,14 +21,30 @@ export const heroContent: HeroContent = {
   name: 'Sayuru Akash Amarasinghe',
   nameJapanese: 'サユル アーカーシュ',
   role: 'Full-stack Developer & Musical Artist',
-  subtitle: 'Building digital experiences with code and creativity',
+  roles: [
+    'Musical Artist',
+    'Full-stack Developer',
+    'Web Designer',
+    'Content Writer',
+    'Investor',
+  ],
+  subtitle:
+    'I make web products, studio systems, and music from Western Sri Lanka.',
+  signalTags: [
+    'Coffee maniac',
+    'Team Android',
+    'Tech enthusiast',
+    'Crypto holder',
+    'Music addict',
+    'Netflix lover',
+  ],
 };
 
 /**
  * About section biographical content
  */
 export const aboutContent: AboutContent = {
-  bio: 'A multi-talented full-stack developer, startup founder, and musical artist from Colombo, Sri Lanka. Graduate in Software Engineering from Plymouth University, UK, currently leading Codezela Technologies as CEO. Passionate about creating exceptional digital experiences that blend technical excellence with creative vision.',
+  bio: 'I run Codezela Technologies, build with Next.js and TypeScript, write the notes that make systems usable, and keep a parallel practice in music production. I studied Software Engineering through Plymouth University and still prefer work that moves from rough sketch to shipped thing without losing taste.',
   roles: [
     'Full-stack Developer',
     'Musical Artist',
@@ -37,12 +53,12 @@ export const aboutContent: AboutContent = {
     'Investor',
   ],
   traits: [
-    'Coffee enthusiast',
-    'Tech lover',
-    'Crypto holder',
+    'Coffee maniac',
+    'Team Android',
+    'Tech enthusiast',
     'Music addict',
-    'Netflix fan',
-    'Android enthusiast',
+    'Crypto holder',
+    'Netflix lover',
   ],
   location: 'Colombo, Sri Lanka',
   education: 'BSc Software Engineering, Plymouth University, UK',
@@ -131,7 +147,7 @@ export const projects: Project[] = [
     id: 'codezela-technologies',
     title: 'Codezela Technologies',
     description:
-      'A technology startup focused on delivering innovative software solutions and digital experiences. Leading a team of developers and designers to create cutting-edge web applications and mobile solutions for clients worldwide.',
+      'The company I lead for software, web systems, and product interfaces. The work is practical: define the surface, build the stack, ship the release, keep it maintainable.',
     technologies: [
       'Next.js',
       'React',
@@ -143,12 +159,13 @@ export const projects: Project[] = [
     ],
     role: 'Founder & CEO',
     aspectRatio: '16/9',
+    imageUrl: '/images/work-codezela.svg',
   },
   {
     id: 'portfolio-platform',
     title: 'Portfolio Platform',
     description:
-      'An animated portfolio showcase featuring advanced scroll animations, parallax effects, and micro-interactions. Built with Japanese minimalist design principles and modern web motion choreography.',
+      'The personal surface you are looking at: identity, work, writing, and motion experiments compressed into one fast Next.js build.',
     technologies: [
       'Next.js 16',
       'Motion (Framer Motion v12)',
@@ -157,33 +174,37 @@ export const projects: Project[] = [
     ],
     role: 'Full-stack Developer & Designer',
     aspectRatio: '4/3',
+    imageUrl: '/images/work-portfolio.svg',
   },
   {
     id: 'music-production',
     title: 'Music Production Portfolio',
     description:
-      'A collection of original music productions spanning multiple genres. Showcasing expertise in audio engineering, mixing, mastering, and sound design.',
+      'Original production, arrangement, mixing, and texture work. A place for finished tracks, unfinished loops, and the small audio ideas that later become something larger.',
     technologies: ['FL Studio', 'Ableton Live', 'Audio Engineering'],
     role: 'Musical Artist & Producer',
     aspectRatio: '1/1',
+    imageUrl: '/images/work-music.svg',
   },
   {
     id: 'web-design-projects',
     title: 'Web Design Projects',
     description:
-      'A series of web design projects featuring modern UI/UX principles, responsive layouts, and engaging user experiences. Focus on clean aesthetics and intuitive navigation.',
+      'Interface studies and client builds where the design is judged by spacing, hierarchy, responsiveness, and whether the implementation still feels clean.',
     technologies: ['Figma', 'Adobe XD', 'React', 'Tailwind CSS'],
     role: 'Web Designer & Front End Developer',
     aspectRatio: '16/9',
+    imageUrl: '/images/work-design.svg',
   },
   {
     id: 'content-writing',
     title: 'Technical Content Writing',
     description:
-      'Technical articles, blog posts, and documentation covering software development, web technologies, and digital trends. Focus on clear, accessible explanations of complex topics.',
+      'Technical notes and product writing for the parts of software that should not need a meeting to understand.',
     technologies: ['Markdown', 'Technical Writing', 'SEO'],
     role: 'Content Writer',
     aspectRatio: '4/3',
+    imageUrl: '/images/work-writing.svg',
   },
 ];
 
@@ -195,6 +216,11 @@ export const socialLinks: SocialLink[] = [
     platform: 'GitHub',
     url: 'https://github.com/sayuru-akash',
     handle: '@sayuruakash',
+  },
+  {
+    platform: 'Facebook',
+    url: 'https://facebook.com/sayuru.s',
+    handle: 'sayuru.s',
   },
   {
     platform: 'LinkedIn',
@@ -211,6 +237,11 @@ export const socialLinks: SocialLink[] = [
     url: 'https://instagram.com/sayuru_akash',
     handle: '@sayuruakash',
   },
+  {
+    platform: 'Telegram',
+    url: 'https://t.me/sayuruakash_channel',
+    handle: 'sayuruakash_channel',
+  },
 ];
 
 /**
@@ -219,7 +250,7 @@ export const socialLinks: SocialLink[] = [
 export const contactContent: ContactContent = {
   email: 'contact@sayuru.me',
   socialLinks,
-  ctaText: "Let's create something exceptional together",
+  ctaText: 'For software, product design, music, or something between them.',
 };
 
 /**

@@ -86,20 +86,23 @@ export default function HeroSection() {
             <a
               key={item.href}
               href={item.href}
-              className="nav-pill rounded-full px-4 py-2 transition-colors duration-300"
+              className="nav-pill relative rounded-full px-4 py-2 transition-colors duration-300"
             >
-              {item.label}
+              <span className="relative z-10">{item.label}</span>
             </a>
           ))}
         </nav>
 
-        <a
+        <motion.a
           href={`mailto:${contactContent.email}`}
-          className="ink-button group inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition-transform duration-300 active:translate-y-px"
+          className="ink-button group inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold"
+          whileHover={{ y: -1 }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 28 }}
         >
           Email
           <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-        </a>
+        </motion.a>
       </header>
 
       <div className="relative z-20 mx-auto grid min-h-[calc(100dvh-90px)] w-full max-w-[1500px] grid-cols-1 items-center gap-24 px-5 pb-24 pt-14 sm:px-8 lg:grid-cols-[minmax(0,0.96fr)_minmax(24rem,0.64fr)] lg:px-10 lg:pb-28 xl:gap-28">
@@ -131,11 +134,9 @@ export default function HeroSection() {
           >
             <span className="block">Sayuru</span>
             <span className="block">Akash</span>
-            <span className="hidden text-[clamp(3.2rem,5.95vw,5.35rem)] text-[var(--ai)] sm:block">
+            <span className="block text-[clamp(2.1rem,9vw,3.7rem)] text-[var(--ai)] sm:text-[clamp(3.2rem,5.95vw,5.35rem)]">
               Amarasinghe
             </span>
-            <span className="block text-[var(--ai)] sm:hidden">Amara</span>
-            <span className="block text-[var(--ai)] sm:hidden">singhe</span>
           </motion.h1>
 
           <motion.div
@@ -175,6 +176,7 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.42, delay: 0.28 + index * 0.035, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.96 }}
               >
                 {tag}
               </motion.li>
@@ -227,13 +229,23 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      <a
+      <motion.a
         href="#profile"
-        className="absolute bottom-8 right-8 z-30 hidden h-12 w-12 place-items-center rounded-full border border-[var(--line)] bg-[rgba(255,255,255,0.82)] text-[var(--ink)] backdrop-blur-xl transition-transform duration-300 hover:translate-y-1 md:grid"
+        className="absolute bottom-8 right-8 z-30 hidden h-12 w-12 place-items-center rounded-full border border-[var(--line)] bg-[rgba(255,255,255,0.82)] text-[var(--ink)] backdrop-blur-xl md:grid"
         aria-label="Scroll to profile"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        whileHover={{ y: 2 }}
+        whileTap={{ scale: 0.94 }}
       >
-        <ArrowDown className="h-5 w-5" />
-      </a>
+        <motion.span
+          animate={prefersReducedMotion ? undefined : { y: [0, 4, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ArrowDown className="h-5 w-5" />
+        </motion.span>
+      </motion.a>
     </section>
   );
 }

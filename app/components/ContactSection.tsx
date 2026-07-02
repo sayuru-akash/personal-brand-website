@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowUpRight, Check, Copy, EnvelopeSimple } from '@phosphor-icons/react';
-import { motion, useMotionValue, useSpring } from 'motion/react';
+import { AnimatePresence, motion, useMotionValue, useSpring } from 'motion/react';
 import { useState } from 'react';
 import BrandIcon from '@/app/components/BrandIcon';
 import { CursorDotField } from '@/app/components/ReactBitsPrimitives';
@@ -92,7 +92,7 @@ export default function ContactSection() {
                 <p className="font-code text-xs uppercase text-[var(--faint)]">Email</p>
                 <a
                   href={`mailto:${contactContent.email}`}
-                  className="mt-4 block break-words text-[clamp(1.65rem,4vw,3.3rem)] font-black leading-tight text-[var(--ink)] transition-colors duration-300 hover:text-[var(--aka)]"
+                  className="mt-4 block break-words text-[clamp(1.45rem,5.5vw,3.3rem)] font-black leading-tight text-[var(--ink)] transition-colors duration-300 hover:text-[var(--aka)]"
                 >
                   {contactContent.email}
                 </a>
@@ -107,24 +107,41 @@ export default function ContactSection() {
                 Write email
                 <EnvelopeSimple className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
               </a>
-              <button
+              <motion.button
                 type="button"
                 onClick={handleCopyEmail}
-                className="paper-button inline-flex min-h-14 items-center justify-center gap-2 rounded-full px-5 text-sm font-bold transition-colors duration-300 active:translate-y-px"
+                className="paper-button inline-flex min-h-14 items-center justify-center gap-2 rounded-full px-5 text-sm font-bold transition-colors duration-300"
+                whileTap={{ scale: 0.97 }}
               >
-                {isCopied ? <Check className="h-5 w-5 text-[var(--matcha)]" /> : <Copy className="h-5 w-5" />}
-                {isCopied ? 'Copied' : 'Copy email'}
-              </button>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={isCopied ? 'copied' : 'copy'}
+                    className="inline-flex items-center gap-2"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    {isCopied ? <Check className="h-5 w-5 text-[var(--matcha)]" /> : <Copy className="h-5 w-5" />}
+                    {isCopied ? 'Copied' : 'Copy email'}
+                  </motion.span>
+                </AnimatePresence>
+              </motion.button>
             </div>
 
             <div className="mt-10 divide-y divide-[var(--line)] border-y border-[var(--line)]">
-              {contactContent.socialLinks.map((link) => (
-                <a
+              {contactContent.socialLinks.map((link, index) => (
+                <motion.a
                   key={link.platform}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="fine-link group flex items-center justify-between gap-6 py-5 transition-colors duration-300"
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                  whileTap={{ scale: 0.99 }}
                 >
                   <span className="flex items-center gap-4">
                     <span className="grid h-11 w-11 place-items-center rounded-full border border-[var(--line)] bg-white transition-colors duration-300 group-hover:bg-[var(--paper-blue)]">
@@ -136,7 +153,7 @@ export default function ContactSection() {
                     </span>
                   </span>
                   <ArrowUpRight className="h-5 w-5 text-[var(--aka)] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
-                </a>
+                </motion.a>
               ))}
             </div>
           </div>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import BrandIcon, { hasBrandIcon } from '@/app/components/BrandIcon';
 import { skillCategories } from '@/data/portfolio';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const stackNotes: Record<string, string> = {
   development: 'The main bench: interfaces, APIs, data, deploys, and the small fixes that make a product feel finished.',
@@ -23,13 +24,14 @@ const categoryTone: Record<string, string> = {
 };
 
 export default function SkillsSection() {
+  const prefersReducedMotion = useReducedMotion();
   const [activeId, setActiveId] = useState(skillCategories[0]?.id ?? '');
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const smoothX = useSpring(mouseX, { stiffness: 110, damping: 24, mass: 0.4 });
   const smoothY = useSpring(mouseY, { stiffness: 110, damping: 24, mass: 0.4 });
-  const rotateX = useTransform(smoothY, [-220, 220], [7, -7]);
-  const rotateY = useTransform(smoothX, [-220, 220], [-7, 7]);
+  const rotateX = useTransform(smoothY, [-220, 220], prefersReducedMotion ? [0, 0] : [7, -7]);
+  const rotateY = useTransform(smoothX, [-220, 220], prefersReducedMotion ? [0, 0] : [-7, 7]);
 
   const activeCategory = useMemo(
     () => skillCategories.find((category) => category.id === activeId) ?? skillCategories[0]!,
@@ -69,7 +71,7 @@ export default function SkillsSection() {
             id="stack-heading"
             className="font-display mt-6 max-w-[9ch] text-6xl leading-[0.9] text-[var(--ink)] sm:text-7xl md:text-8xl"
           >
-            Tools, not trophies.
+            Tools
           </h2>
           <p className="mt-8 max-w-[31rem] text-lg leading-8 text-[var(--muted)]">
             The stack changes by discipline because each mode asks for a different rhythm.
@@ -95,28 +97,37 @@ export default function SkillsSection() {
         <div className="grid grid-cols-1 gap-12 xl:grid-cols-[0.66fr_1.34fr]">
           <motion.div
             className="divide-y divide-[var(--line)] border-y border-[var(--line)]"
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: '-120px' }}
-            transition={{ duration: 0.78, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.06, delayChildren: 0.06 } },
+            }}
           >
             {skillCategories.map((category, index) => {
               const isActive = category.id === activeId;
 
               return (
-                <button
+                <motion.button
                   key={category.id}
                   type="button"
                   className="group relative flex w-full items-center justify-between gap-5 py-7 text-left"
                   onMouseEnter={() => setActiveId(category.id)}
                   onFocus={() => setActiveId(category.id)}
                   onClick={() => setActiveId(category.id)}
+                  variants={{
+                    hidden: { opacity: 0, y: 14 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+                  }}
+                  whileTap={{ scale: 0.99 }}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="stack-active-dot"
                       className="absolute -left-5 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full"
                       style={{ background: categoryTone[category.id] }}
+                      transition={{ type: 'spring', stiffness: 320, damping: 26 }}
                     />
                   )}
                   <span>
@@ -128,7 +139,7 @@ export default function SkillsSection() {
                     </span>
                   </span>
                   <span className="font-code text-xs text-[var(--faint)]">{category.skills.length}</span>
-                </button>
+                </motion.button>
               );
             })}
           </motion.div>
@@ -189,6 +200,8 @@ export default function SkillsSection() {
                         initial={{ opacity: 0, y: 14 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.28, delay: index * 0.025 }}
+                        whileHover={{ y: -3 }}
+                        whileTap={{ scale: 0.98 }}
                       >
                         <BrandIcon
                           name={skill}

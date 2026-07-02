@@ -79,20 +79,30 @@ export default function AboutSection() {
 
           <motion.div
             className="grid grid-cols-1 gap-px overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--line)] md:grid-cols-2"
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, margin: '-120px' }}
-            transition={{ duration: 0.78, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+            }}
           >
             {facts.map((fact) => {
               const Icon = fact.icon;
 
               return (
-                <div key={fact.label} className="bg-white p-6 sm:p-9">
+                <motion.div
+                  key={fact.label}
+                  className="bg-white p-6 sm:p-9"
+                  variants={{
+                    hidden: { opacity: 0, y: 18 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                  }}
+                >
                   <Icon className={`h-6 w-6 ${fact.tone}`} weight="duotone" />
                   <p className="font-code mt-8 text-xs uppercase text-[var(--faint)]">{fact.label}</p>
                   <p className="mt-2 text-xl font-bold leading-snug text-[var(--ink)]">{fact.value}</p>
-                </div>
+                </motion.div>
               );
             })}
           </motion.div>
@@ -111,8 +121,12 @@ export default function AboutSection() {
                   <motion.div
                     key={role}
                     className="paper-button min-h-32 rounded-[1.4rem] p-6 transition-colors duration-300"
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.5, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
                     whileHover={{ y: -4 }}
-                    transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     <span className="font-code text-xs text-[var(--faint)]">{String(index + 1).padStart(2, '0')}</span>
                     <p className="mt-7 text-xl font-black leading-snug text-[var(--ink)]">{role}</p>
@@ -124,14 +138,19 @@ export default function AboutSection() {
             <div>
               <p className="font-code text-xs uppercase text-[var(--ai)]">Signals</p>
               <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {aboutContent.traits.map((trait) => (
-                  <div
+                {aboutContent.traits.map((trait, index) => (
+                  <motion.div
                     key={trait}
                     className="flex min-h-24 items-center gap-4 rounded-[1.15rem] border border-[var(--line)] bg-white p-5"
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ duration: 0.45, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ y: -2 }}
                   >
                     <Sparkle className="h-5 w-5 shrink-0 text-[var(--aka)]" weight="duotone" />
                     <span className="text-sm font-bold leading-tight text-[var(--ink)]">{trait}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -141,8 +160,12 @@ export default function AboutSection() {
                 <motion.div
                   key={note}
                   className="group grid grid-cols-[3rem_1fr] items-start gap-7 border-t border-[var(--line)] py-8"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.5, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
                   whileHover={{ x: 8 }}
-                  transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+                  whileTap={{ scale: 0.99 }}
                 >
                   <span className="font-code text-xs text-[var(--aka)]">
                     {String(index + 1).padStart(2, '0')}

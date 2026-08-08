@@ -44,57 +44,25 @@ export function ShinyText({
   delay = 0.4,
 }: ShinyTextProps) {
   const prefersReducedMotion = useReducedMotion();
-  const [isPaused, setIsPaused] = useState(false);
-  const progress = useMotionValue(0);
-  const elapsedRef = useRef(0);
-  const lastTimeRef = useRef<number | null>(null);
-
-  useAnimationFrame((time) => {
-    if (prefersReducedMotion || isPaused) {
-      lastTimeRef.current = null;
-      return;
-    }
-
-    if (lastTimeRef.current === null) {
-      lastTimeRef.current = time;
-      return;
-    }
-
-    const deltaTime = time - lastTimeRef.current;
-    lastTimeRef.current = time;
-    elapsedRef.current += deltaTime;
-
-    const animationDuration = speed * 1000;
-    const cycleDuration = animationDuration + delay * 1000;
-    const cycleTime = elapsedRef.current % cycleDuration;
-    progress.set(
-      cycleTime < animationDuration
-        ? (cycleTime / animationDuration) * 100
-        : 100,
-    );
-  });
-
-  const backgroundPosition = useTransform(
-    progress,
-    (p) => `${150 - p * 2}% center`,
-  );
   const gradientStyle: CSSProperties = {
     backgroundImage: `linear-gradient(${spread}deg, ${color} 0%, ${color} 35%, ${shineColor} 50%, ${color} 65%, ${color} 100%)`,
     backgroundSize: "200% auto",
+    backgroundPosition: prefersReducedMotion ? "0 center" : undefined,
+    animationDuration: `${speed}s`,
+    animationDelay: `${delay}s`,
     WebkitBackgroundClip: "text",
     backgroundClip: "text",
     WebkitTextFillColor: "transparent",
   };
 
   return (
-    <motion.span
-      className={`inline-block ${className}`}
-      style={{ ...gradientStyle, backgroundPosition }}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+    <span
+      className={`shiny-text inline-block ${className}`}
+      style={gradientStyle}
+      data-reduced-motion={prefersReducedMotion ? "true" : undefined}
     >
       {children}
-    </motion.span>
+    </span>
   );
 }
 
@@ -172,7 +140,13 @@ export function MagnetLines({
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || prefersReducedMotion) return;
+    if (
+      !container ||
+      prefersReducedMotion ||
+      !window.matchMedia("(min-width: 1024px) and (pointer: fine)").matches
+    ) {
+      return;
+    }
 
     const items = container.querySelectorAll<HTMLSpanElement>("span");
 

@@ -44,7 +44,7 @@ export default function PrivacyPolicyPage() {
         <div className="absolute left-0 top-0 h-full w-1 bg-[var(--aka)] sm:w-1.5" />
         <div className="absolute right-0 top-0 h-full w-[36%] bg-[var(--paper-blue)]/52" />
         <div className="relative mx-auto flex min-h-[62dvh] w-full max-w-[1500px] flex-col justify-center px-5 py-24 sm:px-8 lg:px-10 lg:py-32">
-          <Reveal>
+          <Reveal aboveFold>
             <h1 className="font-display max-w-[11ch] text-[clamp(3.7rem,10vw,8.6rem)] leading-[0.96]">
               Privacy <span className="text-[var(--ai)]">Policy.</span>
             </h1>

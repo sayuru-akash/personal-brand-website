@@ -143,6 +143,81 @@ canvas {
   font-variation-settings: "MONO" 1;
 }
 
+.shiny-text {
+  animation-name: shiny-sweep;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.shiny-text:hover,
+.shiny-text[data-reduced-motion="true"] {
+  animation-play-state: paused;
+}
+
+@keyframes shiny-sweep {
+  from {
+    background-position: 150% center;
+  }
+
+  to {
+    background-position: -50% center;
+  }
+}
+
+.deferred-signal {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.deferred-signal > span {
+  position: absolute;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  animation: signal-pulse 2.8s ease-in-out infinite;
+}
+
+.deferred-signal > span:nth-child(1) {
+  width: 72%;
+  height: 72%;
+  color: var(--aka);
+}
+
+.deferred-signal > span:nth-child(2) {
+  width: 44%;
+  height: 44%;
+  color: var(--ai);
+  animation-delay: -0.9s;
+}
+
+.deferred-signal > span:nth-child(3) {
+  width: 15%;
+  height: 15%;
+  border: 0;
+  background: var(--murasaki);
+  animation-delay: -1.8s;
+}
+
+@keyframes signal-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.88) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08) rotate(180deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shiny-text,
+  .deferred-signal > span {
+    animation: none;
+  }
+}
+
 .jp-vertical {
   writing-mode: vertical-rl;
   text-orientation: mixed;

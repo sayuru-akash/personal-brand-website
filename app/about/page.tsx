@@ -51,7 +51,7 @@ export default function AboutPage() {
         <div className="absolute left-0 top-0 h-full w-1 bg-[var(--aka)] sm:w-1.5" />
 
         <div className="relative mx-auto grid min-h-[calc(100dvh-9rem)] w-full max-w-[1500px] grid-cols-1 items-center gap-16 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-[0.92fr_1.08fr] lg:gap-24 lg:px-10 lg:py-28">
-          <Reveal>
+          <Reveal aboveFold>
             <p className="font-code text-xs uppercase text-[var(--muted)]">
               {heroContent.name}
             </p>
@@ -63,7 +63,7 @@ export default function AboutPage() {
             </p>
           </Reveal>
 
-          <Reveal className="relative lg:pl-8" delay={0.08}>
+          <Reveal className="relative lg:pl-8" delay={0.08} aboveFold>
             <div className="paper-shadow relative overflow-hidden rounded-[2rem] border border-[var(--ink)] bg-white p-2">
               <Image
                 src={aboutPageContent.archive[0].src}

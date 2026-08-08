@@ -5,13 +5,13 @@ import { ArrowDown } from "@phosphor-icons/react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import BrandIcon from "@/app/components/BrandIcon";
+import DeferredSignalLottie from "@/app/components/DeferredSignalLottie";
 import SiteHeader from "@/app/components/SiteHeader";
 import {
   MagnetLines,
   RoleTicker,
   ShinyText,
 } from "@/app/components/ReactBitsPrimitives";
-import SignalLottie from "@/app/components/SignalLottie";
 import { aboutContent, heroContent } from "@/data/portfolio";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
@@ -73,7 +73,7 @@ export default function HeroSection() {
         <motion.div className="max-w-[60rem]" style={{ y: copyY }}>
           <motion.p
             className="font-code text-xs uppercase text-[var(--muted)]"
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 1, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
           >
@@ -82,7 +82,7 @@ export default function HeroSection() {
 
           <motion.p
             className="mt-4 text-lg font-bold text-[var(--aka)] sm:text-xl"
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 1, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.72,
@@ -96,7 +96,7 @@ export default function HeroSection() {
           <motion.h1
             id="hero-heading"
             className="font-display mt-8 max-w-full text-[clamp(2.75rem,12vw,4.6rem)] leading-[1.01] text-[var(--ink)] sm:text-[clamp(4.4rem,7vw,6.25rem)]"
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 1, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.88,
@@ -113,7 +113,7 @@ export default function HeroSection() {
 
           <motion.div
             className="mt-12 grid max-w-[58rem] grid-cols-1 gap-8 border-y border-[var(--line)] py-9 sm:py-10 xl:grid-cols-[minmax(18rem,0.72fr)_minmax(0,1.28fr)] xl:gap-14"
-            initial={{ opacity: 0, y: 22 }}
+            initial={{ opacity: 1, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.82,
@@ -219,7 +219,7 @@ export default function HeroSection() {
             </div>
 
             <div className="absolute -bottom-5 -left-3 grid h-28 w-28 place-items-center rounded-[1.3rem] border border-[var(--line)] bg-[rgba(255,255,255,0.88)] backdrop-blur-xl sm:h-32 sm:w-32">
-              <SignalLottie
+              <DeferredSignalLottie
                 className="h-24 w-24 sm:h-28 sm:w-28"
                 variant="tabs"
               />

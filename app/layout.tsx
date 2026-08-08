@@ -1,32 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import {
-  M_PLUS_1_Code,
-  Unbounded,
-  Zen_Kaku_Gothic_New,
-} from "next/font/google";
+import { Geologica, Sono, Unbounded } from "next/font/google";
 import SmoothScroll from "@/app/components/SmoothScroll";
 import AnimationErrorBoundary from "@/app/components/AnimationErrorBoundary";
 import FloatingNav from "@/app/components/FloatingNav";
 import "./globals.css";
 
-const zenKaku = Zen_Kaku_Gothic_New({
+const geologica = Geologica({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700", "900"],
-  variable: "--font-zen-kaku",
+  weight: "variable",
+  variable: "--font-geologica",
   display: "swap",
 });
 
 const unbounded = Unbounded({
   subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
+  weight: "variable",
   variable: "--font-unbounded",
   display: "swap",
 });
 
-const mPlusCode = M_PLUS_1_Code({
+const sono = Sono({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-m-plus-code",
+  weight: "variable",
+  axes: ["MONO"],
+  variable: "--font-sono",
   display: "swap",
 });
 
@@ -131,7 +128,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${zenKaku.variable} ${unbounded.variable} ${mPlusCode.variable}`}
+      className={`${geologica.variable} ${unbounded.variable} ${sono.variable}`}
     >
       <body>
         {/* NoScript message for users with JavaScript disabled */}

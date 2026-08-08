@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-zen-kaku)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-unbounded)', 'var(--font-zen-kaku)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-m-plus-code)', 'monospace'],
+        sans: ['var(--font-geologica)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-unbounded)', 'var(--font-geologica)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-sono)', 'monospace'],
       },
       maxWidth: {
         content: '1500px',

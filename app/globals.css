@@ -5,9 +5,9 @@
   --color-accent: #d63a2f;
   --color-accent-light: #f16655;
   --color-accent-dark: #9f241f;
-  --font-sans: var(--font-zen-kaku), "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
-  --font-display: var(--font-unbounded), var(--font-zen-kaku), system-ui, sans-serif;
-  --font-mono: var(--font-m-plus-code), "SF Mono", Monaco, Consolas, monospace;
+  --font-sans: var(--font-geologica), "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --font-display: var(--font-unbounded), var(--font-geologica), system-ui, sans-serif;
+  --font-mono: var(--font-sono), "SF Mono", Monaco, Consolas, monospace;
 }
 
 :root {
@@ -22,9 +22,9 @@
   --ai: #234fd5;
   --murasaki: #6e4bd6;
   --matcha: #496f4d;
-  --font-sans: var(--font-zen-kaku), "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
-  --font-display: var(--font-unbounded), var(--font-zen-kaku), system-ui, sans-serif;
-  --font-mono: var(--font-m-plus-code), "SF Mono", Monaco, Consolas, monospace;
+  --font-sans: var(--font-geologica), "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --font-display: var(--font-unbounded), var(--font-geologica), system-ui, sans-serif;
+  --font-mono: var(--font-sono), "SF Mono", Monaco, Consolas, monospace;
 }
 
 html {
@@ -140,6 +140,7 @@ canvas {
 
 .font-code {
   font-family: var(--font-mono);
+  font-variation-settings: "MONO" 1;
 }
 
 .jp-vertical {

@@ -23,6 +23,7 @@ export default function SiteHeader({
           alt="Sayuru"
           width={1963}
           height={751}
+          sizes="(min-width: 640px) 214px, 178px"
           className="h-12 w-[178px] object-contain object-left transition-transform duration-300 group-hover:-translate-y-0.5 sm:h-14 sm:w-[214px]"
           priority
         />

@@ -69,6 +69,7 @@ export default function ContactPage() {
                 alt="Sayuru Akash Amarasinghe against a painted brick wall"
                 width={1800}
                 height={1013}
+                quality={60}
                 className="aspect-[16/10] w-full rounded-[1.45rem] object-cover object-center"
                 priority
                 sizes="(min-width: 1024px) 52vw, 94vw"

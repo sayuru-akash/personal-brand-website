@@ -70,6 +70,7 @@ export default function AboutPage() {
                 alt={aboutPageContent.archive[0].alt}
                 width={aboutPageContent.archive[0].width}
                 height={aboutPageContent.archive[0].height}
+                quality={60}
                 className="aspect-[4/3] w-full rounded-[1.45rem] object-cover"
                 priority
                 sizes="(min-width: 1024px) 50vw, 94vw"

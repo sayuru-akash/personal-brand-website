@@ -213,6 +213,7 @@ export default function HeroSection() {
                 width={1122}
                 height={1402}
                 priority
+                quality={65}
                 sizes="(min-width: 1024px) 36vw, (min-width: 640px) 512px, calc(100vw - 40px)"
                 className="aspect-[4/5] w-full rounded-[1.6rem] object-cover"
               />

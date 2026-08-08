@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is Sayuru Akash Amarasinghe's personal brand website. It is a single Next.js App Router application focused on an animated portfolio homepage for a full-stack developer, musical artist, and Codezela Technologies founder.
+This is Sayuru Akash Amarasinghe's personal brand website. It is a single Next.js App Router application with an animated portfolio homepage plus About, Contact, and Privacy Policy pages for a full-stack developer, musical artist, and Codezela Technologies founder.
 
 The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v4, Motion (`motion/react`), and Jest. The homepage is assembled in `app/page.tsx` from section components under `app/components`, with portfolio copy and structured content stored in `data/portfolio.ts`.
 
@@ -10,14 +10,17 @@ The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v
 
 - `app/layout.tsx` defines metadata, viewport settings, favicon/manifest links, accessibility wrappers, and structured data.
 - `app/page.tsx` composes the homepage sections and wraps each animated section with `AnimationErrorBoundary`.
+- `app/about/`, `app/contact/`, and `app/privacy-policy/` contain the public supporting pages.
+- `app/sitemap.ts`, `app/robots.ts`, and `app/opengraph-image.tsx` provide the crawl and social-sharing surfaces.
 - `app/components/` contains the homepage sections, animation fallback components, scroll progress indicator, and component tests.
 - `app/hooks/` contains component-scoped hooks such as `useMagneticHover`.
 - `hooks/` contains shared hooks such as `useReducedMotion` and `useScrollAnimation`.
-- `data/portfolio.ts` is the primary source for editable portfolio content.
+- `data/portfolio.ts` is the primary source for editable homepage, biography, contact, navigation, and privacy content.
 - `types/portfolio.ts` defines the content contracts used by `data/portfolio.ts`.
 - `utils/animationConfig.ts` centralizes reusable Motion variants and transition settings.
 - `app/globals.css` and `tailwind.config.ts` define design tokens, typography, global styles, and animation utilities.
-- `public/` contains the web app icon and manifest.
+- `public/images/archive/` contains optimized local copies of personal images used by the supporting pages.
+- `public/` also contains the web app icon and manifest.
 
 ## Commands
 
@@ -63,7 +66,7 @@ Before handing off code changes, run at least `npm run lint` and the most releva
 
 ## Styling and UX Rules
 
-- Current palette is mostly neutral with emerald as the main accent. Avoid introducing a new dominant color system casually.
+- Current palette is white and neutral with red, blue, purple, and green used as restrained semantic accents. Avoid introducing a new dominant color system casually.
 - Maintain the spacious, asymmetric layout and Japanese typography touches already present in `app/globals.css` and `tailwind.config.ts`.
 - Use responsive Tailwind classes and stable layout constraints for section grids, cards, and animated elements.
 - Keep text readable on mobile and desktop; check long labels, Japanese text, and card content for wrapping.
@@ -94,7 +97,7 @@ When changing animations, reduced-motion behavior, error boundaries, or hook log
 
 ## Build and Deployment Notes
 
-- `next.config.ts` currently allows optimized remote images from `https://sayuru.me`.
+- Public page imagery is stored locally and served through Next.js image optimization.
 - `app/layout.tsx` sets canonical metadata for `https://sayuru.me`.
 - Keep manifest, icon, Open Graph metadata, and structured data consistent with any brand or URL changes.
 - Production deployment is expected to be a static/standard Next.js deployment path. Verify with `npm run build` before release-oriented changes.
@@ -105,4 +108,3 @@ When changing animations, reduced-motion behavior, error boundaries, or hook log
 - Keep changes scoped to the requested surface.
 - If touching UI, avoid visual drift unless the user asked for it.
 - If changing commands, dependencies, routes, metadata, or reusable workflow, update this file and any directly related docs.
-

@@ -1,33 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowDown, ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowDown } from "@phosphor-icons/react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import BrandIcon from "@/app/components/BrandIcon";
+import SiteHeader from "@/app/components/SiteHeader";
 import {
   MagnetLines,
   RoleTicker,
   ShinyText,
 } from "@/app/components/ReactBitsPrimitives";
 import SignalLottie from "@/app/components/SignalLottie";
-import { aboutContent, contactContent, heroContent } from "@/data/portfolio";
-import { useMagneticHover } from "@/app/hooks/useMagneticHover";
+import { aboutContent, heroContent } from "@/data/portfolio";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-
-const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "Profile", href: "#profile" },
-  { label: "Stack", href: "#stack" },
-  { label: "Contact", href: "#contact" },
-];
 
 const toolStrip = ["Next.js", "React", "TypeScript", "Figma", "PostgreSQL"];
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const ctaMagnet = useMagneticHover(0.4);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -75,49 +67,9 @@ export default function HeroSection() {
         />
       )}
 
-      <header className="relative z-30 mx-auto flex w-full max-w-[1500px] items-center justify-between gap-5 px-5 py-5 sm:px-8 lg:px-10">
-        <a
-          href="#home"
-          className="group block shrink-0"
-          aria-label="Sayuru home"
-        >
-          <Image
-            src="/images/generated/sayuru-wordmark-red.png"
-            alt="Sayuru"
-            width={1963}
-            height={751}
-            className="h-12 w-[178px] object-contain object-left transition-transform duration-300 group-hover:-translate-y-0.5 sm:h-14 sm:w-[214px]"
-            priority
-          />
-        </a>
+      <SiteHeader />
 
-        <nav className="hidden items-center gap-1 rounded-full border border-[var(--line)] bg-[rgba(255,255,255,0.82)] p-1 text-sm font-bold text-[var(--muted)] backdrop-blur-xl md:flex">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="nav-pill relative rounded-full px-4 py-2 transition-colors duration-300"
-            >
-              <span className="relative z-10">{item.label}</span>
-            </a>
-          ))}
-        </nav>
-
-        <motion.a
-          href={`mailto:${contactContent.email}`}
-          className="ink-button group inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold"
-          style={{ x: ctaMagnet.x, y: ctaMagnet.y }}
-          onMouseMove={ctaMagnet.handleMouseMove}
-          onMouseLeave={ctaMagnet.handleMouseLeave}
-          whileTap={{ scale: 0.96 }}
-          transition={{ type: "spring", stiffness: 400, damping: 28 }}
-        >
-          Email
-          <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-        </motion.a>
-      </header>
-
-      <div className="relative z-20 mx-auto grid min-h-[calc(100dvh-90px)] w-full max-w-[1500px] grid-cols-1 items-center gap-16 px-5 pb-20 pt-10 sm:px-8 lg:grid-cols-[minmax(0,0.96fr)_minmax(24rem,0.64fr)] lg:gap-24 lg:px-10 lg:pb-28 lg:pt-14 xl:gap-28">
+      <div className="relative z-20 mx-auto grid min-h-[calc(100dvh-148px)] w-full max-w-[1500px] grid-cols-1 items-center gap-16 px-5 pb-20 pt-10 sm:px-8 md:min-h-[calc(100dvh-90px)] lg:grid-cols-[minmax(0,0.96fr)_minmax(24rem,0.64fr)] lg:gap-24 lg:px-10 lg:pb-28 lg:pt-14 xl:gap-28">
         <motion.div className="max-w-[60rem]" style={{ y: copyY }}>
           <motion.p
             className="font-code text-xs uppercase text-[var(--muted)]"
@@ -143,7 +95,7 @@ export default function HeroSection() {
 
           <motion.h1
             id="hero-heading"
-            className="font-display mt-8 max-w-full text-[clamp(2.75rem,12vw,4.6rem)] leading-[0.96] text-[var(--ink)] sm:text-[clamp(4.4rem,7vw,6.25rem)]"
+            className="font-display mt-8 max-w-full text-[clamp(2.75rem,12vw,4.6rem)] leading-[1.01] text-[var(--ink)] sm:text-[clamp(4.4rem,7vw,6.25rem)]"
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{

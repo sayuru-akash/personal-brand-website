@@ -8,7 +8,7 @@ export default function StaticFallback() {
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#2f6f5e]">
             {heroContent.nameJapanese}
           </p>
-          <h1 className="mt-6 max-w-[12ch] text-6xl font-semibold leading-[0.95] sm:text-7xl md:text-8xl">
+          <h1 className="mt-6 max-w-[12ch] text-6xl font-semibold leading-[1.02] sm:text-7xl md:text-8xl">
             {heroContent.name}
           </h1>
           <p className="mt-8 max-w-[42rem] text-2xl leading-snug text-[#4c4943]">

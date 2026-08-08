@@ -12,7 +12,16 @@ import type {
   Project,
   ContactContent,
   SocialLink,
+  AboutPageContent,
+  PrivacyPolicySection,
+  SiteNavigationItem,
 } from "@/types/portfolio";
+
+export const siteNavigation: SiteNavigationItem[] = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+];
 
 /**
  * Hero section content
@@ -62,6 +71,76 @@ export const aboutContent: AboutContent = {
   ],
   location: "Colombo, Sri Lanka",
   education: "BSc Software Engineering, Plymouth University, UK",
+};
+
+export const aboutPageContent: AboutPageContent = {
+  introduction:
+    "Sayuru Akash Amarasinghe is a Sri Lankan full-stack developer, musical artist, designer, writer, investor, and founder of Codezela Technologies.",
+  biography: [
+    "Born on 14 June in Colombo and raised in Kottawa, Sayuru built his practice around technology, sound, and independent creative work. He works from Sri Lanka across product interfaces, full-stack systems, writing, and music production.",
+    "His public music work began in 2020. HMM with Sayuru & Chanuka, a conversational podcast project, is part of that early catalogue. Today, the same interest in rhythm and structure carries between software, design, sound, and the systems behind Codezela Technologies.",
+    "Sayuru studied Software Engineering through Plymouth University in the United Kingdom. His approach remains practical: understand the real problem, make the interface clear, build the underlying system, and ship work that can keep evolving.",
+  ],
+  facts: [
+    { label: "Born", value: "14 June / Colombo, Sri Lanka" },
+    { label: "Based", value: "Colombo, Sri Lanka" },
+    { label: "Education", value: "BSc Software Engineering / Plymouth University, UK" },
+    { label: "Company", value: "Founder & CEO / Codezela Technologies" },
+    { label: "Practice", value: "Software / design / music / writing" },
+    { label: "Notable work", value: "HMM with Sayuru & Chanuka / Podcast" },
+  ],
+  moments: [
+    {
+      marker: "ORIGIN",
+      title: "Colombo",
+      description: "Born in Colombo and raised in Kottawa, Western Province.",
+    },
+    {
+      marker: "2020",
+      title: "Music",
+      description: "Began publishing electronic and independent music work.",
+    },
+    {
+      marker: "BSc",
+      title: "Software engineering",
+      description: "Studied through Plymouth University in the United Kingdom.",
+    },
+    {
+      marker: "NOW",
+      title: "Codezela Technologies",
+      description: "Leads product, software, and web-system work from Sri Lanka.",
+    },
+  ],
+  archive: [
+    {
+      src: "/images/archive/sayuru-beach-profile.webp",
+      alt: "Sayuru Akash Amarasinghe standing by the coast in Sri Lanka",
+      caption: "Western Sri Lanka / personal archive",
+      width: 1800,
+      height: 1348,
+    },
+    {
+      src: "/images/archive/sayuru-window-portrait.webp",
+      alt: "An early portrait of Sayuru Akash Amarasinghe by a window",
+      caption: "Early portrait / personal archive",
+      width: 900,
+      height: 900,
+    },
+    {
+      src: "/images/archive/sayuru-garden-profile.webp",
+      alt: "Sayuru Akash Amarasinghe outdoors during his university years",
+      caption: "University years / personal archive",
+      width: 1600,
+      height: 899,
+    },
+    {
+      src: "/images/archive/sayuru-brick-portrait.webp",
+      alt: "Sayuru Akash Amarasinghe photographed against a painted brick wall",
+      caption: "Portrait study / personal archive",
+      width: 1800,
+      height: 1013,
+    },
+  ],
 };
 
 /**
@@ -257,6 +336,100 @@ export const contactContent: ContactContent = {
   socialLinks,
   ctaText: "For software, product design, music, or something between them.",
 };
+
+export const contactTopics = [
+  "Software / product",
+  "Web design",
+  "Music / sound",
+  "Writing / other",
+] as const;
+
+export const privacyPolicySections: PrivacyPolicySection[] = [
+  {
+    id: "scope",
+    title: "Scope",
+    paragraphs: [
+      "This policy explains how information is handled when you visit sayuru.me, use its contact tools, or follow links from the site. It applies to this personal website and not to services operated by Codezela Technologies or other third parties.",
+    ],
+  },
+  {
+    id: "information",
+    title: "Information handled",
+    paragraphs: [
+      "The website does not provide user accounts, checkout, payments, social login, or public comments. The contact composer prepares an email in your own email application; it does not submit or store the form contents on this website.",
+      "The hosting platform and network providers may process standard technical records needed to deliver and protect the site, such as an IP address, browser type, requested URL, approximate region, timestamp, and security signals.",
+    ],
+    bullets: [
+      "Information you choose to send by email, including your name, email address, and message.",
+      "Basic server, delivery, and security logs created by the hosting infrastructure.",
+      "No sensitive personal information is intentionally requested through the website.",
+    ],
+  },
+  {
+    id: "use",
+    title: "How information is used",
+    paragraphs: [
+      "Information is used only to operate and secure the website, respond to messages, understand and resolve technical issues, and meet applicable legal obligations. Personal information is not sold or rented.",
+    ],
+  },
+  {
+    id: "cookies",
+    title: "Cookies and local storage",
+    paragraphs: [
+      "The current website does not set advertising cookies and does not include a first-party analytics tracker. Essential infrastructure providers may use limited technical mechanisms for security, routing, abuse prevention, or performance. If analytics or other non-essential tracking is introduced, this policy and any consent controls will be updated before that collection begins.",
+    ],
+  },
+  {
+    id: "sharing",
+    title: "Service providers and disclosure",
+    paragraphs: [
+      "Information may be processed by infrastructure providers that host, deliver, or protect the website, and by your chosen email provider when you send a message. Information may also be disclosed when required by law, to protect legal rights, or to investigate abuse and security incidents.",
+    ],
+  },
+  {
+    id: "retention",
+    title: "Retention",
+    paragraphs: [
+      "Messages are retained only for as long as they are useful for the conversation, professional record-keeping, security, or legal obligations. Infrastructure logs are retained according to the relevant provider's operational and security schedules.",
+    ],
+  },
+  {
+    id: "rights",
+    title: "Your choices and rights",
+    paragraphs: [
+      "Depending on where you live, you may have rights to request access, correction, deletion, restriction, or a copy of personal information, and to object to certain processing. You may contact Sayuru using the email below. Identity may need to be verified before a request is completed.",
+    ],
+  },
+  {
+    id: "security",
+    title: "Security and international processing",
+    paragraphs: [
+      "Reasonable technical and organisational measures are used to protect the website and communications. No internet service can guarantee absolute security. Hosting and email providers may process information in countries other than your own under their applicable safeguards.",
+    ],
+  },
+  {
+    id: "external",
+    title: "External links",
+    paragraphs: [
+      "The website links to social networks, GitHub, Codezela Technologies, and other third-party services. Their privacy practices and content are governed by their own policies. Opening those links leaves sayuru.me.",
+    ],
+  },
+  {
+    id: "children",
+    title: "Children",
+    paragraphs: [
+      "This website is a general personal and professional portfolio. It is not directed to children and does not knowingly collect personal information from children through an account or registration service.",
+    ],
+  },
+  {
+    id: "updates",
+    title: "Updates and contact",
+    paragraphs: [
+      "This policy may be revised when the website, its providers, or legal requirements change. The current version will always be published on this page with its effective date.",
+      "For privacy questions or requests, email contact@sayuru.me.",
+    ],
+  },
+];
 
 /**
  * Complete portfolio content export

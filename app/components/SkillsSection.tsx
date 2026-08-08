@@ -94,7 +94,7 @@ export default function SkillsSection() {
           <p className="font-code text-xs uppercase text-[var(--aka)]">Stack</p>
           <h2
             id="stack-heading"
-            className="font-display mt-6 block max-w-[9ch] text-6xl leading-[0.9] text-[var(--ink)] sm:text-7xl md:text-8xl"
+            className="font-display mt-6 block max-w-[9ch] text-6xl leading-[1.02] text-[var(--ink)] sm:text-7xl md:text-8xl"
           >
             <SplitWords text="Tools" />
           </h2>

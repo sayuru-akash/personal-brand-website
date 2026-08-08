@@ -69,7 +69,7 @@ export default function AboutSection() {
           </p>
           <h2
             id="profile-heading"
-            className="font-display mt-6 block max-w-[10ch] text-6xl leading-[0.92] text-[var(--ink)] sm:text-7xl md:text-8xl"
+            className="font-display mt-6 block max-w-[10ch] text-6xl leading-[1.02] text-[var(--ink)] sm:text-7xl md:text-8xl"
           >
             <SplitWords text="Range without noise." />
           </h2>

@@ -3,14 +3,10 @@
 import { ArrowUp, ArrowUpRight } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { contactContent } from "@/data/portfolio";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { contactContent, siteNavigation } from "@/data/portfolio";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-
-const sections = [
-  { id: "profile", label: "Profile" },
-  { id: "stack", label: "Stack" },
-  { id: "contact", label: "Contact" },
-] as const;
 
 /**
  * Scroll-triggered "dynamic island" command pill. It stays hidden inside the
@@ -20,33 +16,14 @@ const sections = [
  */
 export default function FloatingNav() {
   const prefersReducedMotion = useReducedMotion();
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
-  const [active, setActive] = useState<string>("");
 
   useEffect(() => {
     const reveal = () => setVisible(window.scrollY > window.innerHeight * 0.62);
     reveal();
     window.addEventListener("scroll", reveal, { passive: true });
     return () => window.removeEventListener("scroll", reveal);
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const intersecting = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (intersecting) setActive(intersecting.target.id);
-      },
-      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 1] },
-    );
-
-    const targets = sections
-      .map((section) => document.getElementById(section.id))
-      .filter((el): el is HTMLElement => el !== null);
-    targets.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
   }, []);
 
   const handleBackToTop = () => {
@@ -91,19 +68,23 @@ export default function FloatingNav() {
               className="mx-0.5 hidden h-5 w-px bg-[var(--line)] sm:block"
             />
 
-            <ul className="hidden items-center gap-0.5 sm:flex">
-              {sections.map((section) => {
-                const isActive = active === section.id;
+            <ul className="flex items-center gap-0.5">
+              {siteNavigation.map((item) => {
+                const isActive =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.href);
                 return (
-                  <li key={section.id}>
-                    <a
-                      href={`#${section.id}`}
-                      className="relative inline-flex items-center rounded-full px-3.5 py-2 text-xs font-bold transition-colors duration-300"
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className="relative inline-flex items-center rounded-full px-2.5 py-2 text-[0.68rem] font-bold transition-colors duration-300 sm:px-3.5 sm:text-xs"
                       style={{
                         color: isActive ? "var(--ink)" : "var(--muted)",
                       }}
                     >
-                      {section.label}
+                      {item.label}
                       {isActive && (
                         <motion.span
                           layoutId="floating-nav-active"
@@ -115,26 +96,11 @@ export default function FloatingNav() {
                           }}
                         />
                       )}
-                    </a>
+                    </Link>
                   </li>
                 );
               })}
             </ul>
-
-            {/* compact active dot for mobile */}
-            <span className="flex items-center gap-1.5 px-2 sm:hidden">
-              {sections.map((section) => (
-                <span
-                  key={section.id}
-                  className="h-1.5 rounded-full transition-all duration-300"
-                  style={{
-                    width: active === section.id ? 18 : 6,
-                    background:
-                      active === section.id ? "var(--aka)" : "var(--line)",
-                  }}
-                />
-              ))}
-            </span>
 
             <span
               aria-hidden="true"
@@ -143,7 +109,7 @@ export default function FloatingNav() {
 
             <a
               href={`mailto:${contactContent.email}`}
-              className="ink-button inline-flex h-10 items-center gap-1.5 rounded-full px-4 text-xs font-bold"
+              className="ink-button inline-flex h-10 items-center gap-1.5 rounded-full px-3 text-xs font-bold sm:px-4"
             >
               Email
               <ArrowUpRight className="h-3.5 w-3.5" weight="bold" />

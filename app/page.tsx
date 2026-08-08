@@ -2,7 +2,6 @@ import HeroSection from "@/app/components/HeroSection";
 import AboutSection from "@/app/components/AboutSection";
 import AnimationErrorBoundary from "@/app/components/AnimationErrorBoundary";
 import ScrollProgress from "@/app/components/ScrollProgress";
-import FloatingNav from "@/app/components/FloatingNav";
 import SectionDivider from "@/app/components/SectionDivider";
 import SkillsSection from "./components/SkillsSection";
 import ContactSection from "./components/ContactSection";
@@ -32,10 +31,6 @@ export default function Home() {
     <>
       <AnimationErrorBoundary fallbackLabel="Scroll Progress">
         <ScrollProgress />
-      </AnimationErrorBoundary>
-
-      <AnimationErrorBoundary fallbackLabel="Floating Navigation">
-        <FloatingNav />
       </AnimationErrorBoundary>
 
       <div className="min-h-[100dvh] bg-[var(--paper)] text-[var(--ink)]">

@@ -107,6 +107,45 @@ export interface ContactContent {
   ctaText: string;
 }
 
+export interface SiteNavigationItem {
+  label: string;
+  href: string;
+}
+
+export interface BiographyFact {
+  label: string;
+  value: string;
+}
+
+export interface BiographyMoment {
+  marker: string;
+  title: string;
+  description: string;
+}
+
+export interface ArchiveImage {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+}
+
+export interface AboutPageContent {
+  introduction: string;
+  biography: string[];
+  facts: BiographyFact[];
+  moments: BiographyMoment[];
+  archive: ArchiveImage[];
+}
+
+export interface PrivacyPolicySection {
+  id: string;
+  title: string;
+  paragraphs: string[];
+  bullets?: string[];
+}
+
 /**
  * Complete portfolio content structure
  * Aggregates all section content for type-safe data flow

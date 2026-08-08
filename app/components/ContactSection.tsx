@@ -14,6 +14,7 @@ import {
 } from "motion/react";
 import { useState } from "react";
 import BrandIcon from "@/app/components/BrandIcon";
+import SiteFooter from "@/app/components/SiteFooter";
 import {
   CursorDotField,
   SplitWords,
@@ -93,7 +94,7 @@ export default function ContactSection() {
           </p>
           <h2
             id="contact-heading"
-            className="font-display mt-6 block max-w-[10ch] text-6xl leading-[0.9] text-[var(--ink)] sm:text-8xl lg:text-9xl"
+            className="font-display mt-6 block max-w-[10ch] text-6xl leading-[1.02] text-[var(--ink)] sm:text-8xl lg:text-9xl"
           >
             <SplitWords text="Send the rough idea." />
           </h2>
@@ -197,30 +198,9 @@ export default function ContactSection() {
         </motion.div>
       </div>
 
-      <footer className="relative mx-auto mt-20 grid w-full max-w-[1500px] grid-cols-1 gap-6 border-t border-[var(--line)] px-5 pt-8 text-sm text-[var(--muted)] sm:px-8 md:grid-cols-[1fr_auto] lg:px-10">
-        <div>
-          <p className="font-code text-xs uppercase text-[var(--faint)]">
-            Copyright 2015-2026
-          </p>
-          <p className="mt-2 font-bold text-[var(--ink)]">
-            Sayuru Akash Amarasinghe / Colombo, Sri Lanka
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-4 font-code text-xs uppercase">
-          <a className="fine-link" href="#home">
-            Home
-          </a>
-          <a className="fine-link" href="#profile">
-            Profile
-          </a>
-          <a className="fine-link" href="#stack">
-            Stack
-          </a>
-          <a className="fine-link" href="#contact">
-            Contact
-          </a>
-        </div>
-      </footer>
+      <div className="relative mt-20">
+        <SiteFooter />
+      </div>
     </section>
   );
 }

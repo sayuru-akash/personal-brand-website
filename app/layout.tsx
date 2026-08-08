@@ -5,6 +5,8 @@ import {
   Zen_Kaku_Gothic_New,
 } from "next/font/google";
 import SmoothScroll from "@/app/components/SmoothScroll";
+import AnimationErrorBoundary from "@/app/components/AnimationErrorBoundary";
+import FloatingNav from "@/app/components/FloatingNav";
 import "./globals.css";
 
 const zenKaku = Zen_Kaku_Gothic_New({
@@ -34,7 +36,7 @@ export const metadata: Metadata = {
     template: "%s | Sayuru Akash Amarasinghe",
   },
   description:
-    "Portfolio of Sayuru Akash Amarasinghe (サユル アーカーシュ) - Full-stack Developer, Start-up Founder, Musical Artist, and CEO @ Codezela Technologies from Colombo, Sri Lanka. Showcasing expertise in software development, music production, and entrepreneurship.",
+    "Official portfolio of Sayuru Akash Amarasinghe, a full-stack developer, musical artist, designer, writer, investor, and Codezela Technologies founder in Colombo, Sri Lanka.",
   keywords: [
     "Sayuru Akash Amarasinghe",
     "サユル アーカーシュ",
@@ -59,6 +61,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Sayuru Akash Amarasinghe", url: "https://sayuru.me" }],
   creator: "Sayuru Akash Amarasinghe",
   publisher: "Sayuru Akash Amarasinghe",
+  applicationName: "Sayuru Akash Amarasinghe",
+  category: "portfolio",
+  manifest: "/manifest.json",
   formatDetection: {
     email: false,
     address: false,
@@ -67,6 +72,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://sayuru.me"),
   alternates: {
     canonical: "/",
+    languages: { "en-US": "/" },
   },
   openGraph: {
     title: "Sayuru Akash Amarasinghe | Full-stack Developer & Musical Artist",
@@ -76,21 +82,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://sayuru.me",
     siteName: "Sayuru Akash Amarasinghe Portfolio",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Sayuru Akash Amarasinghe - Full-stack Developer & Musical Artist",
-      },
-    ],
+    images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
+    site: "@sayuru_akash",
+    creator: "@sayuru_akash",
     title: "Sayuru Akash Amarasinghe | Full-stack Developer & Musical Artist",
     description:
       "Portfolio showcasing expertise in software development, music production, and entrepreneurship.",
-    images: ["/og-image.jpg"],
+    images: ["/opengraph-image"],
+  },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
   },
   robots: {
     index: true,
@@ -127,11 +133,6 @@ export default function RootLayout({
       lang="en"
       className={`${zenKaku.variable} ${unbounded.variable} ${mPlusCode.variable}`}
     >
-      <head>
-        {/* Favicon and app icons */}
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="manifest" href="/manifest.json" />
-      </head>
       <body>
         {/* NoScript message for users with JavaScript disabled */}
         <noscript>
@@ -158,48 +159,77 @@ export default function RootLayout({
           </SmoothScroll>
         </div>
 
-        {/* Structured data for SEO */}
+        <AnimationErrorBoundary fallbackLabel="Floating Navigation">
+          <FloatingNav />
+        </AnimationErrorBoundary>
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Sayuru Akash Amarasinghe",
-              alternateName: "サユル アーカーシュ",
-              jobTitle: ["Full-stack Developer", "Musical Artist", "CEO"],
-              worksFor: {
-                "@type": "Organization",
-                name: "Codezela Technologies",
-              },
-              alumniOf: {
-                "@type": "EducationalOrganization",
-                name: "Plymouth University",
-                address: {
-                  "@type": "PostalAddress",
-                  addressCountry: "UK",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  "@id": "https://sayuru.me/#website",
+                  url: "https://sayuru.me/",
+                  name: "Sayuru Akash Amarasinghe",
+                  description:
+                    "The official portfolio of Sayuru Akash Amarasinghe.",
+                  inLanguage: "en-US",
+                  publisher: { "@id": "https://sayuru.me/#sayuru" },
                 },
-              },
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "Colombo",
-                addressCountry: "Sri Lanka",
-              },
-              url: "https://sayuru.me",
-              sameAs: [
-                "https://github.com/sayuru-akash",
-                "https://linkedin.com/in/sayuru-akash",
-                "https://twitter.com/sayuru_akash",
-                "https://tiktok.com/@sayuru_akash",
-              ],
-              knowsAbout: [
-                "Software Development",
-                "Full-stack Development",
-                "Music Production",
-                "Content Creation",
-                "Entrepreneurship",
-                "Investment",
-                "Web Design",
+                {
+                  "@type": "Person",
+                  "@id": "https://sayuru.me/#sayuru",
+                  name: "Sayuru Akash Amarasinghe",
+                  alternateName: ["Sayuru Akash", "サユル アーカーシュ"],
+                  image:
+                    "https://sayuru.me/images/generated/sayuru-hero-portrait.png",
+                  email: "mailto:contact@sayuru.me",
+                  url: "https://sayuru.me/",
+                  jobTitle: [
+                    "Full-stack Developer",
+                    "Musical Artist",
+                    "Founder and CEO",
+                  ],
+                  worksFor: {
+                    "@type": "Organization",
+                    name: "Codezela Technologies",
+                    url: "https://codezela.com/",
+                  },
+                  alumniOf: {
+                    "@type": "CollegeOrUniversity",
+                    name: "Plymouth University",
+                    address: {
+                      "@type": "PostalAddress",
+                      addressCountry: "GB",
+                    },
+                  },
+                  address: {
+                    "@type": "PostalAddress",
+                    addressLocality: "Colombo",
+                    addressCountry: "LK",
+                  },
+                  sameAs: [
+                    "https://github.com/sayuru-akash",
+                    "https://linkedin.com/in/sayuruakash",
+                    "https://facebook.com/sayuru.s",
+                    "https://instagram.com/sayuru_akash",
+                    "https://twitter.com/sayuru_akash",
+                    "https://tiktok.com/@sayuru_akash",
+                    "https://t.me/sayuruakash_channel",
+                  ],
+                  knowsAbout: [
+                    "Software Development",
+                    "Full-stack Development",
+                    "Web Design",
+                    "Music Production",
+                    "Technical Writing",
+                    "Entrepreneurship",
+                    "Investment",
+                  ],
+                },
               ],
             }),
           }}

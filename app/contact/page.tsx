@@ -50,7 +50,7 @@ export default function ContactPage() {
 
         <div className="relative mx-auto grid min-h-[calc(100dvh-9rem)] w-full max-w-[1500px] grid-cols-1 items-center gap-16 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-[minmax(0,1.05fr)_minmax(22rem,0.95fr)] lg:gap-20 lg:px-10 lg:py-28">
           <Reveal>
-            <h1 className="font-display max-w-[8ch] text-[clamp(4rem,9vw,7.8rem)] leading-[0.96]">
+            <h1 className="font-display max-w-[8ch] text-[clamp(3.25rem,12vw,7.8rem)] leading-[0.96]">
               Contact<span className="text-[var(--aka)]">.</span>
             </h1>
             <p className="mt-10 max-w-[38rem] text-xl font-semibold leading-9 text-[var(--muted)] sm:text-2xl sm:leading-10">

@@ -73,7 +73,7 @@ export default function AboutPage() {
                 quality={60}
                 className="aspect-[4/3] w-full rounded-[1.45rem] object-cover"
                 priority
-                sizes="(min-width: 1024px) 50vw, 94vw"
+                sizes="(min-width: 1024px) 44vw, 50vw"
               />
             </div>
             <p className="font-code mt-4 text-xs uppercase text-[var(--faint)]">

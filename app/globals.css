@@ -5,8 +5,8 @@
   --color-accent: #d63a2f;
   --color-accent-light: #f16655;
   --color-accent-dark: #9f241f;
-  --font-sans: var(--font-geologica), "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
-  --font-display: var(--font-unbounded), var(--font-geologica), system-ui, sans-serif;
+  --font-sans: "Avenir Next", "Segoe UI Variable", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --font-display: var(--font-unbounded), "Avenir Next", system-ui, sans-serif;
   --font-mono: var(--font-sono), "SF Mono", Monaco, Consolas, monospace;
 }
 
@@ -22,8 +22,8 @@
   --ai: #234fd5;
   --murasaki: #6e4bd6;
   --matcha: #496f4d;
-  --font-sans: var(--font-geologica), "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
-  --font-display: var(--font-unbounded), var(--font-geologica), system-ui, sans-serif;
+  --font-sans: "Avenir Next", "Segoe UI Variable", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --font-display: var(--font-unbounded), "Avenir Next", system-ui, sans-serif;
   --font-mono: var(--font-sono), "SF Mono", Monaco, Consolas, monospace;
 }
 

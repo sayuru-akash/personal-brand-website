@@ -11,7 +11,6 @@ import {
   type ReactNode,
 } from "react";
 import {
-  AnimatePresence,
   motion,
   useAnimationFrame,
   useMotionTemplate,
@@ -90,26 +89,19 @@ export function RoleTicker({ roles, className = "" }: RoleTickerProps) {
 
   return (
     <div className={`relative overflow-hidden ${className}`} aria-live="polite">
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={activeRole}
-          className="block"
-          initial={
-            prefersReducedMotion
-              ? false
-              : { opacity: 0, y: 22, filter: "blur(8px)" }
-          }
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={
-            prefersReducedMotion
-              ? undefined
-              : { opacity: 0, y: -22, filter: "blur(8px)" }
-          }
-          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {activeRole}
-        </motion.span>
-      </AnimatePresence>
+      <motion.span
+        key={activeRole}
+        className="block"
+        initial={
+          prefersReducedMotion
+            ? false
+            : { opacity: 1, y: 14, filter: "blur(4px)" }
+        }
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {activeRole}
+      </motion.span>
     </div>
   );
 }

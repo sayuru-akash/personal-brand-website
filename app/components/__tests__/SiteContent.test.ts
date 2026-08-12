@@ -15,7 +15,12 @@ describe("supporting page content", () => {
   });
 
   it("does not publish a birth year", () => {
-    expect(JSON.stringify(aboutPageContent)).not.toContain("2002");
+    expect(aboutPageContent.biography[0]).toContain("Born on 14 June in Colombo");
+    expect(aboutPageContent.facts[0]).toEqual({
+      label: "Born",
+      value: "14 June / Colombo, Sri Lanka",
+    });
+    expect(aboutPageContent.moments[0].marker).toBe("ORIGIN");
   });
 
   it("provides optimized local archive images with dimensions", () => {

@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-geologica)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-unbounded)', 'var(--font-geologica)', 'system-ui', 'sans-serif'],
+        sans: ['"Avenir Next"', 'system-ui', 'sans-serif'],
+        display: ['var(--font-unbounded)', '"Avenir Next"', 'system-ui', 'sans-serif'],
         mono: ['var(--font-sono)', 'monospace'],
       },
       maxWidth: {

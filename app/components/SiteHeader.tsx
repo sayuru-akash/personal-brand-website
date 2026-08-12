@@ -24,8 +24,8 @@ export default function SiteHeader({
           width={1963}
           height={751}
           quality={60}
-          sizes="(min-width: 640px) 214px, 178px"
-          className="h-12 w-[178px] object-contain object-left transition-transform duration-300 group-hover:-translate-y-0.5 sm:h-14 sm:w-[214px]"
+          sizes="(min-width: 640px) 146px, 126px"
+          className="h-12 w-[126px] object-contain object-left transition-transform duration-300 group-hover:-translate-y-0.5 sm:h-14 sm:w-[146px]"
           priority
         />
       </Link>

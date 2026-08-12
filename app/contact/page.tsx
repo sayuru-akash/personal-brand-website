@@ -72,7 +72,7 @@ export default function ContactPage() {
                 quality={60}
                 className="aspect-[16/10] w-full rounded-[1.45rem] object-cover object-center"
                 priority
-                sizes="(min-width: 1024px) 52vw, 94vw"
+                sizes="(min-width: 1024px) 44vw, 50vw"
               />
             </div>
             <div className="absolute -bottom-5 -left-1 rounded-full border border-[var(--line)] bg-white px-5 py-3 font-code text-xs uppercase text-[var(--aka)] shadow-sm lg:left-3">

@@ -1,22 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Geologica, Sono, Unbounded } from "next/font/google";
+import { Sono, Unbounded } from "next/font/google";
 import SmoothScroll from "@/app/components/SmoothScroll";
 import AnimationErrorBoundary from "@/app/components/AnimationErrorBoundary";
 import FloatingNav from "@/app/components/FloatingNav";
 import "./globals.css";
 
-const geologica = Geologica({
-  subsets: ["latin"],
-  weight: "variable",
-  variable: "--font-geologica",
-  display: "swap",
-});
-
 const unbounded = Unbounded({
   subsets: ["latin"],
   weight: "variable",
   variable: "--font-unbounded",
-  display: "swap",
+  display: "optional",
 });
 
 const sono = Sono({
@@ -25,6 +18,7 @@ const sono = Sono({
   axes: ["MONO"],
   variable: "--font-sono",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -128,7 +122,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geologica.variable} ${unbounded.variable} ${sono.variable}`}
+      className={`${unbounded.variable} ${sono.variable}`}
     >
       <body>
         {/* NoScript message for users with JavaScript disabled */}

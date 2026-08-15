@@ -107,7 +107,7 @@ export default function AboutSection() {
             }}
           >
             <Image
-              src="/images/generated/sayuru-profile-still-life.png"
+              src="/images/generated/sayuru-profile-still-life.webp"
               alt="Minimal still-life visual representing software, music, writing, and studio practice"
               width={1586}
               height={992}

@@ -114,7 +114,7 @@ export default function SkillsSection() {
             }}
           >
             <Image
-              src="/images/generated/sayuru-stack-interface.png"
+              src="/images/generated/sayuru-stack-interface.webp"
               alt="Abstract interface composition for Sayuru's technical stack"
               width={1254}
               height={1254}

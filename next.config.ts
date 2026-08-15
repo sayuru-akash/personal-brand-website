@@ -4,9 +4,9 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   images: {
-    formats: ["image/avif", "image/webp"],
-    minimumCacheTTL: 86400,
-    qualities: [60, 65, 75],
+    // Local images are pre-optimized so production does not depend on a paid
+    // provider image transformation quota.
+    unoptimized: true,
   },
   async headers() {
     return [

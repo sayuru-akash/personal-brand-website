@@ -53,24 +53,28 @@ describe('AnimationErrorBoundary', () => {
   });
 
   it('logs error to console in development', () => {
-    const originalEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = 'development';
+    const replacedEnv = jest.replaceProperty(process, 'env', {
+      ...process.env,
+      NODE_ENV: 'development',
+    });
 
     const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
 
-    render(
-      <AnimationErrorBoundary>
-        <ThrowError />
-      </AnimationErrorBoundary>
-    );
+    try {
+      render(
+        <AnimationErrorBoundary>
+          <ThrowError />
+        </AnimationErrorBoundary>
+      );
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      'Animation boundary caught an error:',
-      expect.any(Error),
-      expect.any(Object)
-    );
-
-    consoleErrorSpy.mockRestore();
-    process.env.NODE_ENV = originalEnv;
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Animation boundary caught an error:',
+        expect.any(Error),
+        expect.any(Object)
+      );
+    } finally {
+      consoleErrorSpy.mockRestore();
+      replacedEnv.restore();
+    }
   });
 });

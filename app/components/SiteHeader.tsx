@@ -19,7 +19,7 @@ export default function SiteHeader({
     >
       <Link href="/" className="group block shrink-0" aria-label="Sayuru home">
         <Image
-          src="/images/generated/sayuru-wordmark-red.png"
+          src="/images/generated/sayuru-wordmark-red.webp"
           alt="Sayuru"
           width={1963}
           height={751}

@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { ArrowDown } from "@phosphor-icons/react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import BrandIcon from "@/app/components/BrandIcon";
 import DeferredSignalLottie from "@/app/components/DeferredSignalLottie";
+import HeroPortraitReveal from "@/app/components/HeroPortraitReveal";
 import SiteHeader from "@/app/components/SiteHeader";
 import {
   MagnetLines,
@@ -169,16 +169,7 @@ export default function HeroSection() {
               lineHeight="28px"
             />
             <div className="paper-shadow relative overflow-hidden rounded-[2.25rem] border border-[var(--ink)] bg-white p-2">
-              <Image
-                src="/images/generated/sayuru-hero-portrait.png"
-                alt="Abstract portrait illustration for Sayuru Akash Amarasinghe"
-                width={1122}
-                height={1402}
-                priority
-                quality={65}
-                sizes="(min-width: 1024px) 36vw, (min-width: 640px) 512px, calc(100vw - 40px)"
-                className="aspect-[4/5] w-full rounded-[1.6rem] object-cover"
-              />
+              <HeroPortraitReveal />
             </div>
 
             <div className="absolute -bottom-5 -left-3 grid h-28 w-28 place-items-center rounded-[1.3rem] border border-[var(--line)] bg-[rgba(255,255,255,0.88)] backdrop-blur-xl sm:h-32 sm:w-32">

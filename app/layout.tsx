@@ -177,7 +177,7 @@ export default function RootLayout({
                   name: "Sayuru Akash Amarasinghe",
                   alternateName: ["Sayuru Akash", "サユル アーカーシュ"],
                   image:
-                    "https://sayuru.me/images/generated/sayuru-hero-portrait.png",
+                    "https://sayuru.me/images/portraits/sayuru-graduation.webp",
                   email: "mailto:contact@sayuru.me",
                   url: "https://sayuru.me/",
                   jobTitle: [
@@ -208,7 +208,7 @@ export default function RootLayout({
                     "https://linkedin.com/in/sayuruakash",
                     "https://facebook.com/sayuru.s",
                     "https://instagram.com/sayuru_akash",
-                    "https://twitter.com/sayuru_akash",
+                    "https://x.com/sayuru_akash",
                     "https://tiktok.com/@sayuru_akash",
                     "https://t.me/sayuruakash_channel",
                   ],

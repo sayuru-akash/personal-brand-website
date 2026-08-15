@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { CONTACT_FORM_ACTION } from "@/lib/contact";
+import { CONTACT_FORM_ACTION } from "@/types/contact";
 
 const TURNSTILE_SCRIPT_ID = "cloudflare-turnstile-script";
 const TURNSTILE_SCRIPT_URL =
@@ -68,9 +68,8 @@ const TurnstileWidget = forwardRef<TurnstileHandle, TurnstileWidgetProps>(
 
     useEffect(() => {
       if (!siteKey) {
-        setLoadError(true);
-        callbacksRef.current.onError();
-        return;
+        const frame = window.requestAnimationFrame(() => callbacksRef.current.onError());
+        return () => window.cancelAnimationFrame(frame);
       }
 
       let disposed = false;
@@ -150,7 +149,7 @@ const TurnstileWidget = forwardRef<TurnstileHandle, TurnstileWidgetProps>(
     return (
       <div className="min-w-0">
         <div ref={containerRef} className="min-h-16 w-full" aria-label="Security verification" />
-        {loadError ? (
+        {!siteKey || loadError ? (
           <p className="mt-2 text-sm leading-6 text-[var(--aka)]" role="alert">
             Verification could not load. You can still use the direct email above.
           </p>

@@ -3,13 +3,12 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import {
-  CONTACT_FORM_ACTION,
   CONTACT_MAX_BODY_BYTES,
-  type ContactApiResponse,
   contactSubmissionSchema,
   renderContactEmailHtml,
   renderContactEmailText,
 } from "@/lib/contact";
+import { CONTACT_FORM_ACTION, type ContactApiResponse } from "@/types/contact";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

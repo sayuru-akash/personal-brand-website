@@ -294,9 +294,9 @@ export const socialLinks: SocialLink[] = [
     handle: "sayuru.s",
   },
   {
-    platform: "Twitter",
-    url: "https://twitter.com/sayuru_akash",
-    handle: "@sayuruakash",
+    platform: "X",
+    url: "https://x.com/sayuru_akash",
+    handle: "@sayuru-akash",
   },
   {
     platform: "Instagram",
@@ -311,7 +311,7 @@ export const socialLinks: SocialLink[] = [
   {
     platform: "GitHub",
     url: "https://github.com/sayuru-akash",
-    handle: "@sayuruakash",
+    handle: "@sayuru-akash",
   },
   {
     platform: "Telegram",
@@ -348,8 +348,8 @@ export const privacyPolicySections: PrivacyPolicySection[] = [
     id: "information",
     title: "Information handled",
     paragraphs: [
-      "The website does not provide user accounts, checkout, payments, social login, or public comments. The contact composer prepares an email in your own email application; it does not submit or store the form contents on this website.",
-      "The hosting platform and network providers may process standard technical records needed to deliver and protect the site, such as an IP address, browser type, requested URL, approximate region, timestamp, and security signals.",
+      "The website does not provide user accounts, checkout, payments, social login, or public comments. When you use the contact form, the name, email address, topic, and message you enter are submitted to the website and delivered as an email.",
+      "The hosting platform, Cloudflare Turnstile, and network providers may process standard technical records needed to deliver and protect the site, such as an IP address, browser type, requested URL, approximate region, timestamp, and security signals.",
     ],
     bullets: [
       "Information you choose to send by email, including your name, email address, and message.",
@@ -375,7 +375,7 @@ export const privacyPolicySections: PrivacyPolicySection[] = [
     id: "sharing",
     title: "Service providers and disclosure",
     paragraphs: [
-      "Information may be processed by infrastructure providers that host, deliver, or protect the website, and by your chosen email provider when you send a message. Information may also be disclosed when required by law, to protect legal rights, or to investigate abuse and security incidents.",
+      "Information may be processed by infrastructure providers that host, deliver, or protect the website. Cloudflare Turnstile helps detect automated abuse, and Resend delivers contact form messages to contact@sayuru.me. Information may also be disclosed when required by law, to protect legal rights, or to investigate abuse and security incidents.",
     ],
   },
   {

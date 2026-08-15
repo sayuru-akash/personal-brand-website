@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { contactTopics } from "@/data/portfolio";
 
-export const CONTACT_FORM_ACTION = "contact";
 export const CONTACT_MAX_BODY_BYTES = 16_384;
 
 export const contactSubmissionSchema = z
@@ -17,19 +16,6 @@ export const contactSubmissionSchema = z
   .strict();
 
 export type ContactSubmission = z.infer<typeof contactSubmissionSchema>;
-
-export type ContactApiResponse =
-  | {
-      ok: true;
-      message: string;
-      reference: string;
-    }
-  | {
-      ok: false;
-      message: string;
-      code: "invalid_request" | "verification_failed" | "delivery_failed" | "unavailable";
-      fields?: string[];
-    };
 
 type ContactEmailInput = Pick<ContactSubmission, "name" | "email" | "topic" | "message"> & {
   reference: string;

@@ -17,7 +17,7 @@ type TurnstileOptions = {
   appearance: "interaction-only";
   execution: "render";
   language: "auto";
-  responseField: false;
+  "response-field": false;
   callback: (token: string) => void;
   "expired-callback": () => void;
   "timeout-callback": () => void;
@@ -89,7 +89,7 @@ const TurnstileWidget = forwardRef<TurnstileHandle, TurnstileWidgetProps>(
           appearance: "interaction-only",
           execution: "render",
           language: "auto",
-          responseField: false,
+          "response-field": false,
           callback: (token) => callbacksRef.current.onVerify(token),
           "expired-callback": () => {
             callbacksRef.current.onExpire();

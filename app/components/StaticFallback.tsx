@@ -17,13 +17,6 @@ export default function StaticFallback() {
           <p className="mt-6 max-w-[44rem] text-lg font-semibold leading-8 text-[#4c4943]">
             {heroContent.roles.join(' / ')}
           </p>
-          <div className="mt-8 flex max-w-[56rem] flex-wrap gap-3">
-            {heroContent.signalTags.map((tag) => (
-              <span key={tag} className="rounded-full border border-[#d8d2c6] px-4 py-2 text-xs font-semibold uppercase text-[#6e6a61]">
-                {tag}
-              </span>
-            ))}
-          </div>
           <p className="mt-6 max-w-[44rem] text-base leading-7 text-[#6e6a61]">
             {aboutContent.bio}
           </p>

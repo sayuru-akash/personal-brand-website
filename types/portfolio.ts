@@ -20,8 +20,6 @@ export interface HeroContent {
   roles: string[];
   /** Additional tagline or subtitle */
   subtitle: string;
-  /** Compact personality or identity tags */
-  signalTags: string[];
 }
 
 /**

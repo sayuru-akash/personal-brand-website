@@ -500,7 +500,7 @@ export function SplitWords({
     <Tag
       className={className}
       variants={splitWordContainer}
-      initial="hidden"
+      initial={false}
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
     >

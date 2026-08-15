@@ -86,7 +86,7 @@ export default function SkillsSection() {
 
       <div className="relative mx-auto grid w-full max-w-[1500px] grid-cols-1 gap-24 px-5 sm:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:px-10 xl:gap-28">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-120px" }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
@@ -104,7 +104,7 @@ export default function SkillsSection() {
           </p>
           <motion.div
             className="mt-16 hidden overflow-hidden rounded-[2rem] border border-[var(--line)] bg-white p-2 lg:block"
-            initial={{ opacity: 0, y: 22 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-120px" }}
             transition={{
@@ -127,7 +127,7 @@ export default function SkillsSection() {
         <div className="grid grid-cols-1 gap-12 xl:grid-cols-[0.66fr_1.34fr]">
           <motion.div
             className="divide-y divide-[var(--line)] border-y border-[var(--line)]"
-            initial="hidden"
+            initial={false}
             whileInView="visible"
             viewport={{ once: true, margin: "-120px" }}
             variants={{
@@ -191,7 +191,7 @@ export default function SkillsSection() {
             style={{ rotateX, rotateY, transformPerspective: 900 }}
             onMouseMove={handleMove}
             onMouseLeave={handleLeave}
-            initial={{ opacity: 0, y: 28 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-120px" }}
             transition={{
@@ -206,7 +206,7 @@ export default function SkillsSection() {
                 style={{ background: categoryTone[activeCategory.id] }}
               />
               <div className="flex items-start justify-between gap-8 border-b border-[var(--line)] p-7 sm:p-9">
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={activeCategory.id}
                     initial={{ opacity: 0, y: 12 }}
@@ -234,7 +234,7 @@ export default function SkillsSection() {
                 </div>
               </div>
 
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={activeCategory.id}
                   className="flex flex-1 flex-col justify-between gap-12 p-7 sm:p-9"
@@ -254,7 +254,7 @@ export default function SkillsSection() {
                         className="min-h-32 p-5"
                         glowColor="rgba(35,79,213,0.16)"
                         motionProps={{
-                          initial: { opacity: 0, y: 14 },
+                          initial: false,
                           animate: { opacity: 1, y: 0 },
                           transition: { duration: 0.28, delay: index * 0.025 },
                           whileHover: { y: -3 },

@@ -3,10 +3,10 @@ import { contactContent, siteNavigation } from "@/data/portfolio";
 
 export default function SiteFooter() {
   return (
-    <footer className="relative mx-auto w-full max-w-[1500px] border-t border-[var(--line)] px-5 py-10 text-sm text-[var(--muted)] sm:px-8 lg:px-10 lg:py-12">
+    <footer className="relative mx-auto w-full max-w-[1500px] border-t border-[var(--line)] px-5 py-10 text-sm text-[var(--ink)] sm:px-8 lg:px-10 lg:py-12">
       <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_auto] md:items-end">
         <div>
-          <p className="font-code text-xs uppercase text-[var(--faint)]">
+          <p className="font-code text-xs uppercase text-[var(--ink)]">
             Copyright 2015-2026
           </p>
           <p className="mt-2 font-bold text-[var(--ink)]">

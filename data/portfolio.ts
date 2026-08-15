@@ -39,14 +39,6 @@ export const heroContent: HeroContent = {
   ],
   subtitle:
     "I make web products, studio systems, and music from Western Sri Lanka.",
-  signalTags: [
-    "Coffee maniac",
-    "Team Android",
-    "Tech enthusiast",
-    "Crypto holder",
-    "Music addict",
-    "Netflix lover",
-  ],
 };
 
 /**

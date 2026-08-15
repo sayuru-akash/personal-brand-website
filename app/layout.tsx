@@ -123,6 +123,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${unbounded.variable} ${sono.variable}`}
+      data-scroll-behavior="smooth"
     >
       <body>
         {/* NoScript message for users with JavaScript disabled */}

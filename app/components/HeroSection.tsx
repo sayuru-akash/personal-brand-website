@@ -12,7 +12,7 @@ import {
   RoleTicker,
   ShinyText,
 } from "@/app/components/ReactBitsPrimitives";
-import { aboutContent, heroContent } from "@/data/portfolio";
+import { heroContent } from "@/data/portfolio";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const toolStrip = ["Next.js", "React", "TypeScript", "Figma", "PostgreSQL"];
@@ -72,16 +72,7 @@ export default function HeroSection() {
       <div className="relative z-20 mx-auto grid min-h-[calc(100dvh-148px)] w-full max-w-[1500px] grid-cols-1 items-center gap-16 px-5 pb-20 pt-10 sm:px-8 md:min-h-[calc(100dvh-90px)] lg:grid-cols-[minmax(0,0.96fr)_minmax(24rem,0.64fr)] lg:gap-24 lg:px-10 lg:pb-28 lg:pt-14 xl:gap-28">
         <motion.div className="max-w-[60rem]" style={{ y: copyY }}>
           <motion.p
-            className="font-code text-xs uppercase text-[var(--muted)]"
-            initial={{ opacity: 1, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {aboutContent.location} / Codezela Technologies
-          </motion.p>
-
-          <motion.p
-            className="mt-4 text-lg font-bold text-[var(--aka)] sm:text-xl"
+            className="text-xl font-bold text-[var(--aka)] sm:text-2xl"
             initial={{ opacity: 1, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -145,38 +136,9 @@ export default function HeroSection() {
             </p>
           </motion.div>
 
-          <motion.ul
-            className="mt-10 flex max-w-[56rem] flex-wrap gap-3"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.78,
-              delay: 0.25,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
-            {heroContent.signalTags.map((tag, index) => (
-              <motion.li
-                key={tag}
-                className="paper-button inline-flex h-10 items-center rounded-full px-4 font-code text-xs uppercase"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.42,
-                  delay: 0.28 + index * 0.035,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.96 }}
-              >
-                {tag}
-              </motion.li>
-            ))}
-          </motion.ul>
-
           <motion.div
             className="mt-8 flex flex-wrap items-center gap-3"
-            initial={{ opacity: 0, y: 18 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: 0.78,
@@ -233,7 +195,7 @@ export default function HeroSection() {
         href="#profile"
         className="absolute bottom-8 right-8 z-30 hidden h-12 w-12 place-items-center rounded-full border border-[var(--line)] bg-[rgba(255,255,255,0.82)] text-[var(--ink)] backdrop-blur-xl md:grid"
         aria-label="Scroll to profile"
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
         whileHover={{ y: 2 }}

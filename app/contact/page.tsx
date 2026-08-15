@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import BrandIcon from "@/app/components/BrandIcon";
 import ContactComposer from "@/app/components/ContactComposer";
+import InteractiveSiteFooter from "@/app/components/InteractiveSiteFooter";
 import Reveal from "@/app/components/Reveal";
-import SiteFooter from "@/app/components/SiteFooter";
 import SiteHeader from "@/app/components/SiteHeader";
 import { aboutContent, contactContent } from "@/data/portfolio";
 
@@ -41,12 +41,12 @@ const contactJsonLd = {
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white text-[var(--ink)]">
-      <SiteHeader />
-
-      <section className="relative isolate overflow-hidden border-t border-[var(--line)]">
+      <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 ink-grid opacity-24" />
         <div className="absolute left-0 top-0 h-full w-1 bg-[var(--aka)] sm:w-1.5" />
         <div className="absolute right-0 top-0 h-[58%] w-[38%] bg-[var(--paper-blue)]/60" />
+
+        <SiteHeader />
 
         <div className="relative mx-auto grid min-h-[calc(100dvh-9rem)] w-full max-w-[1500px] grid-cols-1 items-center gap-16 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-[minmax(0,1.05fr)_minmax(22rem,0.95fr)] lg:gap-20 lg:px-10 lg:py-28">
           <Reveal aboveFold>
@@ -74,9 +74,6 @@ export default function ContactPage() {
                 priority
                 sizes="(min-width: 1024px) 44vw, 50vw"
               />
-            </div>
-            <div className="absolute -bottom-5 -left-1 rounded-full border border-[var(--line)] bg-white px-5 py-3 font-code text-xs uppercase text-[var(--aka)] shadow-sm lg:left-3">
-              Open to considered work
             </div>
           </Reveal>
         </div>
@@ -132,7 +129,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <SiteFooter />
+      <InteractiveSiteFooter />
 
       <script
         type="application/ld+json"

@@ -2,8 +2,8 @@ import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import InteractiveSiteFooter from "@/app/components/InteractiveSiteFooter";
 import Reveal from "@/app/components/Reveal";
-import SiteFooter from "@/app/components/SiteFooter";
 import SiteHeader from "@/app/components/SiteHeader";
 import { aboutPageContent, heroContent } from "@/data/portfolio";
 
@@ -43,12 +43,12 @@ const aboutJsonLd = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white text-[var(--ink)]">
-      <SiteHeader />
-
-      <section className="relative isolate overflow-hidden border-t border-[var(--line)]">
+      <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 ink-grid opacity-25" />
         <div className="absolute right-0 top-0 h-full w-[42%] bg-[var(--paper-blue)]/55" />
         <div className="absolute left-0 top-0 h-full w-1 bg-[var(--aka)] sm:w-1.5" />
+
+        <SiteHeader />
 
         <div className="relative mx-auto grid min-h-[calc(100dvh-9rem)] w-full max-w-[1500px] grid-cols-1 items-center gap-16 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-[0.92fr_1.08fr] lg:gap-24 lg:px-10 lg:py-28">
           <Reveal aboveFold>
@@ -213,7 +213,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <SiteFooter />
+      <InteractiveSiteFooter />
 
       <script
         type="application/ld+json"

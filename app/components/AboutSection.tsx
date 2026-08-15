@@ -59,7 +59,7 @@ export default function AboutSection() {
       <div className="mx-auto grid w-full max-w-[1500px] grid-cols-1 gap-24 px-5 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:px-10 xl:gap-28">
         <motion.div
           className="lg:sticky lg:top-24 lg:self-start"
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-120px" }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
@@ -82,7 +82,7 @@ export default function AboutSection() {
         <div className="space-y-24">
           <motion.div
             className="grid grid-cols-1 gap-12 border-t border-[var(--line)] pt-12 xl:grid-cols-[0.92fr_1.08fr]"
-            initial={{ opacity: 0, y: 26 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-120px" }}
             transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
@@ -97,7 +97,7 @@ export default function AboutSection() {
 
           <motion.div
             className="paper-shadow relative overflow-hidden rounded-[2.2rem] border border-[var(--line)] bg-white p-2"
-            initial={{ opacity: 0, y: 28 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-120px" }}
             transition={{
@@ -118,7 +118,7 @@ export default function AboutSection() {
 
           <motion.div
             className="grid grid-cols-1 gap-px overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--line)] md:grid-cols-2"
-            initial="hidden"
+            initial={false}
             whileInView="visible"
             viewport={{ once: true, margin: "-120px" }}
             variants={{
@@ -158,7 +158,7 @@ export default function AboutSection() {
 
           <motion.div
             className="space-y-16 border-t border-[var(--line)] pt-14"
-            initial={{ opacity: 0, y: 28 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-120px" }}
             transition={{
@@ -179,7 +179,7 @@ export default function AboutSection() {
                     glowColor="rgba(214,58,47,0.14)"
                     tilt
                     motionProps={{
-                      initial: { opacity: 0, y: 16 },
+                      initial: false,
                       whileInView: { opacity: 1, y: 0 },
                       viewport: { once: true, margin: "-80px" },
                       transition: {
@@ -211,7 +211,7 @@ export default function AboutSection() {
                   <motion.div
                     key={trait}
                     className="flex min-h-24 items-center gap-4 rounded-[1.15rem] border border-[var(--line)] bg-white p-5"
-                    initial={{ opacity: 0, y: 14 }}
+                    initial={false}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-60px" }}
                     transition={{
@@ -238,7 +238,7 @@ export default function AboutSection() {
                 <motion.div
                   key={note}
                   className="group grid grid-cols-[3rem_1fr] items-start gap-7 border-t border-[var(--line)] py-8"
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={false}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{

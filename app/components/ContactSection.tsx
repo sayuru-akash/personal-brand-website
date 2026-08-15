@@ -84,7 +84,7 @@ export default function ContactSection() {
 
       <div className="relative mx-auto grid min-h-[calc(100dvh-16rem)] w-full max-w-[1500px] grid-cols-1 content-center gap-24 px-5 sm:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:px-10 xl:gap-28">
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-120px" }}
           transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
@@ -105,7 +105,7 @@ export default function ContactSection() {
 
         <motion.div
           className="self-end overflow-hidden rounded-[2.4rem] border border-[var(--ink)] bg-white p-2 paper-shadow"
-          initial={{ opacity: 0, y: 28 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-120px" }}
           transition={{ duration: 0.82, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
@@ -143,7 +143,7 @@ export default function ContactSection() {
                   <motion.span
                     key={isCopied ? "copied" : "copy"}
                     className="inline-flex items-center gap-2"
-                    initial={{ opacity: 0, y: 6 }}
+                    initial={false}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
@@ -167,7 +167,7 @@ export default function ContactSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="fine-link group flex items-center justify-between gap-6 py-5 transition-colors duration-300"
-                  initial={{ opacity: 0, y: 14 }}
+                  initial={false}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{

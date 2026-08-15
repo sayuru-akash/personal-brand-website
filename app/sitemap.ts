@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "monthly",
       priority: 1,
-      images: ["https://sayuru.me/images/generated/sayuru-hero-portrait.png"],
+      images: ["https://sayuru.me/images/portraits/sayuru-graduation.webp"],
     },
     {
       url: "https://sayuru.me/about",

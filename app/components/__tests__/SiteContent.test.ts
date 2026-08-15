@@ -3,6 +3,7 @@ import {
   contactTopics,
   privacyPolicySections,
   siteNavigation,
+  socialLinks,
 } from "@/data/portfolio";
 
 describe("supporting page content", () => {
@@ -37,5 +38,14 @@ describe("supporting page content", () => {
     expect(contactTopics.length).toBeGreaterThanOrEqual(4);
     expect(privacyPolicySections.length).toBeGreaterThanOrEqual(10);
     expect(privacyPolicySections.every((section) => section.paragraphs.length > 0)).toBe(true);
+  });
+
+  it("uses the current X label and hyphenated public handles", () => {
+    expect(socialLinks).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ platform: "X", handle: "@sayuru-akash" }),
+        expect.objectContaining({ platform: "GitHub", handle: "@sayuru-akash" }),
+      ]),
+    );
   });
 });

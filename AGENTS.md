@@ -4,19 +4,22 @@
 
 This is Sayuru Akash Amarasinghe's personal brand website. It is a single Next.js App Router application with an animated portfolio homepage plus About, Contact, and Privacy Policy pages for a full-stack developer, musical artist, and Codezela Technologies founder.
 
-The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v4, Motion (`motion/react`), and Jest. The homepage is assembled in `app/page.tsx` from section components under `app/components`, with portfolio copy and structured content stored in `data/portfolio.ts`.
+The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v4, Motion (`motion/react`), Jest, Resend, Zod, and Cloudflare Turnstile. The homepage is assembled in `app/page.tsx` from section components under `app/components`, with portfolio copy and structured content stored in `data/portfolio.ts`.
 
 ## Repository Layout
 
 - `app/layout.tsx` defines metadata, viewport settings, favicon/manifest links, accessibility wrappers, and structured data.
 - `app/page.tsx` composes the homepage sections and wraps each animated section with `AnimationErrorBoundary`.
 - `app/about/`, `app/contact/`, and `app/privacy-policy/` contain the public supporting pages.
+- `app/api/contact/route.ts` validates Turnstile tokens and contact payloads before delivering inquiries through Resend.
 - `app/sitemap.ts`, `app/robots.ts`, and `app/opengraph-image.tsx` provide the crawl and social-sharing surfaces.
 - `app/components/` contains the homepage sections, animation fallback components, scroll progress indicator, and component tests.
 - `app/hooks/` contains component-scoped hooks such as `useMagneticHover`.
 - `hooks/` contains shared hooks such as `useReducedMotion` and `useScrollAnimation`.
 - `data/portfolio.ts` is the primary source for editable homepage, biography, contact, navigation, and privacy content.
 - `types/portfolio.ts` defines the content contracts used by `data/portfolio.ts`.
+- `lib/contact.ts` contains contact validation plus the HTML and plain-text notification email renderers.
+- `types/contact.ts` contains the client/server contact response contract and shared Turnstile action.
 - `utils/animationConfig.ts` centralizes reusable Motion variants and transition settings.
 - `app/globals.css` and `tailwind.config.ts` define design tokens, typography, global styles, and animation utilities.
 - `public/images/archive/` contains optimized local copies of personal images used by the supporting pages.
@@ -100,6 +103,8 @@ When changing animations, reduced-motion behavior, error boundaries, or hook log
 - Public page imagery is stored locally and served through Next.js image optimization.
 - `app/layout.tsx` sets canonical metadata for `https://sayuru.me`.
 - Keep manifest, icon, Open Graph metadata, and structured data consistent with any brand or URL changes.
+- Copy `.env.example` to the deployment provider and set real values for Resend delivery and Turnstile. Never commit `.env.local` or secret values.
+- The contact form requires `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, and `TURNSTILE_ALLOWED_HOSTNAMES`.
 - Production deployment is expected to be a static/standard Next.js deployment path. Verify with `npm run build` before release-oriented changes.
 
 ## Git and Change Safety

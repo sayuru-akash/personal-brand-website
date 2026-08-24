@@ -361,35 +361,36 @@ export const privacyPolicySections: PrivacyPolicySection[] = [
     id: "use",
     title: "How information is used",
     paragraphs: [
-      "Information is used only to operate and secure the website, respond to messages, understand and resolve technical issues, and meet applicable legal obligations. Personal information is not sold or rented.",
+      "Information is used only to operate and secure the website, respond to messages, understand aggregate site use and performance, resolve technical issues, and meet applicable legal obligations. Personal information is not sold or rented.",
     ],
   },
   {
     id: "cookies",
     title: "Cookies and local storage",
     paragraphs: [
-      "The current website does not set advertising cookies and does not include a first-party analytics tracker. Essential infrastructure providers may use limited technical mechanisms for security, routing, abuse prevention, or performance. If analytics or other non-essential tracking is introduced, this policy and any consent controls will be updated before that collection begins.",
+      "The website uses Google Analytics 4 to understand aggregate visits, navigation, interactions, and technical performance. Google Analytics may use cookies or similar browser storage and may process device and browser details, an approximate region, pages visited, interaction events, and performance measurements. Contact form names, email addresses, messages, and submission references are not deliberately sent to analytics.",
+      "The website does not use advertising cookies. Essential infrastructure providers may also use limited technical mechanisms for security, routing, abuse prevention, or performance.",
     ],
   },
   {
     id: "sharing",
     title: "Service providers and disclosure",
     paragraphs: [
-      "Information may be processed by infrastructure providers that host, deliver, or protect the website. Cloudflare Turnstile helps detect automated abuse, and Resend delivers contact form messages to contact@sayuru.me. Information may also be disclosed when required by law, to protect legal rights, or to investigate abuse and security incidents.",
+      "Information may be processed by infrastructure providers that host, deliver, or protect the website. Google processes site usage and performance measurements through Google Analytics, Cloudflare Turnstile helps detect automated abuse, and Resend delivers contact form messages to contact@sayuru.me. Information may also be disclosed when required by law, to protect legal rights, or to investigate abuse and security incidents.",
     ],
   },
   {
     id: "retention",
     title: "Retention",
     paragraphs: [
-      "Messages are retained only for as long as they are useful for the conversation, professional record-keeping, security, or legal obligations. Infrastructure logs are retained according to the relevant provider's operational and security schedules.",
+      "Messages are retained only for as long as they are useful for the conversation, professional record-keeping, security, or legal obligations. Analytics measurements and infrastructure logs are retained according to the configured retention periods and the relevant provider's operational and security schedules.",
     ],
   },
   {
     id: "rights",
     title: "Your choices and rights",
     paragraphs: [
-      "Depending on where you live, you may have rights to request access, correction, deletion, restriction, or a copy of personal information, and to object to certain processing. You may contact Sayuru using the email below. Identity may need to be verified before a request is completed.",
+      "You can restrict analytics cookies through your browser settings or an analytics-blocking extension. Depending on where you live, you may also have rights to request access, correction, deletion, restriction, or a copy of personal information, and to object to certain processing. You may contact Sayuru using the email below. Identity may need to be verified before a request is completed.",
     ],
   },
   {

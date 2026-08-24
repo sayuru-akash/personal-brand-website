@@ -1,9 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import { Sono, Unbounded } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import AnalyticsWebVitals from "@/app/components/Analytics";
 import SmoothScroll from "@/app/components/SmoothScroll";
 import AnimationErrorBoundary from "@/app/components/AnimationErrorBoundary";
 import FloatingNav from "@/app/components/FloatingNav";
 import "./globals.css";
+
+const googleAnalyticsId =
+  process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID ?? "G-MQEHDZJNDE";
+const analyticsEnabled =
+  process.env.NODE_ENV === "production" &&
+  process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_DISABLED !== "true";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
@@ -155,6 +163,8 @@ export default function RootLayout({
           <FloatingNav />
         </AnimationErrorBoundary>
 
+        {analyticsEnabled ? <AnalyticsWebVitals /> : null}
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -227,6 +237,7 @@ export default function RootLayout({
           }}
         />
       </body>
+      {analyticsEnabled ? <GoogleAnalytics gaId={googleAnalyticsId} /> : null}
     </html>
   );
 }

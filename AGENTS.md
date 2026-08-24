@@ -4,11 +4,11 @@
 
 This is Sayuru Akash Amarasinghe's personal brand website. It is a single Next.js App Router application with an animated portfolio homepage plus About, Contact, and Privacy Policy pages for a full-stack developer, musical artist, and Codezela Technologies founder.
 
-The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v4, Motion (`motion/react`), Jest, Resend, Zod, and Cloudflare Turnstile. The homepage is assembled in `app/page.tsx` from section components under `app/components`, with portfolio copy and structured content stored in `data/portfolio.ts`.
+The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v4, Motion (`motion/react`), Jest, Resend, Zod, Cloudflare Turnstile, and Google Analytics 4 through `@next/third-parties`. The homepage is assembled in `app/page.tsx` from section components under `app/components`, with portfolio copy and structured content stored in `data/portfolio.ts`.
 
 ## Repository Layout
 
-- `app/layout.tsx` defines metadata, viewport settings, favicon/manifest links, accessibility wrappers, and structured data.
+- `app/layout.tsx` defines metadata, viewport settings, favicon/manifest links, accessibility wrappers, structured data, and the production Google Analytics integration.
 - `app/page.tsx` composes the homepage sections and wraps each animated section with `AnimationErrorBoundary`.
 - `app/about/`, `app/contact/`, and `app/privacy-policy/` contain the public supporting pages.
 - `app/api/contact/route.ts` validates Turnstile tokens and contact payloads before delivering inquiries through Resend.
@@ -100,11 +100,12 @@ When changing animations, reduced-motion behavior, error boundaries, or hook log
 
 ## Build and Deployment Notes
 
-- Public page imagery is stored locally and served through Next.js image optimization.
+- Public page imagery is stored as pre-optimized local assets and served with Next.js image layout and lazy-loading behavior.
 - `app/layout.tsx` sets canonical metadata for `https://sayuru.me`.
 - Keep manifest, icon, Open Graph metadata, and structured data consistent with any brand or URL changes.
 - Copy `.env.example` to the deployment provider and set real values for Resend delivery and Turnstile. Never commit `.env.local` or secret values.
 - The contact form requires `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, and `TURNSTILE_ALLOWED_HOSTNAMES`.
+- Google Analytics uses `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` and defaults to the site's public GA4 measurement ID. It runs in production builds only. Set `NEXT_PUBLIC_GOOGLE_ANALYTICS_DISABLED=true` to disable collection in a production environment.
 - Production deployment is expected to be a static/standard Next.js deployment path. Verify with `npm run build` before release-oriented changes.
 
 ## Git and Change Safety

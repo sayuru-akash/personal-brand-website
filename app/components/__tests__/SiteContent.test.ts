@@ -38,6 +38,11 @@ describe("supporting page content", () => {
     expect(contactTopics.length).toBeGreaterThanOrEqual(4);
     expect(privacyPolicySections.length).toBeGreaterThanOrEqual(10);
     expect(privacyPolicySections.every((section) => section.paragraphs.length > 0)).toBe(true);
+    expect(
+      privacyPolicySections
+        .find((section) => section.id === "cookies")
+        ?.paragraphs.join(" "),
+    ).toContain("Google Analytics 4");
   });
 
   it("uses the current X label and hyphenated public handles", () => {

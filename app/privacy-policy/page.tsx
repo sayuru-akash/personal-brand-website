@@ -30,7 +30,7 @@ const privacyJsonLd = {
   "@id": "https://sayuru.me/privacy-policy#webpage",
   url: "https://sayuru.me/privacy-policy",
   name: "Privacy Policy",
-  dateModified: "2026-08-15",
+  dateModified: "2026-08-25",
   isPartOf: { "@id": "https://sayuru.me/#website" },
 };
 
@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
                 A plain-language account of what this site handles, what it does not collect, and how to ask a question.
               </p>
               <p className="font-code text-xs uppercase text-[var(--faint)]">
-                Effective 15 August 2026
+                Effective 25 August 2026
               </p>
             </div>
           </Reveal>

@@ -3,6 +3,7 @@
 import { Check, CheckCircle, Copy, PaperPlaneTilt, SpinnerGap, WarningCircle } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "motion/react";
 import { type FormEvent, useRef, useState } from "react";
+import { trackContactLead } from "@/app/components/Analytics";
 import TurnstileWidget, { type TurnstileHandle } from "@/app/components/TurnstileWidget";
 import { contactContent, contactTopics } from "@/data/portfolio";
 import type { ContactApiResponse } from "@/types/contact";
@@ -86,6 +87,7 @@ export default function ContactComposer() {
         );
       }
 
+      trackContactLead(String(form.get("topic") ?? "General"));
       formElement.reset();
       submissionIdRef.current = null;
       setStatus("success");

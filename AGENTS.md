@@ -18,6 +18,7 @@ The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v
 - `app/hooks/` contains component-scoped hooks such as `useMagneticHover`.
 - `hooks/` contains shared hooks such as `useReducedMotion` and `useScrollAnimation`.
 - `data/portfolio.ts` is the primary source for editable homepage, biography, contact, navigation, and privacy content.
+- `data/hero-previews.ts` stores the introduction's hover/tap context, links, and verified sources. `HeroIntroduction.tsx` uses Floating UI for anchored, accessible previews; its text must continue to match `heroContent.subtitle` exactly.
 - `types/portfolio.ts` defines the content contracts used by `data/portfolio.ts`.
 - `lib/contact.ts` contains contact validation plus the HTML and plain-text notification email renderers.
 - `types/contact.ts` contains the client/server contact response contract and shared Turnstile action.

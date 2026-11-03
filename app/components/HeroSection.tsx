@@ -2,14 +2,13 @@
 
 import { ArrowDown, ArrowUpRight } from "@phosphor-icons/react";
 import Link from "next/link";
-import Image from "next/image";
-import { MapPin, X } from "@phosphor-icons/react";
 import BrandIcon from "@/app/components/BrandIcon";
+import HeroIntroduction from "@/app/components/HeroIntroduction";
 import HeroPortraitReveal from "@/app/components/HeroPortraitReveal";
 import SiteHeader from "@/app/components/SiteHeader";
 import Reveal from "@/app/components/Reveal";
 import { RoleTicker } from "@/app/components/ReactBitsPrimitives";
-import { aboutPageContent, heroContent, socialLinks } from "@/data/portfolio";
+import { heroContent, socialLinks } from "@/data/portfolio";
 
 export default function HeroSection() {
   return (
@@ -24,51 +23,12 @@ export default function HeroSection() {
             <div>
               <p className="japanese-name">{heroContent.nameJapanese}</p>
               <h1 id="hero-heading">{heroContent.name}</h1>
-              <p className="identity-role"><strong>{heroContent.role}</strong></p>
-            </div>
-          </div>
-          <div className="intro-copy">
-            <p>
-              {heroContent.subtitle.split("Colombo, Sri Lanka")[0]}
-              <button
-                type="button"
-                className="location-trigger"
-                popoverTarget="location-preview"
-                aria-label="Colombo, Sri Lanka: show photo"
-              >
-                Colombo, Sri Lanka
-              </button>
-              {heroContent.subtitle.split("Colombo, Sri Lanka")[1]}
-            </p>
-          </div>
-          <div
-            popover="auto"
-            id="location-preview"
-            className="location-preview"
-          >
-            <Image
-              src={aboutPageContent.archive[0].src}
-              alt={aboutPageContent.archive[0].alt}
-              width={1800}
-              height={1348}
-              sizes="340px"
-            />
-            <div>
-              <p>
-                <MapPin size={14} />
-                {aboutPageContent.archive[0].caption}
+              <p className="identity-role">
+                <strong>{heroContent.role}</strong>
               </p>
-              <button
-                type="button"
-                popoverTarget="location-preview"
-                popoverTargetAction="hide"
-                aria-label="Close location photo"
-                title="Close location photo"
-              >
-                <X size={17} />
-              </button>
             </div>
           </div>
+          <HeroIntroduction />
           <div className="current-role">
             <span className="status-light" />
             <span className="micro-label">Current mode</span>

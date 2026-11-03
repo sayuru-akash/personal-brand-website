@@ -24,7 +24,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Contact Sayuru Akash Amarasinghe",
-    description: "Software, product design, music, writing, and collaborations.",
+    description:
+      "Software, product design, music, writing, and collaborations.",
     images: ["/opengraph-image"],
   },
 };
@@ -40,97 +41,64 @@ const contactJsonLd = {
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-white text-[var(--ink)]">
-      <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 ink-grid opacity-24" />
-        <div className="absolute left-0 top-0 h-full w-1 bg-[var(--aka)] sm:w-1.5" />
-        <div className="absolute right-0 top-0 h-[58%] w-[38%] bg-[var(--paper-blue)]/60" />
-
-        <SiteHeader />
-
-        <div className="relative mx-auto grid min-h-[calc(100dvh-9rem)] w-full max-w-[1500px] grid-cols-1 items-center gap-16 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-[minmax(0,1.05fr)_minmax(22rem,0.95fr)] lg:gap-20 lg:px-10 lg:py-28">
-          <Reveal aboveFold>
-            <h1 className="font-display max-w-[8ch] text-[clamp(3.25rem,12vw,7.8rem)] leading-[0.96]">
-              Contact<span className="text-[var(--aka)]">.</span>
-            </h1>
-            <p className="mt-10 max-w-[38rem] text-xl font-semibold leading-9 text-[var(--muted)] sm:text-2xl sm:leading-10">
-              {contactContent.ctaText}
-            </p>
-            <div className="mt-12 flex items-center gap-3 font-code text-xs uppercase text-[var(--faint)]">
-              <MapPin className="h-5 w-5 text-[var(--ai)]" weight="duotone" />
-              {aboutContent.location} / working worldwide
-            </div>
-          </Reveal>
-
-          <Reveal className="relative lg:pl-8" delay={0.08} aboveFold>
-            <div className="paper-shadow overflow-hidden rounded-[2rem] border border-[var(--ink)] bg-white p-2">
-              <Image
-                src="/images/archive/sayuru-brick-portrait.webp"
-                alt="Sayuru Akash Amarasinghe against a painted brick wall"
-                width={1800}
-                height={1013}
-                quality={60}
-                className="aspect-[16/10] w-full rounded-[1.45rem] object-cover object-center"
-                priority
-                sizes="(min-width: 1024px) 44vw, 50vw"
-              />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="mx-auto grid w-full max-w-[1500px] grid-cols-1 gap-20 px-5 py-28 sm:px-8 sm:py-36 lg:grid-cols-[0.72fr_1.28fr] lg:gap-28 lg:px-10 lg:py-48">
-        <Reveal className="lg:sticky lg:top-28 lg:self-start">
-          <p className="font-code text-xs uppercase text-[var(--aka)]">Inquiry</p>
-          <h2 className="font-display mt-6 max-w-[9ch] text-5xl leading-[1.02] sm:text-7xl">
-            Start with the useful part.
-          </h2>
-          <p className="mt-8 max-w-md text-lg leading-8 text-[var(--muted)]">
-            A short brief, the current constraint, and what a good outcome looks like are enough to begin.
+    <div className="journal-page">
+      <SiteHeader />
+      <section className="journal-wrap page-intro">
+        <Reveal aboveFold>
+          <p className="micro-label">Contact</p>
+          <h1>Contact.</h1>
+          <p className="section-deck">{contactContent.ctaText}</p>
+          <p className="location-note">
+            <MapPin size={15} />
+            {aboutContent.location} / working worldwide
           </p>
         </Reveal>
-
-        <Reveal delay={0.06}>
+        <Reveal aboveFold className="contact-cover">
+          <Image
+            src="/images/archive/sayuru-brick-portrait.webp"
+            alt="Sayuru Akash Amarasinghe against a painted brick wall"
+            width={1800}
+            height={1013}
+            priority
+            sizes="(max-width: 760px) 90vw, 720px"
+          />
+        </Reveal>
+      </section>
+      <section className="journal-wrap journal-section">
+        <Reveal>
+          <p className="micro-label">Inquiry</p>
+          <h2>Start with the useful part.</h2>
+          <p className="section-deck">
+            A short brief, the current constraint, and what a good outcome looks
+            like are enough to begin.
+          </p>
+        </Reveal>
+        <Reveal className="contact-form-surface">
           <ContactComposer />
         </Reveal>
       </section>
-
-      <section className="relative overflow-hidden border-y border-[var(--line)] bg-[var(--paper-quiet)] py-28 sm:py-36 lg:py-44">
-        <div className="absolute inset-0 ink-grid opacity-18" />
-        <div className="relative mx-auto grid w-full max-w-[1500px] grid-cols-1 gap-16 px-5 sm:px-8 lg:grid-cols-[0.65fr_1.35fr] lg:gap-28 lg:px-10">
-          <Reveal>
-            <p className="font-code text-xs uppercase text-[var(--ai)]">Elsewhere</p>
-            <h2 className="font-display mt-6 max-w-[8ch] text-5xl leading-[1.02] sm:text-7xl">
-              Find the right channel.
-            </h2>
-          </Reveal>
-
-          <div className="border-t border-[var(--ink)]">
-            {contactContent.socialLinks.map((link, index) => (
-              <Reveal key={link.platform} delay={index * 0.035}>
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group grid grid-cols-[3rem_minmax(0,1fr)_auto] items-center gap-5 border-b border-[var(--line)] py-6 text-[var(--ink)] transition-colors duration-300 hover:text-[var(--aka)] sm:grid-cols-[4rem_minmax(11rem,0.7fr)_1fr_auto]"
-                >
-                  <span className="grid h-11 w-11 place-items-center rounded-full border border-[var(--line)] bg-white text-[var(--ink)] transition-transform duration-300 group-hover:-translate-y-0.5">
-                    <BrandIcon name={link.platform} className="h-5 w-5" />
-                  </span>
-                  <span className="text-lg font-black">{link.platform}</span>
-                  <span className="hidden font-code text-xs text-[var(--faint)] sm:block">
-                    {link.handle}
-                  </span>
-                  <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </a>
-              </Reveal>
-            ))}
-          </div>
+      <section className="journal-wrap journal-section">
+        <Reveal>
+          <p className="micro-label">Elsewhere</p>
+          <h2>Find the right channel.</h2>
+        </Reveal>
+        <div className="social-index">
+          {contactContent.socialLinks.map((link) => (
+            <a
+              href={link.url}
+              key={link.platform}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <BrandIcon name={link.platform} className="h-5 w-5" />
+              <span>{link.platform}</span>
+              <span className="social-handle">{link.handle}</span>
+              <ArrowUpRight size={16} />
+            </a>
+          ))}
         </div>
       </section>
-
       <InteractiveSiteFooter />
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}

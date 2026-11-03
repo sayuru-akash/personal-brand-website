@@ -11,7 +11,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy-policy" },
   openGraph: {
     title: "Privacy Policy | Sayuru Akash Amarasinghe",
-    description: "How information is handled when you visit or contact sayuru.me.",
+    description:
+      "How information is handled when you visit or contact sayuru.me.",
     url: "/privacy-policy",
     type: "website",
     images: ["/opengraph-image"],
@@ -19,7 +20,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Privacy Policy | Sayuru Akash Amarasinghe",
-    description: "How information is handled when you visit or contact sayuru.me.",
+    description:
+      "How information is handled when you visit or contact sayuru.me.",
     images: ["/opengraph-image"],
   },
 };
@@ -36,103 +38,70 @@ const privacyJsonLd = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-white text-[var(--ink)]">
-      <section className="relative isolate overflow-hidden border-b border-[var(--line)]">
-        <div className="absolute inset-0 ink-grid opacity-24" />
-        <div className="absolute left-0 top-0 h-full w-1 bg-[var(--aka)] sm:w-1.5" />
-        <div className="absolute right-0 top-0 h-full w-[36%] bg-[var(--paper-blue)]/52" />
-
-        <SiteHeader />
-
-        <div className="relative mx-auto flex min-h-[62dvh] w-full max-w-[1500px] flex-col justify-center px-5 py-24 sm:px-8 lg:px-10 lg:py-32">
-          <Reveal aboveFold>
-            <h1 className="font-display max-w-[11ch] text-[clamp(3.7rem,10vw,8.6rem)] leading-[0.96]">
-              Privacy <span className="text-[var(--ai)]">Policy.</span>
-            </h1>
-            <div className="mt-10 grid max-w-[70rem] grid-cols-1 gap-8 border-t border-[var(--ink)] pt-8 md:grid-cols-[1fr_auto] md:items-end">
-              <p className="max-w-[48rem] text-xl font-semibold leading-9 text-[var(--muted)] sm:text-2xl sm:leading-10">
-                A plain-language account of what this site handles, what it does not collect, and how to ask a question.
-              </p>
-              <p className="font-code text-xs uppercase text-[var(--faint)]">
-                Effective 25 August 2026
-              </p>
-            </div>
-          </Reveal>
-        </div>
+    <div className="journal-page">
+      <SiteHeader />
+      <section className="journal-wrap page-intro">
+        <Reveal aboveFold>
+          <p className="micro-label">Effective 25 August 2026</p>
+          <h1>Privacy Policy.</h1>
+          <p className="section-deck">
+            A plain-language account of what this site handles, what it does not
+            collect, and how to ask a question.
+          </p>
+        </Reveal>
       </section>
-
-      <section className="mx-auto grid w-full max-w-[1500px] grid-cols-1 gap-20 px-5 py-28 sm:px-8 sm:py-36 lg:grid-cols-[0.55fr_1.45fr] lg:gap-28 lg:px-10 lg:py-44">
-        <aside className="lg:sticky lg:top-28 lg:self-start">
-          <Reveal>
-            <p className="font-code text-xs uppercase text-[var(--aka)]">Contents</p>
-            <nav aria-label="Privacy policy sections" className="mt-8 border-t border-[var(--ink)]">
-              <ol>
-                {privacyPolicySections.map((section, index) => (
-                  <li key={section.id} className="border-b border-[var(--line)]">
-                    <a
-                      className="fine-link grid grid-cols-[2.5rem_1fr] gap-3 py-4 text-sm font-bold leading-6"
-                      href={`#${section.id}`}
-                    >
-                      <span className="font-code text-xs text-[var(--faint)]">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      {section.title}
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
-          </Reveal>
-        </aside>
-
-        <article className="min-w-0 border-t border-[var(--ink)]">
+      <div className="journal-wrap privacy-layout">
+        <nav aria-label="Privacy policy sections" className="privacy-contents">
+          <p className="micro-label">Contents</p>
+          <ol>
+            {privacyPolicySections.map((section, index) => (
+              <li key={section.id}>
+                <a href={`#${section.id}`}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {section.title}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+        <article>
           {privacyPolicySections.map((section, index) => (
-            <Reveal
+            <section
+              id={section.id}
               key={section.id}
-              className="scroll-mt-28 border-b border-[var(--line)] py-10 sm:py-14"
-              delay={Math.min(index * 0.02, 0.12)}
+              className="privacy-section"
+              aria-labelledby={`${section.id}-heading`}
             >
-              <section id={section.id} aria-labelledby={`${section.id}-heading`}>
-                <div className="grid grid-cols-[3rem_minmax(0,1fr)] gap-5 sm:grid-cols-[4rem_minmax(0,1fr)] sm:gap-8">
-                  <span className="font-code text-xs text-[var(--aka)]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h2 id={`${section.id}-heading`} className="text-2xl font-black sm:text-3xl">
-                      {section.title}
-                    </h2>
-                    <div className="mt-7 space-y-6 text-base leading-8 text-[var(--muted)] sm:text-lg sm:leading-9">
-                      {section.paragraphs.map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                    </div>
-                    {section.bullets ? (
-                      <ul className="mt-7 space-y-4 border-l-2 border-[var(--aka)] pl-6 text-base leading-8 text-[var(--muted)] sm:text-lg">
-                        {section.bullets.map((bullet) => (
-                          <li key={bullet}>{bullet}</li>
-                        ))}
-                      </ul>
-                    ) : null}
-                  </div>
-                </div>
-              </section>
-            </Reveal>
+              <Reveal>
+                <p className="micro-label">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h2 id={`${section.id}-heading`}>{section.title}</h2>
+                {section.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+                {section.bullets ? (
+                  <ul>
+                    {section.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </Reveal>
+            </section>
           ))}
-
-          <Reveal className="py-12 sm:py-16">
-            <p className="font-code text-xs uppercase text-[var(--faint)]">Privacy contact</p>
+          <section className="privacy-section">
+            <p className="micro-label">Privacy contact</p>
             <a
+              className="privacy-email"
               href={`mailto:${contactContent.email}`}
-              className="mt-4 block break-words text-[clamp(1.6rem,4vw,3rem)] font-black leading-tight text-[var(--ink)] transition-colors duration-300 hover:text-[var(--aka)]"
             >
               {contactContent.email}
             </a>
-          </Reveal>
+          </section>
         </article>
-      </section>
-
+      </div>
       <InteractiveSiteFooter />
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(privacyJsonLd) }}

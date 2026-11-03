@@ -51,7 +51,7 @@ Before handing off code changes, run at least `npm run lint` and the most releva
 - Keep the app as a single App Router application unless the user explicitly asks for a larger structural change.
 - Prefer editing content in `data/portfolio.ts` over hardcoding copy inside components.
 - Keep data shape changes synchronized with `types/portfolio.ts` and every component that consumes the changed fields.
-- Preserve the existing white, neutral, Japanese-minimal visual direction unless the user explicitly asks for a redesign.
+- Preserve the light personal-journal visual direction: a 720px reading column, Onest typography, fine separators, and restrained blue accents unless the user explicitly asks for a redesign.
 - Keep animated UI resilient: wrap new major animated sections with `AnimationErrorBoundary` when they can fail independently.
 - Respect reduced-motion behavior when adding animations or scroll effects.
 - Do not treat `.github/copilot-instructions.md` as fully current without checking the source files; parts of it describe an older dark-theme component structure.
@@ -70,7 +70,7 @@ Before handing off code changes, run at least `npm run lint` and the most releva
 ## Styling and UX Rules
 
 - Current palette is white and neutral with red, blue, purple, and green used as restrained semantic accents. Avoid introducing a new dominant color system casually.
-- Maintain the spacious, asymmetric layout and Japanese typography touches already present in `app/globals.css` and `tailwind.config.ts`.
+- Use the shared journal layout classes in `app/globals.css` on every public page. Keep the Japanese name accent and responsive reading widths consistent.
 - Use responsive Tailwind classes and stable layout constraints for section grids, cards, and animated elements.
 - Keep text readable on mobile and desktop; check long labels, Japanese text, and card content for wrapping.
 - Avoid adding decorative clutter that fights the existing minimalist direction.

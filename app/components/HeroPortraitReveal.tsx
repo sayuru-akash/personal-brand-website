@@ -64,7 +64,7 @@ export default function HeroPortraitReveal() {
         height={981}
         priority
         quality={88}
-        sizes="(min-width: 1024px) 36vw, (min-width: 640px) 512px, calc(100vw - 40px)"
+        sizes="(max-width: 600px) 70px, 112px"
         className="h-full w-full object-cover object-center"
       />
 
@@ -83,7 +83,7 @@ export default function HeroPortraitReveal() {
           width={1122}
           height={1402}
           quality={82}
-          sizes="(min-width: 1024px) 36vw, (min-width: 640px) 512px, calc(100vw - 40px)"
+          sizes="(max-width: 600px) 70px, 112px"
           className="h-full w-full object-cover"
         />
       </motion.div>

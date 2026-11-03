@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Sono, Unbounded } from "next/font/google";
+import { Sono, Onest } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import AnalyticsWebVitals from "@/app/components/Analytics";
 import SmoothScroll from "@/app/components/SmoothScroll";
@@ -13,10 +13,10 @@ const analyticsEnabled =
   process.env.NODE_ENV === "production" &&
   process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_DISABLED !== "true";
 
-const unbounded = Unbounded({
+const onest = Onest({
   subsets: ["latin"],
   weight: "variable",
-  variable: "--font-unbounded",
+  variable: "--font-onest",
   display: "optional",
 });
 
@@ -130,7 +130,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${unbounded.variable} ${sono.variable}`}
+      className={`${onest.variable} ${sono.variable}`}
       data-scroll-behavior="smooth"
     >
       <body>

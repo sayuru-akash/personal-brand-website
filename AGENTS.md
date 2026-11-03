@@ -14,6 +14,7 @@ The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v
 - `app/api/contact/route.ts` validates Turnstile tokens and contact payloads before delivering inquiries through Resend.
 - `app/sitemap.ts`, `app/robots.ts`, and `app/opengraph-image.tsx` provide the crawl and social-sharing surfaces.
 - `app/components/` contains the homepage sections, animation fallback components, scroll progress indicator, and component tests.
+- `app/components/SkillPlayground.tsx` lazy-loads Matter.js for the interactive skill tray, with pointer and keyboard controls, pause/reset/shuffle, offscreen sleeping, and a static reduced-motion fallback.
 - `app/hooks/` contains component-scoped hooks such as `useMagneticHover`.
 - `hooks/` contains shared hooks such as `useReducedMotion` and `useScrollAnimation`.
 - `data/portfolio.ts` is the primary source for editable homepage, biography, contact, navigation, and privacy content.

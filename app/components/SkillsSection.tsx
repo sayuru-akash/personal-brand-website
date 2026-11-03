@@ -4,6 +4,7 @@ import { CaretDown } from "@phosphor-icons/react";
 import { useState } from "react";
 import BrandIcon from "@/app/components/BrandIcon";
 import Reveal from "@/app/components/Reveal";
+import SkillPlayground from "@/app/components/SkillPlayground";
 import { skillCategories } from "@/data/portfolio";
 
 const stackNotes: Record<string, string> = {
@@ -43,6 +44,7 @@ export default function SkillsSection() {
           The stack changes by discipline because each mode asks for a different
           rhythm.
         </p>
+        <SkillPlayground />
         <div className="stack-index">
           {skillCategories.map((category, index) => {
             const isOpen = expanded.includes(category.id);

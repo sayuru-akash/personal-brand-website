@@ -447,6 +447,126 @@ h3 {
 .stack-index {
   margin-top: 32px;
 }
+.skill-playground {
+  margin-top: 30px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafbfc;
+}
+.playground-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  min-height: 48px;
+  border-bottom: 1px solid var(--line);
+  background: white;
+}
+.playground-toolbar > div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.playground-toolbar button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  background: transparent;
+  border-radius: 4px;
+  color: var(--muted);
+  transition: background 0.2s;
+}
+.playground-toolbar button:hover {
+  background: var(--paper-blue);
+  color: var(--ai);
+}
+.playground-toolbar button:disabled {
+  opacity: 0.35;
+}
+.tool-tray {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 44px);
+  align-content: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px;
+}
+.physics-tool {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #e0e5ee;
+  border-radius: 8px;
+  background: white;
+  color: #293341;
+  box-shadow: 0 2px 5px #1a23350a;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+.physics-tool svg {
+  pointer-events: none;
+}
+.tool-tray[data-ready="true"] .physics-tool {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+.tool-tray[data-ready="false"] {
+  height: auto;
+  min-height: 320px;
+}
+@media (max-width: 600px) {
+  .tool-tray {
+    height: 380px;
+  }
+}
+@media (max-width: 360px) {
+  .tool-tray {
+    height: 480px;
+  }
+}
+.tool-tray[data-paused="true"] .physics-tool {
+  cursor: pointer;
+}
+.physics-tool:active {
+  cursor: grabbing;
+  z-index: 3;
+  box-shadow: 0 4px 16px #1a23351a;
+}
+.physics-tool:focus-visible {
+  z-index: 4;
+}
+.tool-group-1 {
+  color: #7956a0;
+  background: #fcfaff;
+  border-color: #e9e2f0;
+}
+.tool-group-2 {
+  color: #9b573a;
+  background: #fffaf7;
+  border-color: #efdfd7;
+}
+.tool-group-3 {
+  color: #317665;
+  background: #f7fcfa;
+  border-color: #d9ebe5;
+}
+.tool-group-4 {
+  color: #3e69ae;
+  background: #f7faff;
+  border-color: #dce6f5;
+}
 .stack-entry {
   border-bottom: 1px solid var(--line);
 }

@@ -12,6 +12,11 @@ jest.mock("@/app/components/BrandIcon", () => ({
   default: () => null,
 }));
 
+jest.mock("@/app/components/SkillPlayground", () => ({
+  __esModule: true,
+  default: () => null,
+}));
+
 describe("skills index", () => {
   it("opens and closes groups independently for keyboard and pointer users", () => {
     render(<SkillsSection />);

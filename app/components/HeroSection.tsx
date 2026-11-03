@@ -24,22 +24,21 @@ export default function HeroSection() {
             <div>
               <p className="japanese-name">{heroContent.nameJapanese}</p>
               <h1 id="hero-heading">{heroContent.name}</h1>
-              <p className="identity-role">{heroContent.role}</p>
+              <p className="identity-role"><strong>{heroContent.role}</strong></p>
             </div>
           </div>
           <div className="intro-copy">
             <p>
-              {heroContent.subtitle.split("Western Sri Lanka")[0]}
+              {heroContent.subtitle.split("Colombo, Sri Lanka")[0]}
               <button
                 type="button"
                 className="location-trigger"
                 popoverTarget="location-preview"
-                aria-label="Western Sri Lanka: show photo"
+                aria-label="Colombo, Sri Lanka: show photo"
               >
-                Western Sri Lanka
+                Colombo, Sri Lanka
               </button>
-              {heroContent.subtitle.split("Western Sri Lanka")[1]} I work across
-              product interfaces, full-stack systems, writing, and sound.
+              {heroContent.subtitle.split("Colombo, Sri Lanka")[1]}
             </p>
           </div>
           <div

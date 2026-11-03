@@ -29,7 +29,7 @@ export const siteNavigation: SiteNavigationItem[] = [
 export const heroContent: HeroContent = {
   name: "Sayuru Akash Amarasinghe",
   nameJapanese: "サユル アーカーシュ",
-  role: "Full-stack Engineer & Musical Artist",
+  role: "Entrepreneur, Full-Stack Engineer & Artist",
   roles: [
     "Musical Artist",
     "Full-stack Engineer",
@@ -38,7 +38,7 @@ export const heroContent: HeroContent = {
     "Investor",
   ],
   subtitle:
-    "I make web products, studio systems, and music from Western Sri Lanka.",
+    "I build software, businesses and ideas. I'm the CEO of Codezela Technologies and a lecturer at Codezela Career Accelerator and ISBS Campus, working across technology, education and creative projects. I'm based in Colombo, Sri Lanka. Beyond the screen, you'll find me exploring music, design and everything in between.",
 };
 
 /**

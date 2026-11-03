@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is Sayuru Akash Amarasinghe's personal brand website. It is a single Next.js App Router application with an animated portfolio homepage plus About, Contact, and Privacy Policy pages for a full-stack developer, musical artist, and Codezela Technologies founder.
+This is Sayuru Akash Amarasinghe's personal brand website. It is a single Next.js App Router application with an animated portfolio homepage plus About, Contact, and Privacy Policy pages for a full-stack engineer, musical artist, and Codezela Technologies founder.
 
 The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v4, Motion (`motion/react`), Jest, Resend, Zod, Cloudflare Turnstile, and Google Analytics 4 through `@next/third-parties`. The homepage is assembled in `app/page.tsx` from section components under `app/components`, with portfolio copy and structured content stored in `data/portfolio.ts`.
 

@@ -10,7 +10,7 @@ import { aboutPageContent, heroContent } from "@/data/portfolio";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Biography of Sayuru Akash Amarasinghe, a Sri Lankan full-stack developer, musical artist, designer, writer, investor, and founder of Codezela Technologies.",
+    "Biography of Sayuru Akash Amarasinghe, a Sri Lankan full-stack engineer, musical artist, designer, writer, investor, and founder of Codezela Technologies.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About Sayuru Akash Amarasinghe",

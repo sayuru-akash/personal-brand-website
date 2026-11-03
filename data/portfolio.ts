@@ -29,10 +29,10 @@ export const siteNavigation: SiteNavigationItem[] = [
 export const heroContent: HeroContent = {
   name: "Sayuru Akash Amarasinghe",
   nameJapanese: "サユル アーカーシュ",
-  role: "Full-stack Developer & Musical Artist",
+  role: "Full-stack Engineer & Musical Artist",
   roles: [
     "Musical Artist",
-    "Full-stack Developer",
+    "Full-stack Engineer",
     "Web Designer",
     "Content Writer",
     "Investor",
@@ -47,7 +47,7 @@ export const heroContent: HeroContent = {
 export const aboutContent: AboutContent = {
   bio: "I run Codezela Technologies, build with Next.js and TypeScript, write the notes that make systems usable, and keep a parallel practice in music production. I studied Software Engineering through Plymouth University and still prefer work that moves from rough sketch to shipped thing without losing taste.",
   roles: [
-    "Full-stack Developer",
+    "Full-stack Engineer",
     "Musical Artist",
     "CEO @ Codezela Technologies",
     "Content Writer",
@@ -67,7 +67,7 @@ export const aboutContent: AboutContent = {
 
 export const aboutPageContent: AboutPageContent = {
   introduction:
-    "Sayuru Akash Amarasinghe is a Sri Lankan full-stack developer, musical artist, designer, writer, investor, and founder of Codezela Technologies.",
+    "Sayuru Akash Amarasinghe is a Sri Lankan full-stack engineer, musical artist, designer, writer, investor, and founder of Codezela Technologies.",
   biography: [
     "Born on 14 June in Colombo and raised in Kottawa, Sayuru built his practice around technology, sound, and independent creative work. He works from Sri Lanka across product interfaces, full-stack systems, writing, and music production.",
     "His public music work began in 2020. HMM with Sayuru & Chanuka, a conversational podcast project, is part of that early catalogue. Today, the same interest in rhythm and structure carries between software, design, sound, and the systems behind Codezela Technologies.",
@@ -243,7 +243,7 @@ export const projects: Project[] = [
       "Tailwind CSS v4",
       "TypeScript",
     ],
-    role: "Full-stack Developer & Designer",
+    role: "Full-stack Engineer & Designer",
     aspectRatio: "4/3",
     imageUrl: "/images/work-portfolio.svg",
   },

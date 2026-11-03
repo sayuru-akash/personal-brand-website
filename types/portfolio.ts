@@ -14,7 +14,7 @@ export interface HeroContent {
   name: string;
   /** Japanese name (e.g., "サユル アーカーシュ") */
   nameJapanese: string;
-  /** Primary role statement (e.g., "Full-stack Developer & Musical Artist") */
+  /** Primary role statement (e.g., "Full-stack Engineer & Musical Artist") */
   role: string;
   /** Expanded rotating role list */
   roles: string[];

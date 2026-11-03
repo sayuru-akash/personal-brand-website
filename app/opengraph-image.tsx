@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "Sayuru Akash Amarasinghe - Full-stack Developer and Musical Artist";
+  "Sayuru Akash Amarasinghe - Full-stack Engineer and Musical Artist";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -68,7 +68,7 @@ export default function OpenGraphImage() {
           </div>
         </div>
         <div style={{ display: "flex", fontSize: 22, color: "#6e675e", fontWeight: 600 }}>
-          Full-stack Developer / Musical Artist / Founder
+          Full-stack Engineer / Musical Artist / Founder
         </div>
       </div>
       <div

@@ -27,7 +27,7 @@ describe('AboutSection', () => {
   });
 
   it('includes key roles', () => {
-    expect(aboutContent.roles).toContain('Full-stack Developer');
+    expect(aboutContent.roles).toContain('Full-stack Engineer');
     expect(aboutContent.roles).toContain('CEO @ Codezela Technologies');
   });
 

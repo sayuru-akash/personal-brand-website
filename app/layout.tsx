@@ -31,15 +31,15 @@ const sono = Sono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Sayuru Akash Amarasinghe | Full-stack Developer & Musical Artist",
+    default: "Sayuru Akash Amarasinghe | Full-stack Engineer & Musical Artist",
     template: "%s | Sayuru Akash Amarasinghe",
   },
   description:
-    "Official portfolio of Sayuru Akash Amarasinghe, a full-stack developer, musical artist, designer, writer, investor, and Codezela Technologies founder in Colombo, Sri Lanka.",
+    "Official portfolio of Sayuru Akash Amarasinghe, a full-stack engineer, musical artist, designer, writer, investor, and Codezela Technologies founder in Colombo, Sri Lanka.",
   keywords: [
     "Sayuru Akash Amarasinghe",
     "サユル アーカーシュ",
-    "Full-stack Developer",
+    "Full-stack Engineer",
     "Front End Developer",
     "Web Designer",
     "Musical Artist",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     languages: { "en-US": "/" },
   },
   openGraph: {
-    title: "Sayuru Akash Amarasinghe | Full-stack Developer & Musical Artist",
+    title: "Sayuru Akash Amarasinghe | Full-stack Engineer & Musical Artist",
     description:
       "Portfolio showcasing expertise in software development, music production, and entrepreneurship. CEO @ Codezela Technologies, BSc Software Engineering graduate from Plymouth University.",
     type: "website",
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@sayuru_akash",
     creator: "@sayuru_akash",
-    title: "Sayuru Akash Amarasinghe | Full-stack Developer & Musical Artist",
+    title: "Sayuru Akash Amarasinghe | Full-stack Engineer & Musical Artist",
     description:
       "Portfolio showcasing expertise in software development, music production, and entrepreneurship.",
     images: ["/opengraph-image"],
@@ -191,7 +191,7 @@ export default function RootLayout({
                   email: "mailto:contact@sayuru.me",
                   url: "https://sayuru.me/",
                   jobTitle: [
-                    "Full-stack Developer",
+                    "Full-stack Engineer",
                     "Musical Artist",
                     "Founder and CEO",
                   ],

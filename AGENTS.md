@@ -17,7 +17,7 @@ The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v
 - `app/components/SkillPlayground.tsx` lazy-loads Matter.js for the interactive skill tray, with pointer and keyboard controls, pause/reset/shuffle, offscreen sleeping, and a static reduced-motion fallback.
 - `app/hooks/` contains component-scoped hooks such as `useMagneticHover`.
 - `hooks/` contains shared hooks such as `useReducedMotion` and `useScrollAnimation`.
-- `data/portfolio.ts` is the primary source for editable homepage, biography, contact, navigation, and privacy content.
+- `data/portfolio.ts` is the primary source for editable homepage, biography, contact, navigation, and privacy content. Its `heroTools` export controls the ordered hero tool row independently of `skillCategories`.
 - `data/hero-previews.ts` stores the introduction's hover/tap context, links, and verified sources. `HeroIntroduction.tsx` uses Floating UI for anchored, accessible previews; its text must continue to match `heroContent.subtitle` exactly.
 - `types/portfolio.ts` defines the content contracts used by `data/portfolio.ts`.
 - `lib/contact.ts` contains contact validation plus the HTML and plain-text notification email renderers.
@@ -25,7 +25,8 @@ The current implementation uses Next.js 16, React 19, TypeScript, Tailwind CSS v
 - `utils/animationConfig.ts` centralizes reusable Motion variants and transition settings.
 - `app/globals.css` and `tailwind.config.ts` define design tokens, typography, global styles, and animation utilities.
 - `public/images/archive/` contains optimized local copies of personal images used by the supporting pages.
-- `public/` also contains the web app icon and manifest.
+- `public/` also contains the generated red S PNG icon variants and manifest.
+- `README.md` documents the current site, setup, architecture, and screenshots. `docs/MAINTENANCE.md` covers content changes, delivery, analytics, and release checks.
 
 ## Commands
 
@@ -56,7 +57,7 @@ Before handing off code changes, run at least `npm run lint` and the most releva
 - Preserve the light personal-journal visual direction: a 720px reading column, Onest typography, fine separators, and restrained blue accents unless the user explicitly asks for a redesign.
 - Keep animated UI resilient: wrap new major animated sections with `AnimationErrorBoundary` when they can fail independently.
 - Respect reduced-motion behavior when adding animations or scroll effects.
-- Do not treat `.github/copilot-instructions.md` as fully current without checking the source files; parts of it describe an older dark-theme component structure.
+- Keep README screenshots in `docs/images/` current after visible design changes.
 
 ## Code Style
 
@@ -108,7 +109,8 @@ When changing animations, reduced-motion behavior, error boundaries, or hook log
 - Copy `.env.example` to the deployment provider and set real values for Resend delivery and Turnstile. Never commit `.env.local` or secret values.
 - The contact form requires `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, and `TURNSTILE_ALLOWED_HOSTNAMES`.
 - Google Analytics uses `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` and defaults to the site's public GA4 measurement ID. It runs in production builds only. Set `NEXT_PUBLIC_GOOGLE_ANALYTICS_DISABLED=true` to disable collection in a production environment.
-- Production deployment is expected to be a static/standard Next.js deployment path. Verify with `npm run build` before release-oriented changes.
+- Public pages are prerendered, but `/api/contact` requires a Node.js runtime. Use a standard Next.js deployment, not a static-only export. Verify with `npm run build` before release-oriented changes.
+- `/images/` assets use one-year immutable caching. Use new filenames when replacing image content.
 
 ## Git and Change Safety
 

@@ -8,7 +8,7 @@ import HeroPortraitReveal from "@/app/components/HeroPortraitReveal";
 import SiteHeader from "@/app/components/SiteHeader";
 import Reveal from "@/app/components/Reveal";
 import { RoleTicker } from "@/app/components/ReactBitsPrimitives";
-import { heroContent, socialLinks } from "@/data/portfolio";
+import { heroContent, heroTools, socialLinks } from "@/data/portfolio";
 
 export default function HeroSection() {
   return (
@@ -56,14 +56,14 @@ export default function HeroSection() {
               ))}
           </div>
           <div className="hero-tools">
-            {["Next.js", "React", "TypeScript", "Figma", "PostgreSQL"].map(
-              (tool) => (
-                <span key={tool}>
+            {heroTools.map((tool) => (
+              <span key={tool}>
+                <span aria-hidden="true">
                   <BrandIcon name={tool} className="h-4 w-4" />
-                  {tool}
                 </span>
-              ),
-            )}
+                {tool}
+              </span>
+            ))}
           </div>
           <div className="intro-bottom">
             <a href="#profile" className="quiet-link">

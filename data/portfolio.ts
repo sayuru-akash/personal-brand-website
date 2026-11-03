@@ -41,6 +41,17 @@ export const heroContent: HeroContent = {
     "I build software, businesses and ideas. I'm the CEO of Codezela Technologies and a lecturer at Codezela Career Accelerator and ISBS Campus, working across technology, education and creative projects. I'm based in Colombo, Sri Lanka. Beyond the screen, you'll find me exploring music, design and everything in between.",
 };
 
+export const heroTools = [
+  "Next.js",
+  "React",
+  "TypeScript",
+  "Laravel",
+  ".NET",
+  "PostgreSQL",
+  "MySQL",
+  "Figma",
+] as const;
+
 /**
  * About section biographical content
  */
